@@ -1,0 +1,97 @@
+.btn-app-store {
+    background: #fff;
+    /* color: white; */
+    position: relative;
+    height: 60px;
+    padding-left: 75px;
+    padding-right: 40px;
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}.btn-app-store i {
+    font-size: 40px;
+    position: absolute;
+    left: 20px;
+}.btn-app-store .small {
+    display: block;
+    font-size: 12px;
+    line-height: 12px;
+    margin-bottom: 2px;
+    margin-top: 5px;
+}.btn-app-store .big {
+    display: block;
+    text-align: left;
+    font-size: 21px;
+    line-height: 21px;
+}
+
+.btn-app-store:hover {
+    background-color: #c1c1c1;
+}
+/* ===========last section============ */
+
+.service:hover h4, .service.active h4,.service:hover i, .service.active i {
+    opacity: 1;
+    height: auto;
+}
+
+.service-content h4,.service-content i {
+    opacity: 0;
+    height: 0;
+    line-height: 25px;
+    padding: 0 18px;
+}
+
+// ============slider===================
+#slider {
+    background-image: url('../../../assets/images/slider/a617d-slider2-bg.jpg');
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    align-items: end;
+}
+
+#slider .owl{
+    width: 1200px;
+    overflow: hidden;
+}
+
+@media screen and (max-width:1200px) {
+    #slider .owl{
+        width: 900px;
+    }
+}
+
+@media screen and (max-width:900px) {
+    #slider .owl{
+        width: 600px;
+        h3{
+            font-size: 30px !important;
+        }
+    }
+}
+
+@media screen and (max-width:600px) {
+    #slider .owl{
+        width: 300px;
+        h3{
+            font-size: 20px !important;
+        }
+        img{
+            width: 250px !important;
+        }
+    }
+}
+
+@media screen and (max-width:300px) {
+    #slider .owl{
+        width: 200px;
+        h3{
+            font-size: 15px !important;
+        }
+        img{
+            width: 150px !important;
+        }
+    }
+}

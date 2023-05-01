@@ -1,0 +1,91 @@
+<div class="inner-intro parallax bg-overlay-black-70 bg-darkImg">
+    <div class="container">
+        <div class="row text-center intro-title">
+            <h1 class="text-orange">Login</h1>
+            <p class="text-white">Welcome To Low Calories</p>
+            <ul class="page-breadcrumb">
+                <li><a href="#"><i class="fa fa-home"></i> Home</a> <i class="fa fa-angle-double-right"></i></li>
+                <li><span>login</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<section class="login-block" id="login_section">
+    <div class="card-container container">
+        <div class="row">
+            <div class="col-lg-5 login-sec">
+                <div class="header text-center">
+                    <i class="fas fa-2x fa-utensils"></i>
+                    <h2 class="text-orange">Login</h2>
+                </div>
+                <div class="body mt-5">
+                    <ng-container *ngIf="login$ | async as login">
+                        <div *ngIf="login.status == 0" class="text-danger text-center mb-2">
+                            Invalid Credentials | {{login.message}}
+                        </div>
+                        <div *ngIf="login.error != null" class="text-danger text-center mb-2">
+                            {{login.error.message}}
+                        </div>
+                    </ng-container>
+                    
+                    <form [formGroup]='loginForm' (ngSubmit)='onSubmit(loginForm)'>
+                        <div class="row">
+                            <div class="col-12 my-2">
+                                <div class="form-group">
+                                    <i class="fas fa-at text-orange"></i>
+                                    <input type="text" name="email" class="form-control" placeholder="example@gmail.com"
+                                        formControlName='email'>
+                                </div>
+                                <div class="text-start">
+                                    <small class="text-danger ms-1" *ngIf="loginForm.get('email')?.touched &&
+                                        loginForm.get('email')?.hasError('email')">The email is not valid</small>
+                                    <small class="text-danger ms-1" *ngIf="loginForm.get('email')?.touched &&
+                                        loginForm.get('email')?.hasError('required')">This field is required</small>
+                                </div>
+                            </div>
+                            <div class="col-12 my-2">
+                                <div class="form-group">
+                                    <i class="fas fa-lock text-orange"></i>
+                                    <input name="password" type="password" class="form-control"
+                                        placeholder="************" formControlName='password'>
+                                </div>
+                                <div class="text-start">
+                                    <small class="text-danger ms-1" *ngIf="loginForm.get('password')?.touched &&
+                                        loginForm.get('password')?.hasError('required')">This field is required</small>
+                                </div>
+                            </div>
+                            <div class="form-submit mb-30 d-flex justify-content-between">
+                                <a routerLink="../register" class="href">REGISTER</a>
+                                <a routerLink="../reset" class="href">FORGET PASSWORD</a>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="submit" class="slide_from_bottom mt-3">
+                                    LOGIN
+                                    <ng-container *ngIf="login$ | async as login">
+                                        <ng-container *ngIf="login.loading">
+                                            <i class="fa-solid fa-circle-notch fa-spin"></i>
+                                        </ng-container>
+                                    </ng-container>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+            <div class="col-lg-7 banner-sec d-lg-block d-none position-relative">
+                <div class="text-caption d-none d-md-block">
+                    <div class="banner-text">
+                        <h2>Welcome To Low Calories</h2>
+                        <p>You think natural food can't be tasty? <br> Try our suggestions and see that it's not true!
+                            <br> Our products are the best proof that you can provide your body with the necessary
+                            nutrients while satisfying
+                            the appetite for delicious food.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

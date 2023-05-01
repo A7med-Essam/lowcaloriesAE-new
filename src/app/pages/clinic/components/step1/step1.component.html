@@ -1,0 +1,65 @@
+
+<form [formGroup]='clinicFormData'>
+    <div class="row">
+        <div class="col-lg-6 my-2">
+            <div class="mb-2"><label for="">{{"clinic.step1.name" }}<span class="text-danger">*</span></label></div>
+            <input type="text" pInputText placeholder='{{"clinic.step1.name" }}' [style]="{'width':'100%'}" formControlName="name"/>
+            <div class="text-start">
+                <small class="text-danger ms-1" *ngIf="clinicFormData.get('name')?.touched &&
+                clinicFormData.get('name')?.hasError('required')">{{"errors.required"}}</small>
+            </div>
+        </div>
+        <div class="col-lg-6 my-2">
+            <div class="mb-2"><label for="">{{"clinic.step1.email" }}<span class="text-danger">*</span></label></div>
+            <input type="email" pInputText placeholder='{{"clinic.step1.email" }}' [style]="{'width':'100%'}" formControlName="email"/>
+            <div class="text-start">
+                <small class="text-danger ms-1" *ngIf="clinicFormData.get('email')?.touched &&
+                clinicFormData.get('email')?.hasError('required')">{{"errors.required"}}</small>
+            </div>
+            <div class="text-start">
+                <small class="text-danger ms-1" *ngIf="clinicFormData.get('email')?.touched &&
+                clinicFormData.get('email')?.hasError('email')">{{"errors.email"}}</small>
+            </div>
+        </div>
+        <div class="col-lg-6 my-2">
+            <div class="mb-2"><label for="">{{"clinic.step1.mobile" }}<span class="text-danger">*</span></label></div>
+            <input type="text" pInputText placeholder='{{"clinic.step1.mobile" }}' [style]="{'width':'100%'}"
+            maxlength="10"
+            formControlName="mobile" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"/>
+            <div class="text-start">
+                <small class="text-danger ms-1" *ngIf="clinicFormData.get('mobile')?.touched &&
+                clinicFormData.get('mobile')?.hasError('required')">{{"errors.required"}}</small>
+            </div>
+            <div class="text-start">
+                <small class="text-danger ms-1" *ngIf="clinicFormData.get('mobile')?.touched &&
+                clinicFormData.get('mobile')?.hasError('pattern')">{{"errors.mobile"}}</small>
+            </div>
+        </div>
+        <div class="col-lg-6 my-2">
+            <div class="mb-2"><label for="">{{"clinic.step1.whatsApp" }}</label></div>
+            <input type="number" pInputText placeholder='{{"clinic.step1.whatsApp" }}' [style]="{'width':'100%'}" formControlName="whatsApp"/>
+            <div class="text-start">
+                <small class="text-danger ms-1" *ngIf="clinicFormData.get('whatsApp')?.touched &&
+                clinicFormData.get('whatsApp')?.hasError('required')">{{"errors.required"}}</small>
+            </div>
+        </div>
+        <div class="col-lg-6 my-2">
+            <label class="mb-2">{{"clinic.step1.emirate" }}<span class="text-danger">*</span></label>
+            <p-dropdown [options]="Clinic" formControlName="emirate" (ngModelChange)="getAreas($event)"
+            optionLabel="name" optionValue="id" autoWidth="false" [style]="{'width':'100%'}" placeholder=''></p-dropdown>
+            <div class="text-start">
+                <small class="text-danger ms-1" *ngIf="clinicFormData.get('emirate')?.touched &&
+                clinicFormData.get('emirate')?.hasError('required')">{{"errors.required"}}</small>
+            </div>
+        </div>
+        <div class="col-lg-6 my-2">
+            <label class="mb-2">{{"clinic.step1.area" }}<span class="text-danger">*</span></label>
+            <p-dropdown [options]="Areas" formControlName="area"
+            optionLabel="area_en" optionValue="id" autoWidth="false" [style]="{'width':'100%'}" placeholder=''></p-dropdown>
+            <div class="text-start">
+                <small class="text-danger ms-1" *ngIf="clinicFormData.get('area')?.touched &&
+                clinicFormData.get('area')?.hasError('required')">{{"errors.required"}}</small>
+            </div>
+        </div>
+    </div>
+</form>

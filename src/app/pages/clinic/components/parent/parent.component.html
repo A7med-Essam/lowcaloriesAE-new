@@ -1,0 +1,62 @@
+<div class="inner-intro parallax bg-overlay-black-70 bg-darkImg">
+    <div class="container">
+      <div class="row text-center intro-title">
+        <h1 class="text-orange">Clinic</h1>
+        <p class="text-white">We Know The Secret Of Your Success</p>
+        <ul class="page-breadcrumb">
+          <li><a href="#"><i class="fa fa-home"></i> Home</a> <i class="fa fa-angle-double-right"></i></li>
+          <li><span>Clinic</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+<section class="bg-img-main mt-5">
+    <div class="container">
+        <div class="row" style="height: 600px;">
+            <div [ngClass]="{'col-lg-6': (currIndex == 1), 'col-xl-8': (currIndex == 2), 'col-xl-12 col-lg-12': true}">
+                <h1 class="fa-3x">
+                    <span class="txt-main">{{"clinic.title" }}</span>
+                </h1>
+                <div class="stepper-wrapper my-5 pb-3" #indicators>
+                    <div class="progress" #progressElm></div>
+                    <div class="screen-indicator completed step1">1</div>
+                    <div class="screen-indicator step2">2</div>
+                </div>
+                <app-step1 *ngIf="currIndex == 1" 
+                    [Clinic]="Clinic" 
+                    (isValidForm)="getFormStatus($event)" 
+                    (EmirateId)="getEmirateId($event)" 
+                    (ClinicForm)="getClinicForm($event)"
+                    [ClinicForm2]="ClinicForm">
+                </app-step1>
+                <app-step2 *ngIf="currIndex == 2" 
+                    [Emirate_appointments]="Emirate_appointments" 
+                    (isSelectedTime)="GetTimeStatus($event)" 
+                    (SubInfo)="GetSubInfo($event)" 
+                    [ClinicForm]="ClinicForm">
+                </app-step2>
+                <button *ngIf="currIndex == 1" class="btn border-0 pointer mt-4" #nextBtn
+                    [ngClass]="{'disabled': currIndex == 1 && InValid}"
+                    id="next-btn" (click)="next();">
+                        <a class="button">{{"buttons.next" }}</a>
+                </button>
+                <div class="d-flex mb-3">
+                    <button *ngIf="currIndex == 2" class="btn bg-black text-white px-5 py-2 mt-4 font-weight-500 mx-2" (click)="previous();"><span class="px-2">
+                        {{"buttons.back" }}
+                    </span>
+                    </button>
+                    <button class="btn bg-main text-white px-5 py-2 mt-4 w-100 font-weight-500 mx-2" id="next-btn"
+                          *ngIf="isSelectedTime && currIndex == 2" (click)="getCheckOut()">
+                        <span class="px-2">{{"buttons.checkOut" }}</span>
+                    </button>
+                </div>
+            </div>
+            <!-- <div class="my-3 d-flex justify-content-center align-items-center" 
+            [ngClass]="{'col-lg-6': (currIndex == 1), 'col-xl-4': (currIndex == 2)}">
+                <div style="position: relative;text-align: center;">
+                    <img src="../../../../../assets/images/logo/Logo_1651235830.png" class="img-fluid" alt="" style="width: 300px;">
+                </div>
+            </div> -->
+        </div>
+    </div>
+</section>

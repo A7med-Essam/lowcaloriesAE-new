@@ -1,0 +1,107 @@
+<div class="inner-intro parallax bg-overlay-black-70 bg-darkImg">
+    <div class="container">
+        <div class="row text-center intro-title">
+            <h1 class="text-orange">Register</h1>
+            <p class="text-white">We Know The Secret Of Your Success</p>
+            <ul class="page-breadcrumb">
+                <li><a href="#"><i class="fa fa-home"></i> Home</a> <i class="fa fa-angle-double-right"></i></li>
+                <li><span>Register</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<section class="py-5" id="register_section">
+    <div class="container">
+        <form>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="group">
+                            <label class="text-muted">FIRST NAME</label>
+                            <input type="text" required="" name="first_name">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="group">
+                            <label class="text-muted">LAST NAME</label>
+                            <input type="text" required="" name="last_name">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="group">
+                            <label class="text-muted">PASSWORD</label>
+                            <input type="password" required="" name="password">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="group">
+                            <label class="text-muted">CONFIRM PASSWORD</label>
+                            <input type="password" required="" name="confirmPassword">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="group">
+                            <label class="text-muted">Birth Date</label>
+                            <input type="date" class="text-muted" required="" name="birthday" max="2005-01-01">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="group">
+                            <label class="text-muted">EMAIL</label>
+                            <input type="email" required="" name="email">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="group">
+                            <label class="text-muted">PHONE NUMBER</label>
+                            <input type="number" required="" name="phone_number">
+                        </div>
+                    </div>
+                </div>
+          
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="group">
+                            <label class="text-muted">WEIGHT</label>
+                            <input type="number" required="" name="Weight">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="group">
+                            <label class="text-muted">HEIGHT</label>
+                            <input type="number" required="" name="height">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <div class="group">
+                            <label class="text-muted">Gender</label>
+                            <p-dropdown [options]="gender" appendTo="body" [style]="{'width':'100%'}" placeholder='Select Gender'></p-dropdown>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mt-4">
+                    <button class="btn border-0 pointer mt-4 disabled w-100 next action-button">
+                        <a class="button">Register</a>
+                </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
