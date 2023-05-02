@@ -25,7 +25,7 @@ export class AuthService {
 
 
 
-  logOut() {
+  logOut2() {
     // this._Router.navigate(['/login']);
     // this.currentUser.next(null);
     this._LocalService.removeItem('lowcaloriesAE_new');
@@ -56,6 +56,10 @@ export class AuthService {
 
   signUp(signUpData: ISignUpData): Observable<{ status: number; data: IRegisterResponse; message: string }> {
     return this._ApiService.postReq('register', signUpData);
+  }
+
+  logOut(): Observable<{ status: number; data: null; message: string }> {
+    return this._ApiService.postReq('logout', '');
   }
 
 }

@@ -26,7 +26,6 @@ export class PlansComponent implements OnInit {
         this._PlansService.getPrograms_normal().subscribe({
           next:res=>{
             this.programs.push(...res.data)
-            console.log(this.programs);
           }
         })
       }

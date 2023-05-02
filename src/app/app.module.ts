@@ -12,7 +12,7 @@ import { TermsComponent } from './pages/terms/terms.component';
 import { PlansComponent } from './pages/plans/plans.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,6 +26,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { APP_STORE } from './store/appStore';
 import { AuthEffect } from './store/authStore/auth.effect';
+import { AuthInterceptor } from './core/interceptor/http.interceptor';
 
 const APP_PRIMENG_MODULE = [DropdownModule, SkeletonModule];
 @NgModule({
@@ -56,7 +57,13 @@ const APP_PRIMENG_MODULE = [DropdownModule, SkeletonModule];
     CarouselModule,
     APP_PRIMENG_MODULE,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

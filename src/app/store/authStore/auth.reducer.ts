@@ -1,6 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createReducer, on } from '@ngrx/store';
-import { IRegisterResponse, ILoginResponse } from 'src/app/interfaces/auth.interface';
+import {
+  IRegisterResponse,
+  ILoginResponse,
+} from 'src/app/interfaces/auth.interface';
 import { IHttpResponse } from '../appStore';
 import * as authActions from './auth.action';
 
@@ -38,14 +41,70 @@ export const LoginReducer = createReducer(
     error: action.error,
     data: null,
     loading: false,
+    message: null,
+    status: 0,
   })),
-  on(authActions.LOGOUT, (state) => ({
+  on(authActions.LOGOUT_START, (state) => ({
     ...state,
-    error: null,
-    data: null,
-    loading: false,
+    loading: true,
+  })),
+  on(authActions.LOGOUT_SUCCESS, (state, action) => ({
+    ...state,
+    data: action.status == 1 ? null : state.data,
+    loading:false,
+    message:null
   }))
+  // on(authActions.LOGOUT_FAILED, (state,action) => ({
+  //   ...state,
+  //   error: action.error,
+  //   data: null,
+  //   loading: false,
+  //   message:null,
+  //   status:null
+  // }))
 );
+
+// ================================================================ LOGOUT ================================================================
+
+// export interface ILogoutState extends IHttpResponse {
+//   data: null;
+// }
+
+// const logoutInitial: ILogoutState = {
+//   error: null,
+//   loading: null,
+//   data: null,
+//   message: null,
+//   status: null,
+// };
+
+// export const LogoutReducer = createReducer(
+//   logoutInitial,
+//   on(authActions.LOGOUT_START, (state) => ({
+//     ...state,
+//     error: null,
+//     data: null,
+//     loading: true,
+//     message:null,
+//     status:null
+//   })),
+//   on(authActions.LOGOUT_SUCCESS, (state,action) => ({
+//     ...state,
+//     error: null,
+//     data:null,
+//     loading: false,
+//     message:null,
+//     status:null
+//   })),
+//   on(authActions.LOGOUT_FAILED, (state,action) => ({
+//     ...state,
+//     error: action.error,
+//     data: null,
+//     loading: false,
+//     message:null,
+//     status:null
+//   }))
+// );
 
 // ================================================================ Register ================================================================
 
@@ -68,6 +127,8 @@ export const RegisterReducer = createReducer(
     loading: true,
     data: null,
     error: null,
+    message: null,
+    status: 0,
   })),
   on(authActions.REGISTER_SUCCESS, (state, action) => ({
     ...state,
@@ -82,5 +143,7 @@ export const RegisterReducer = createReducer(
     error: action.error,
     data: null,
     loading: false,
+    message: null,
+    status: 0,
   }))
 );

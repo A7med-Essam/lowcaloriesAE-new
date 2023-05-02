@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import * as authActions from './auth.action';
 import { Router } from '@angular/router';
 import { LocalService } from 'src/app/services/local.service';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { ILoginResponse } from 'src/app/interfaces/auth.interface';
 
 @Injectable()
@@ -15,7 +15,8 @@ export class AuthEffect implements OnInitEffects {
     private actions$: Actions,
     private _AuthService: AuthService,
     private _Router: Router,
-    private _LocalService: LocalService
+    private _LocalService: LocalService,
+    private _Store: Store
   ) {}
 
   ngrxOnInitEffects() {
@@ -52,16 +53,30 @@ export class AuthEffect implements OnInitEffects {
     )
   );
 
-  logout = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(authActions.LOGOUT),
-        tap((action) => {
-          this._LocalService.removeItem('lowcaloriesAE_new');
-          this._Router.navigate(['login']);
-        })
-      ),
-    { dispatch: false }
+  logout = createEffect(() =>
+    this.actions$.pipe(
+      ofType(authActions.LOGOUT_START),
+      exhaustMap((action) =>
+        this._AuthService.logOut().pipe(
+          map((res) =>
+            authActions.LOGOUT_SUCCESS({
+              data: res.data,
+              message: res.message,
+              status: res.status,
+            })
+          ),
+          tap((res) => {
+            if (res.status == 1) {
+              this._LocalService.removeItem('lowcaloriesAE_new');
+              this._Router.navigate(['login']);
+            }
+          }),
+          catchError((error: HttpErrorResponse) =>
+            of(authActions.LOGOUT_FAILED({ error: error }))
+          )
+        )
+      )
+    )
   );
 
   registerEffect = createEffect(() =>
@@ -90,6 +105,14 @@ export class AuthEffect implements OnInitEffects {
             ),
             tap((res) => {
               if (res.status == 1) {
+                this._Store.dispatch(
+                  authActions.LOGIN_START({
+                    data: {
+                      email: action.data.email,
+                      password: action.data.password,
+                    },
+                  })
+                );
                 this._LocalService.setJsonValue('lowcaloriesAE_new', res.data);
                 this._Router.navigate(['/home']);
               }

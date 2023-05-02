@@ -35,7 +35,18 @@ export interface ISignInData {
 // REGISTER
 
 export interface IRegisterResponse {
-  id: number;
+  phone_number: string;
+  email:        string;
+  first_name:   string;
+  last_name:    string;
+  gender:       string;
+  birthday:     Date;
+  height:       string;
+  Weight:       string;
+  updated_at:   Date;
+  created_at:   Date;
+  id:           number;
+  auth_token:   string;
 }
 
 export interface ISignUpData {

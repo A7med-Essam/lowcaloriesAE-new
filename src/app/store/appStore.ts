@@ -1,7 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { ActionReducerMap } from '@ngrx/store';
 import * as authStore from './authStore/auth.reducer';
 
-export const APP_STORE = {
+export interface AppState {
+  login: authStore.ILoginState;
+  register: authStore.IRegisterState
+}
+
+export const APP_STORE: ActionReducerMap<AppState> = {
   login: authStore.LoginReducer,
   register: authStore.RegisterReducer,
 };

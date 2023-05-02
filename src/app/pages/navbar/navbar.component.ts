@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { LOGOUT } from 'src/app/store/authStore/auth.action';
+import { LOGOUT_START} from 'src/app/store/authStore/auth.action';
 import { ILoginState } from 'src/app/store/authStore/auth.reducer';
 import { loginSelector } from 'src/app/store/authStore/auth.selector';
 
@@ -18,6 +18,6 @@ export class NavbarComponent {
   }
 
   logOut() {
-    this._Store.dispatch(LOGOUT());
+    this._Store.dispatch(LOGOUT_START());
   }
 }

@@ -4,17 +4,19 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpHeaders,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { ApiService } from '../services/api.service';
+import { map, Observable, take, exhaustMap } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { loginSelector } from 'src/app/store/authStore/auth.selector';
+import { LocalService } from 'src/app/services/local.service';
+import { ILoginResponse } from 'src/app/interfaces/auth.interface';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  token: string = '';
+  // token: string = '';
   constructor(
-    private _ApiService: ApiService,
-    // private _LocalService: LocalService
+    // private store: Store
+    private _LocalService: LocalService
   ) {
     // _AuthService.currentUser.subscribe((res: any) => {
     //   if (res == null) {
@@ -25,10 +27,10 @@ export class AuthInterceptor implements HttpInterceptor {
     // });
   }
 
-  checkToken(): Observable<any> {
-    const HTTP_HEADER = new HttpHeaders().set('token', this.token);
-    return this._ApiService.post_withoutLoader('checkToken', '', HTTP_HEADER);
-  }
+  // checkToken(): Observable<any> {
+  //   const HTTP_HEADER = new HttpHeaders().set('token', this.token);
+  //   return this._ApiService.post_withoutLoader('checkToken', '', HTTP_HEADER);
+  // }
 
   intercept(
     request: HttpRequest<unknown>,
@@ -55,12 +57,51 @@ export class AuthInterceptor implements HttpInterceptor {
     //       .set('lang', 'en'),
     //   });
     // }
-    HttpHeader = request.clone({
-      headers: request.headers
-        .set('Accept', ['application/json'])
-        .set('Authorization', `Bearer ${this.token}`)
-        .set('lang', 'en'),
-    });
-    return next.handle(HttpHeader);
+
+
+
+    // return this.store.select(loginSelector).pipe(
+    //   map(authState => {
+    //     return authState.data;
+    //   }),
+    //   exhaustMap(user => {
+    //     console.log(user?.access_token,"token");
+    //     if (!user) {
+    //       return next.handle(request);
+    //     }
+    //     else{
+    //       const HttpHeader = request.clone({
+    //         headers: request.headers.set('Authorization', `Bearer ${user.access_token}`)
+    //       });
+    //       return next.handle(HttpHeader);
+    //     }
+    //   })
+    //   );
+
+    // this.store.select(loginSelector)
+
+    // if (this._LocalService.getJsonValue('lowcaloriesAE_new')) {
+    //   const user: ILoginResponse = JSON.parse(
+    //     this._LocalService.getJsonValue('lowcaloriesAE_new')
+    //   );
+    //   console.log(user);
+    //   HttpHeader = request.clone({
+    //     headers: request.headers
+    //       .set('Authorization', `Bearer ${user.access_token}`)
+    //   });
+    //   return next.handle(HttpHeader);
+    // }
+    // else{
+    //   return next.handle(request);
+    // }
+
+    if (this._LocalService.getJsonValue('lowcaloriesAE_new')) {
+      HttpHeader = request.clone({
+        headers: request.headers
+        .set('Authorization', `Bearer ${this._LocalService.getJsonValue('lowcaloriesAE_new').auth_token}`)
+      });
+      return next.handle(HttpHeader);
+    }
+    return next.handle(request);
   }
 }

@@ -13,7 +13,7 @@ export class FooterComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getFooterInfo()
+    // this.getFooterInfo()
   }
   info: any;
   getFooterInfo() {

@@ -20,14 +20,14 @@
                 </div>
                 <div class="body mt-5">
                     <ng-container *ngIf="login$ | async as login">
-                        <div *ngIf="login.status == 0" class="text-danger text-center mb-2">
-                            Invalid Credentials | {{login.message}}
+                        <div *ngIf="login.status == 0 && login.error" class="text-danger text-center mb-2">
+                            {{login.message}}
                         </div>
                         <div *ngIf="login.error != null" class="text-danger text-center mb-2">
-                            {{login.error.message}}
+                            {{login?.error?.error?.message}}
                         </div>
                     </ng-container>
-                    
+
                     <form [formGroup]='loginForm' (ngSubmit)='onSubmit(loginForm)'>
                         <div class="row">
                             <div class="col-12 my-2">

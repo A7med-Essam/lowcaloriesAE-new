@@ -14,10 +14,10 @@
     <div class="container">
         <ng-container *ngIf="register$ | async as register">
             <div *ngIf="register.status == 0 && register.error == null" class="text-danger text-center mb-2">
-                Invalid Credentials | {{register.message}}
+                {{register.message}}
             </div>
             <div *ngIf="register.error != null" class="text-danger text-center mb-2">
-                {{register.error.message}}
+                {{register.error.error.message}}
             </div>
         </ng-container>
         <form [formGroup]='registerForm' (ngSubmit)='onSubmit(registerForm)'>
@@ -198,7 +198,14 @@
                 <div class="col-12 mt-4">
                     <button class="btn border-0 pointer mt-4 w-100 next action-button rounded p-0"
                         [disabled]="registerForm.invalid">
-                        <a class="button w-100">Register</a>
+                        <a class="button w-100">
+                            Register
+                            <ng-container *ngIf="register$ | async as register">
+                                <ng-container *ngIf="register.loading">
+                                    <i class="fa-solid fa-circle-notch fa-spin p-0 mx-1"></i>
+                                </ng-container>
+                            </ng-container>
+                        </a>
                     </button>
                 </div>
             </div>
