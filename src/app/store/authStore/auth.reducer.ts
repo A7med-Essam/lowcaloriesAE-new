@@ -1,14 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createReducer, on } from '@ngrx/store';
-import { loginResponse } from 'src/app/interfaces/auth.interface';
+import { IRegisterResponse, ILoginResponse } from 'src/app/interfaces/auth.interface';
+import { IHttpResponse } from '../appStore';
 import * as authActions from './auth.action';
 
-export interface ILoginState {
-  loading: boolean | null;
-  data: loginResponse | null;
-  error: HttpErrorResponse | null;
-  status: number | null;
-  message: string | null;
+// ================================================================ LOGIN ================================================================
+export interface ILoginState extends IHttpResponse {
+  data: ILoginResponse | null;
 }
 
 const loginInitial: ILoginState = {
@@ -44,6 +42,44 @@ export const LoginReducer = createReducer(
   on(authActions.LOGOUT, (state) => ({
     ...state,
     error: null,
+    data: null,
+    loading: false,
+  }))
+);
+
+// ================================================================ Register ================================================================
+
+export interface IRegisterState extends IHttpResponse {
+  data: IRegisterResponse | null;
+}
+
+const registerInitial: IRegisterState = {
+  error: null,
+  loading: null,
+  data: null,
+  message: null,
+  status: null,
+};
+
+export const RegisterReducer = createReducer(
+  registerInitial,
+  on(authActions.REGISTER_START, (state) => ({
+    ...state,
+    loading: true,
+    data: null,
+    error: null,
+  })),
+  on(authActions.REGISTER_SUCCESS, (state, action) => ({
+    ...state,
+    error: null,
+    loading: false,
+    data: action.status == 1 ? action.data : null,
+    message: action.message,
+    status: action.status,
+  })),
+  on(authActions.REGISTER_FAILED, (state, action) => ({
+    ...state,
+    error: action.error,
     data: null,
     loading: false,
   }))

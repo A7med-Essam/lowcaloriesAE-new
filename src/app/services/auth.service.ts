@@ -3,7 +3,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { LocalService } from './local.service';
 import { ApiService } from 'src/app/core/services/api.service';
-import { loginResponse, signInData } from '../interfaces/auth.interface';
+import { ILoginResponse, IRegisterResponse, ISignInData, ISignUpData } from '../interfaces/auth.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -23,9 +23,7 @@ export class AuthService {
     }
   }
 
-  signUp(signUpData: any): Observable<any> {
-    return this._ApiService.postReq('register', signUpData);
-  }
+
 
   logOut() {
     // this._Router.navigate(['/login']);
@@ -51,13 +49,13 @@ export class AuthService {
   // ===========================================================================
 
   signIn(
-    signInData: signInData
-  ): Observable<{ status: number; data: loginResponse; message: string }> {
+    signInData: ISignInData
+  ): Observable<{ status: number; data: ILoginResponse; message: string }> {
     return this._ApiService.postReq('login', signInData);
   }
 
-  // saveUser(user: loginResponse) {
-  //   this._LocalService.setJsonValue('lowcaloriesAE_new', user);
-  //   this.currentUser.next(user);
-  // }
+  signUp(signUpData: ISignUpData): Observable<{ status: number; data: IRegisterResponse; message: string }> {
+    return this._ApiService.postReq('register', signUpData);
+  }
+
 }

@@ -1,4 +1,5 @@
-export interface loginResponse {
+// LOGIN
+export interface ILoginResponse {
   id: number;
   role: string;
   first_name: string;
@@ -26,7 +27,25 @@ export interface loginResponse {
   cids: any[];
 }
 
-export interface signInData {
+export interface ISignInData {
   email: string;
   password: string;
+}
+
+// REGISTER
+
+export interface IRegisterResponse {
+  id: number;
+}
+
+export interface ISignUpData {
+  email: string;
+  password: string;
+  first_name:string
+  last_name:string
+  phone_number:number
+  gender:string
+  height:number
+  Weight:number
+  birthday:string
 }

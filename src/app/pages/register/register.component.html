@@ -12,13 +12,34 @@
 </div>
 <section class="py-5" id="register_section">
     <div class="container">
-        <form>
+        <ng-container *ngIf="register$ | async as register">
+            <div *ngIf="register.status == 0 && register.error == null" class="text-danger text-center mb-2">
+                Invalid Credentials | {{register.message}}
+            </div>
+            <div *ngIf="register.error != null" class="text-danger text-center mb-2">
+                {{register.error.message}}
+            </div>
+        </ng-container>
+        <form [formGroup]='registerForm' (ngSubmit)='onSubmit(registerForm)'>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="form-group">
                         <div class="group">
                             <label class="text-muted">FIRST NAME</label>
-                            <input type="text" required="" name="first_name">
+                            <input formControlName="first_name" type="text" required="" name="first_name" maxlength="20">
+                        </div>
+                        <div class="text-start">
+                            <small class="text-danger ms-1" *ngIf="registerForm.get('first_name')?.touched &&
+                                registerForm.get('first_name')?.hasError('required')">This field is required</small>
+
+                                <small class="text-danger"
+                                *ngIf="registerForm.get('first_name')?.touched && registerForm.get('first_name')?.hasError('maxlength')">
+                                First Name Maximum Length 20 Character
+                            </small>
+                            <small class="text-danger"
+                                *ngIf="registerForm.get('first_name')?.touched && registerForm.get('first_name')?.hasError('minlength')">
+                                First Minimum Length 1 Character
+                            </small>
                         </div>
                     </div>
                 </div>
@@ -26,7 +47,19 @@
                     <div class="form-group">
                         <div class="group">
                             <label class="text-muted">LAST NAME</label>
-                            <input type="text" required="" name="last_name">
+                            <input formControlName="last_name" type="text" required="" name="last_name" maxlength="20">
+                        </div>
+                        <div class="text-start">
+                            <small class="text-danger ms-1" *ngIf="registerForm.get('last_name')?.touched &&
+                                registerForm.get('last_name')?.hasError('required')">This field is required</small>
+                                <small class="text-danger"
+                                *ngIf="registerForm.get('last_name')?.touched && registerForm.get('last_name')?.hasError('maxlength')">
+                                Last Name Maximum Length 20 Character
+                            </small>
+                            <small class="text-danger"
+                                *ngIf="registerForm.get('last_name')?.touched && registerForm.get('last_name')?.hasError('minlength')">
+                                Last Name Minimum Length 1 Character
+                            </small>
                         </div>
                     </div>
                 </div>
@@ -34,24 +67,37 @@
                     <div class="form-group">
                         <div class="group">
                             <label class="text-muted">PASSWORD</label>
-                            <input type="password" required="" name="password">
+                            <input formControlName="password" type="password" required="" name="password">
                         </div>
-
+                        <div class="text-start">
+                            <small class="text-danger ms-1" *ngIf="registerForm.get('password')?.touched &&
+                                registerForm.get('password')?.hasError('required')">This field is required</small>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
                         <div class="group">
                             <label class="text-muted">CONFIRM PASSWORD</label>
-                            <input type="password" required="" name="confirmPassword">
+                            <input formControlName="confirm_password" type="password" required=""
+                                name="confirm_password">
                         </div>
+                        <small class="text-danger " *ngIf="registerForm.get('confirm_password')?.touched && 
+                        registerForm.get('confirm_password')?.invalid">
+                            Password doesn't match
+                        </small>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
                         <div class="group">
                             <label class="text-muted">Birth Date</label>
-                            <input type="date" class="text-muted" required="" name="birthday" max="2005-01-01">
+                            <input formControlName="birthday" type="date" class="text-muted" required="" name="birthday"
+                                max="2005-01-01">
+                        </div>
+                        <div class="text-start">
+                            <small class="text-danger ms-1" *ngIf="registerForm.get('birthday')?.touched &&
+                                registerForm.get('birthday')?.hasError('required')">This field is required</small>
                         </div>
                     </div>
                 </div>
@@ -59,7 +105,13 @@
                     <div class="form-group">
                         <div class="group">
                             <label class="text-muted">EMAIL</label>
-                            <input type="email" required="" name="email">
+                            <input formControlName="email" type="email" required="" name="email">
+                        </div>
+                        <div class="text-start">
+                            <small class="text-danger ms-1" *ngIf="registerForm.get('email')?.touched &&
+                                registerForm.get('email')?.hasError('email')">The email is not valid</small>
+                            <small class="text-danger ms-1" *ngIf="registerForm.get('email')?.touched &&
+                                registerForm.get('email')?.hasError('required')">This field is required</small>
                         </div>
                     </div>
                 </div>
@@ -67,16 +119,45 @@
                     <div class="form-group">
                         <div class="group">
                             <label class="text-muted">PHONE NUMBER</label>
-                            <input type="number" required="" name="phone_number">
+                            <input formControlName="phone_number" type="text" required="" name="phone_number"
+                                maxlength="10" minlength="10"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
                         </div>
+                        <div class="text-start">
+                            <small class="text-danger ms-1" *ngIf="registerForm.get('phone_number')?.touched &&
+                                registerForm.get('phone_number')?.hasError('required')">This field is required</small>
+
+                            <small class="text-danger"
+                                *ngIf="registerForm.get('phone_number')?.touched && registerForm.get('phone_number')?.hasError('maxlength')">
+                                Mobile Maximum Length 10 Digits
+                            </small>
+                            <small class="text-danger"
+                                *ngIf="registerForm.get('phone_number')?.touched && registerForm.get('phone_number')?.hasError('minlength')">
+                                Mobile Minimum Length 10 Digits
+                            </small>
+                        </div>
+
                     </div>
                 </div>
-          
+
                 <div class="col-lg-6">
                     <div class="form-group">
                         <div class="group">
                             <label class="text-muted">WEIGHT</label>
-                            <input type="number" required="" name="Weight">
+                            <input formControlName="Weight" type="text" required="" name="Weight" maxlength="3" minlength="1"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                        </div>
+                        <div class="text-start">
+                            <small class="text-danger ms-1" *ngIf="registerForm.get('Weight')?.touched &&
+                                registerForm.get('Weight')?.hasError('required')">This field is required</small>
+                                <small class="text-danger"
+                                *ngIf="registerForm.get('Weight')?.touched && registerForm.get('Weight')?.hasError('maxlength')">
+                                Weight Maximum Length 3 Digits
+                            </small>
+                            <small class="text-danger"
+                                *ngIf="registerForm.get('Weight')?.touched && registerForm.get('Weight')?.hasError('minlength')">
+                                Weight Minimum Length 1 Digits
+                            </small>
                         </div>
                     </div>
                 </div>
@@ -84,7 +165,20 @@
                     <div class="form-group">
                         <div class="group">
                             <label class="text-muted">HEIGHT</label>
-                            <input type="number" required="" name="height">
+                            <input formControlName="height" type="text" required="" name="height" maxlength="3" minlength="1"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                        </div>
+                        <div class="text-start">
+                            <small class="text-danger ms-1" *ngIf="registerForm.get('height')?.touched &&
+                                registerForm.get('height')?.hasError('required')">This field is required</small>
+                                <small class="text-danger"
+                                *ngIf="registerForm.get('height')?.touched && registerForm.get('height')?.hasError('maxlength')">
+                                Height Maximum Length 3 Digits
+                            </small>
+                            <small class="text-danger"
+                                *ngIf="registerForm.get('height')?.touched && registerForm.get('height')?.hasError('minlength')">
+                                Height Minimum Length 1 Digits
+                            </small>
                         </div>
                     </div>
                 </div>
@@ -92,14 +186,20 @@
                     <div class="form-group">
                         <div class="group">
                             <label class="text-muted">Gender</label>
-                            <p-dropdown [options]="gender" appendTo="body" [style]="{'width':'100%'}" placeholder='Select Gender'></p-dropdown>
+                            <p-dropdown formControlName="gender" [options]="gender" appendTo="body"
+                                [style]="{'width':'100%'}" placeholder='Select Gender'></p-dropdown>
+                        </div>
+                        <div class="text-start">
+                            <small class="text-danger ms-1" *ngIf="registerForm.get('gender')?.touched &&
+                                registerForm.get('gender')?.hasError('required')">This field is required</small>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 mt-4">
-                    <button class="btn border-0 pointer mt-4 disabled w-100 next action-button">
-                        <a class="button">Register</a>
-                </button>
+                    <button class="btn border-0 pointer mt-4 w-100 next action-button rounded p-0"
+                        [disabled]="registerForm.invalid">
+                        <a class="button w-100">Register</a>
+                    </button>
                 </div>
             </div>
         </form>

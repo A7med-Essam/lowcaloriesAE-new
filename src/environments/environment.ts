@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  BaseUrl : "https://lowcalories.ae/api/",
+  BaseUrl : "https://lowcalories.ae/api/v4/",
   production: false
 };
 
