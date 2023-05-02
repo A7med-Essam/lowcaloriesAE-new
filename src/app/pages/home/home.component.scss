@@ -1,33 +1,33 @@
-.btn-app-store {
-    background: #fff;
-    /* color: white; */
-    position: relative;
-    height: 60px;
-    padding-left: 75px;
-    padding-right: 40px;
-    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-}.btn-app-store i {
-    font-size: 40px;
-    position: absolute;
-    left: 20px;
-}.btn-app-store .small {
-    display: block;
-    font-size: 12px;
-    line-height: 12px;
-    margin-bottom: 2px;
-    margin-top: 5px;
-}.btn-app-store .big {
-    display: block;
-    text-align: left;
-    font-size: 21px;
-    line-height: 21px;
-}
+// .btn-app-store {
+//     background: #fff;
+//     /* color: white; */
+//     position: relative;
+//     height: 60px;
+//     padding-left: 75px;
+//     padding-right: 40px;
+//     -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+//     -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+//     box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+// }.btn-app-store i {
+//     font-size: 40px;
+//     position: absolute;
+//     left: 20px;
+// }.btn-app-store .small {
+//     display: block;
+//     font-size: 12px;
+//     line-height: 12px;
+//     margin-bottom: 2px;
+//     margin-top: 5px;
+// }.btn-app-store .big {
+//     display: block;
+//     text-align: left;
+//     font-size: 21px;
+//     line-height: 21px;
+// }
 
-.btn-app-store:hover {
-    background-color: #c1c1c1;
-}
+// .btn-app-store:hover {
+//     background-color: #c1c1c1;
+// }
 /* ===========last section============ */
 
 .service:hover h4, .service.active h4,.service:hover i, .service.active i {
@@ -95,3 +95,23 @@
         }
     }
 }
+
+.menu-thumbnail{
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+::ng-deep{
+    .p-image-mask{
+        transform: scale(6);
+    }
+}
+
+@media screen and (max-width:800px) {
+    ::ng-deep{
+        .p-image-mask{
+            transform: scale(4) !important;
+        }
+    }
+}
+

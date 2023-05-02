@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +11,9 @@ export class HomeComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+  options: AnimationOptions = {
+    path: '../../../assets/lottie/app_store.json',
+  };
 
   customOptions: OwlOptions = {
     loop: true,
