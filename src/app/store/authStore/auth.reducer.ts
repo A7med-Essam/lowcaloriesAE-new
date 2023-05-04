@@ -5,7 +5,7 @@ import {
   ILoginResponse,
 } from 'src/app/interfaces/auth.interface';
 import { IHttpResponse } from '../appStore';
-import * as authActions from './auth.action';
+import * as fromAuthActions from './auth.action';
 
 // ================================================================ LOGIN ================================================================
 export interface ILoginState extends IHttpResponse {
@@ -22,13 +22,13 @@ const loginInitial: ILoginState = {
 
 export const LoginReducer = createReducer(
   loginInitial,
-  on(authActions.LOGIN_START, (state) => ({
+  on(fromAuthActions.LOGIN_START, (state) => ({
     ...state,
     loading: true,
     data: null,
     error: null,
   })),
-  on(authActions.LOGIN_SUCCESS, (state, action) => ({
+  on(fromAuthActions.LOGIN_SUCCESS, (state, action) => ({
     ...state,
     error: null,
     loading: false,
@@ -36,7 +36,7 @@ export const LoginReducer = createReducer(
     message: action.message,
     status: action.status,
   })),
-  on(authActions.LOGIN_FAILED, (state, action) => ({
+  on(fromAuthActions.LOGIN_FAILED, (state, action) => ({
     ...state,
     error: action.error,
     data: null,
@@ -44,67 +44,17 @@ export const LoginReducer = createReducer(
     message: null,
     status: 0,
   })),
-  on(authActions.LOGOUT_START, (state) => ({
+  on(fromAuthActions.LOGOUT_START, (state) => ({
     ...state,
     loading: true,
   })),
-  on(authActions.LOGOUT_SUCCESS, (state, action) => ({
+  on(fromAuthActions.LOGOUT_SUCCESS, (state, action) => ({
     ...state,
     data: action.status == 1 ? null : state.data,
     loading:false,
     message:null
   }))
-  // on(authActions.LOGOUT_FAILED, (state,action) => ({
-  //   ...state,
-  //   error: action.error,
-  //   data: null,
-  //   loading: false,
-  //   message:null,
-  //   status:null
-  // }))
 );
-
-// ================================================================ LOGOUT ================================================================
-
-// export interface ILogoutState extends IHttpResponse {
-//   data: null;
-// }
-
-// const logoutInitial: ILogoutState = {
-//   error: null,
-//   loading: null,
-//   data: null,
-//   message: null,
-//   status: null,
-// };
-
-// export const LogoutReducer = createReducer(
-//   logoutInitial,
-//   on(authActions.LOGOUT_START, (state) => ({
-//     ...state,
-//     error: null,
-//     data: null,
-//     loading: true,
-//     message:null,
-//     status:null
-//   })),
-//   on(authActions.LOGOUT_SUCCESS, (state,action) => ({
-//     ...state,
-//     error: null,
-//     data:null,
-//     loading: false,
-//     message:null,
-//     status:null
-//   })),
-//   on(authActions.LOGOUT_FAILED, (state,action) => ({
-//     ...state,
-//     error: action.error,
-//     data: null,
-//     loading: false,
-//     message:null,
-//     status:null
-//   }))
-// );
 
 // ================================================================ Register ================================================================
 
@@ -122,7 +72,7 @@ const registerInitial: IRegisterState = {
 
 export const RegisterReducer = createReducer(
   registerInitial,
-  on(authActions.REGISTER_START, (state) => ({
+  on(fromAuthActions.REGISTER_START, (state) => ({
     ...state,
     loading: true,
     data: null,
@@ -130,7 +80,7 @@ export const RegisterReducer = createReducer(
     message: null,
     status: 0,
   })),
-  on(authActions.REGISTER_SUCCESS, (state, action) => ({
+  on(fromAuthActions.REGISTER_SUCCESS, (state, action) => ({
     ...state,
     error: null,
     loading: false,
@@ -138,7 +88,7 @@ export const RegisterReducer = createReducer(
     message: action.message,
     status: action.status,
   })),
-  on(authActions.REGISTER_FAILED, (state, action) => ({
+  on(fromAuthActions.REGISTER_FAILED, (state, action) => ({
     ...state,
     error: action.error,
     data: null,

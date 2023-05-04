@@ -25,8 +25,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { ImageModule } from 'primeng/image';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { APP_STORE } from './store/appStore';
-import { AuthEffect } from './store/authStore/auth.effect';
+import { APP_STORE, APP_EFFECTS } from './store/appStore';
 import { AuthInterceptor } from './core/interceptor/http.interceptor';
 import { LottieModule } from 'ngx-lottie';
 
@@ -59,7 +58,7 @@ const APP_PRIMENG_MODULE = [DropdownModule, SkeletonModule, ImageModule];
     ReactiveFormsModule,
     BrowserAnimationsModule,
     StoreModule.forRoot(APP_STORE),
-    EffectsModule.forRoot([AuthEffect]),
+    EffectsModule.forRoot(APP_EFFECTS),
     CarouselModule,
     APP_PRIMENG_MODULE,
     LottieModule.forRoot({ player: playerFactory, useWebWorker: true })

@@ -1,16 +1,26 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActionReducerMap } from '@ngrx/store';
-import * as authStore from './authStore/auth.reducer';
+import { AuthEffect } from './authStore/auth.effect';
+import { ProgramEffects } from './programStore/program.effect';
+import * as fromAuthStore from './authStore/auth.reducer';
+import * as fromProgramStore from './programStore/program.reducer';
 
 export interface AppState {
-  login: authStore.ILoginState;
-  register: authStore.IRegisterState
+  login: fromAuthStore.ILoginState;
+  register: fromAuthStore.IRegisterState
+  programs:fromProgramStore.IProgramState
 }
 
 export const APP_STORE: ActionReducerMap<AppState> = {
-  login: authStore.LoginReducer,
-  register: authStore.RegisterReducer,
+  login: fromAuthStore.LoginReducer,
+  register: fromAuthStore.RegisterReducer,
+  programs: fromProgramStore.RegisterReducer
 };
+
+export const APP_EFFECTS = [
+  AuthEffect,
+  ProgramEffects
+]
 
 export interface IHttpResponse {
   loading: boolean | null;

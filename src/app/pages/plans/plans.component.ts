@@ -1,34 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { PlansService } from 'src/app/services/plans/plans.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { IProgramResponse } from 'src/app/interfaces/program.interface';
+import * as fromProgramActions from '../../store/programStore/program.action';
+import * as fromProgramSelector from '../../store/programStore/program.selector';
 
 @Component({
   selector: 'app-plans',
   templateUrl: './plans.component.html',
-  styleUrls: ['./plans.component.scss']
+  styleUrls: ['./plans.component.scss'],
 })
-export class PlansComponent implements OnInit {
-  skeletonMode:boolean = false
-  constructor(private _PlansService:PlansService) { }
+export class PlansComponent implements OnDestroy {
+  skeletonMode$: Observable<boolean | null>;
+  programs$: Observable<IProgramResponse[] | null>;
+  private destroyed$: Subject<void> = new Subject();
 
-  ngOnInit(): void {
-    this.getPrograms();
+  constructor(private _Store: Store) {
+    this.programs$ = this._Store.select(fromProgramSelector.programSelector);
+    this.skeletonMode$ = this._Store.select(
+      fromProgramSelector.programLoadingSelector
+    );
+    this.programs$.pipe(takeUntil(this.destroyed$)).subscribe((res) => {
+      res || this._Store.dispatch(fromProgramActions.FETCH_PROGRAM_START());
+    });
   }
 
-  
-  programs:any[] = []
-  getPrograms(){
-    this.skeletonMode = true;
-    this.programs = []
-    this._PlansService.getPrograms_custom().subscribe({
-      next:res=>{
-        this.skeletonMode = false;
-        this.programs.push(...res.data)
-        this._PlansService.getPrograms_normal().subscribe({
-          next:res=>{
-            this.programs.push(...res.data)
-          }
-        })
-      }
-    })
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 }

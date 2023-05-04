@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { exhaustMap, map, of, catchError, tap, defer } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import * as authActions from './auth.action';
+import * as fromAuthActions from './auth.action';
 import { Router } from '@angular/router';
 import { LocalService } from 'src/app/services/local.service';
 import { Action, Store } from '@ngrx/store';
@@ -22,18 +22,18 @@ export class AuthEffect implements OnInitEffects {
   ngrxOnInitEffects() {
     let user: ILoginResponse =
       this._LocalService.getJsonValue('lowcaloriesAE_new');
-    return authActions.LOGIN_SUCCESS({ data: user, message: '', status: 1 });
+    return fromAuthActions.LOGIN_SUCCESS({ data: user, message: '', status: 1 });
   }
 
   loginEffect = createEffect(() =>
     this.actions$.pipe(
-      ofType(authActions.LOGIN_START),
+      ofType(fromAuthActions.LOGIN_START),
       exhaustMap((action) =>
         this._AuthService
           .signIn({ email: action.data.email, password: action.data.password })
           .pipe(
             map((res) =>
-              authActions.LOGIN_SUCCESS({
+              fromAuthActions.LOGIN_SUCCESS({
                 data: res.data,
                 message: res.message,
                 status: res.status,
@@ -46,7 +46,7 @@ export class AuthEffect implements OnInitEffects {
               }
             }),
             catchError((error: HttpErrorResponse) =>
-              of(authActions.LOGIN_FAILED({ error: error }))
+              of(fromAuthActions.LOGIN_FAILED({ error: error }))
             )
           )
       )
@@ -55,11 +55,11 @@ export class AuthEffect implements OnInitEffects {
 
   logout = createEffect(() =>
     this.actions$.pipe(
-      ofType(authActions.LOGOUT_START),
+      ofType(fromAuthActions.LOGOUT_START),
       exhaustMap((action) =>
         this._AuthService.logOut().pipe(
           map((res) =>
-            authActions.LOGOUT_SUCCESS({
+            fromAuthActions.LOGOUT_SUCCESS({
               data: res.data,
               message: res.message,
               status: res.status,
@@ -72,7 +72,7 @@ export class AuthEffect implements OnInitEffects {
             }
           }),
           catchError((error: HttpErrorResponse) =>
-            of(authActions.LOGOUT_FAILED({ error: error }))
+            of(fromAuthActions.LOGOUT_FAILED({ error: error }))
           )
         )
       )
@@ -81,7 +81,7 @@ export class AuthEffect implements OnInitEffects {
 
   registerEffect = createEffect(() =>
     this.actions$.pipe(
-      ofType(authActions.REGISTER_START),
+      ofType(fromAuthActions.REGISTER_START),
       exhaustMap((action) =>
         this._AuthService
           .signUp({
@@ -97,7 +97,7 @@ export class AuthEffect implements OnInitEffects {
           })
           .pipe(
             map((res) =>
-              authActions.REGISTER_SUCCESS({
+              fromAuthActions.REGISTER_SUCCESS({
                 data: res.data,
                 message: res.message,
                 status: res.status,
@@ -106,7 +106,7 @@ export class AuthEffect implements OnInitEffects {
             tap((res) => {
               if (res.status == 1) {
                 this._Store.dispatch(
-                  authActions.LOGIN_START({
+                  fromAuthActions.LOGIN_START({
                     data: {
                       email: action.data.email,
                       password: action.data.password,
@@ -118,7 +118,7 @@ export class AuthEffect implements OnInitEffects {
               }
             }),
             catchError((error: HttpErrorResponse) =>
-              of(authActions.REGISTER_FAILED({ error: error }))
+              of(fromAuthActions.REGISTER_FAILED({ error: error }))
             )
           )
       )
