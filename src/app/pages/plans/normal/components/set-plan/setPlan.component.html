@@ -73,40 +73,47 @@
                         </div>
                         <div class="col-12 my-2">
                             <div class="mb-2"><label>Start Date <span class="text-danger">*</span></label></div>
-                            <p-calendar dateFormat="dd-mm-yy DD" [showIcon]="true" (onSelect)="onSelectedDate($event,deliveredDays)"
-                                placeholder="dd-mm-yy" formControlName='Start_Date' [minDate]="uaeDate" [disabledDays]="[5]"></p-calendar>
+                            <p-calendar dateFormat="dd-mm-yy DD" [showIcon]="true"
+                                (onSelect)="onSelectedDate($event,deliveredDays)" placeholder="dd-mm-yy"
+                                formControlName='Start_Date' [minDate]="uaeDate" [disabledDays]="[5]"></p-calendar>
                             <small class="text-danger" *ngIf="ProgramDetailsForm.get('Start_Date')?.touched &&
                             ProgramDetailsForm.get('Start_Date')?.invalid">This field is required.</small>
                         </div>
                         <div class="col-12 my-2">
                             <label>Delivery Days <span class="text-danger">*</span></label>
-                            <div><small><span class="text-muted">Days you want your meals to be delivered</span></small></div>
+                            <div><small><span class="text-muted">Days you want your meals to be delivered</span></small>
+                            </div>
                             <div class="row mt-3 deliveredDays" #deliveredDays>
-                                <div class="col-xl-3 col-lg-4 col-md-3 col-sm-6 col-12" *ngFor="let delivery_day of delivery_days; let i = index">
-                                    <label class="item w-100 shadow-lg me-3 my-2 ms-0 px-3 py-2 bg-white rounded-md dayWeek" [for]="'day'+i"
-                                        [attr.day]="getDayNumber(delivery_day?.day_name)" #CurrentDay 
-                                        [attr.dayName]="delivery_day?.day_name" (click)="checkDeliveryDays(CurrentDay);">
+                                <div class="col-xl-3 col-lg-4 col-md-3 col-sm-6 col-12"
+                                    *ngFor="let delivery_day of delivery_days; let i = index">
+                                    <label
+                                        class="item w-100 shadow-lg me-3 my-2 ms-0 px-3 py-2 bg-white rounded-md dayWeek"
+                                        [for]="'day'+i" [attr.day]="getDayNumber(delivery_day?.day_name)" #CurrentDay
+                                        [attr.dayName]="delivery_day?.day_name"
+                                        (click)="checkDeliveryDays(CurrentDay);">
                                         {{delivery_day?.day_name}}
                                     </label>
-                                    <input type="checkbox" hidden  formControlName='CheckDays' [id]="'day'+i">
+                                    <input type="checkbox" hidden formControlName='CheckDays' [id]="'day'+i">
                                 </div>
                                 <div class="col-xl-3 col-lg-4 col-md-3 col-sm-6 col-12">
-                                    <label class="item w-100 shadow-lg me-3 my-2 ms-0 px-3 py-2 bg-white rounded-md allWeek" day="8" [for]="'day8'"
-                                    (click)="checkAllWeekBtn(AllWeek);" #AllWeek>All Week</label>
-                                    <input type="checkbox" hidden  formControlName='CheckDays' [id]="'day8'">
+                                    <label
+                                        class="item w-100 shadow-lg me-3 my-2 ms-0 px-3 py-2 bg-white rounded-md allWeek"
+                                        day="8" [for]="'day8'" (click)="checkAllWeekBtn(AllWeek);" #AllWeek>All
+                                        Week</label>
+                                    <input type="checkbox" hidden formControlName='CheckDays' [id]="'day8'">
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 my-2">
                             <div class="text-center">
-                                <a class="button mt-20 pointer py-1 px-5">
-                                    <button class="btn w-100 border-0" type="submit" 
-                                        [disabled]="ProgramDetailsForm.invalid">Apply
-                                            <ng-container *ngIf="nextButtonMode$ | async">
-                                                <i class="fa-solid fa-circle-notch fa-spin p-0"></i>
-                                            </ng-container>
-                                    </button>
-                                </a>
+                                <button class="btn border-0 p-0" type="submit"
+                                    [disabled]="ProgramDetailsForm.invalid">
+                                    <a class="button mt-20 pointer py-2 px-5">Apply
+                                        <ng-container *ngIf="nextButtonMode$ | async">
+                                            <i class="fa-solid fa-circle-notch fa-spin p-0"></i>
+                                        </ng-container>
+                                    </a>
+                                </button>
                             </div>
                         </div>
                     </div>
