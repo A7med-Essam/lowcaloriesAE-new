@@ -21,6 +21,12 @@
 .disabled {
   cursor: not-allowed !important;
 }
+
+.flex-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 // .bg-orange{
 //     background-color: #E93E21;
 // }
@@ -5679,23 +5685,7 @@ body {
     color: #e93e21 !important;
   
   }
-  .p-dropdown:not(.p-disabled):hover {
-    border-color: #e93e21 !important;
-}
 
-.p-dropdown:not(.p-disabled).p-focus{
-  box-shadow: 0 0 0 0.2rem #e93f213b;
-  border-color: #e93e21;
-}
-.p-dropdown{
-  background-color: #e3e3e3 !important;
-  font-weight: 600;
-  height: 45px;
-}
-.p-dropdown-label{
-  display: flex !important;
-  align-items: center;
-}
 
 .bg-darkImg{
   background-image: url('./assets/images/slider/a617d-slider2-bg.jpg');
@@ -5711,4 +5701,69 @@ body {
 
 .bg-downloadApp::before{
   background: rgba(0, 0, 0, 0.6);
+}
+
+@media all and (max-width:776px) {
+  .bg-darkImg {
+    h1{
+      font-size: 30px;
+    }
+  }
+}
+
+@media all and (max-width:350px) {
+  .bg-darkImg {
+    height: 430px !important;
+    h1{
+      font-size: 20px;
+    }
+    p{
+      font-size: 15px;
+    }
+  }
+}
+
+// primeng 
+
+.p-dropdown:not(.p-disabled):hover {
+  border-color: #e93e21 !important;
+}
+
+.p-inputtext:enabled:hover{
+  border-color: #e93e21 !important;
+}
+
+.p-inputtext:enabled:focus{
+  box-shadow: 0 0 0 0.2rem #e93f213b;
+  border-color: #e93e21;
+}
+
+.p-dropdown:not(.p-disabled).p-focus{
+box-shadow: 0 0 0 0.2rem #e93f213b;
+border-color: #e93e21;
+}
+.p-dropdown{
+background-color: #e3e3e3 !important;
+font-weight: 600;
+height: 45px;
+}
+.p-dropdown-label{
+display: flex !important;
+align-items: center;
+}
+
+.p-dropdown,.p-calendar{
+  width: 100%;
+}
+.p-datepicker-trigger{
+  padding: 5px 0px !important;
+  background-color: #E93E21;
+  border-color: #E93E21;
+  &:hover{
+    background-color: #af3019 !important;
+    border-color: #af3019 !important;
+  }
+}
+.p-datepicker-calendar{
+  text-align: center;
 }

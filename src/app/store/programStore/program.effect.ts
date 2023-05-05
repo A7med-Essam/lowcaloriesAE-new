@@ -25,10 +25,6 @@ export class ProgramEffects {
                 status: res.status,
               })
             ),
-            tap((res) => {
-              if (res.status == 1) {
-              }
-            }),
             catchError((error: HttpErrorResponse) =>
               of(fromProgramActions.FETCH_PROGRAM_FAILED({ error: error }))
             )

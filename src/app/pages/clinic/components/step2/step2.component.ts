@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ClinicService } from 'src/app/services/clinic/clinic.service';
+import { ClinicService } from 'src/app/services/clinic.service';
 import { SharedService } from 'src/app/services/shared.service';
 
 @Component({

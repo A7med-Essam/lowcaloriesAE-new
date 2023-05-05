@@ -9,7 +9,7 @@ import { FooterComponent } from './pages/footer/footer.component';
 import { MenuComponent } from './pages/menu/menu.component';
 import { ContactsComponent } from './pages/contacts/contacts.component';
 import { TermsComponent } from './pages/terms/terms.component';
-import { PlansComponent } from './pages/plans/plans.component';
+import { ProgramComponent } from './pages/program/program.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -29,8 +29,8 @@ import { APP_STORE, APP_EFFECTS } from './store/appStore';
 import { AuthInterceptor } from './core/interceptor/http.interceptor';
 import { LottieModule } from 'ngx-lottie';
 
-export function playerFactory() { 
-  return import('lottie-web'); 
+export function playerFactory() {
+  return import('lottie-web');
 }
 
 const APP_PRIMENG_MODULE = [DropdownModule, SkeletonModule, ImageModule];
@@ -43,7 +43,7 @@ const APP_PRIMENG_MODULE = [DropdownModule, SkeletonModule, ImageModule];
     MenuComponent,
     ContactsComponent,
     TermsComponent,
-    PlansComponent,
+    ProgramComponent,
     RegisterComponent,
     LoginComponent,
     NotfoundComponent,
@@ -61,7 +61,7 @@ const APP_PRIMENG_MODULE = [DropdownModule, SkeletonModule, ImageModule];
     EffectsModule.forRoot(APP_EFFECTS),
     CarouselModule,
     APP_PRIMENG_MODULE,
-    LottieModule.forRoot({ player: playerFactory, useWebWorker: true })
+    LottieModule.forRoot({ player: playerFactory, useWebWorker: true }),
   ],
   providers: [
     {

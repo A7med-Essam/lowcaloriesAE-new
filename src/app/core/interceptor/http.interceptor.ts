@@ -18,13 +18,7 @@ export class AuthInterceptor implements HttpInterceptor {
     // private store: Store
     private _LocalService: LocalService
   ) {
-    // _AuthService.currentUser.subscribe((res: any) => {
-    //   if (res == null) {
-    //     this.token = '';
-    //   } else {
-    //     this.token = res.token;
-    //   }
-    // });
+
   }
 
   // checkToken(): Observable<any> {

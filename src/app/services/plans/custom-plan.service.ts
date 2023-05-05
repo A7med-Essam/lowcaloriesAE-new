@@ -11,15 +11,15 @@ export class CustomPlanService {
     private _ApiService:ApiService
   ) { }
 
-  getCustomProgramDetails(program_id:number): Observable<any> {
-    return this._ApiService.postReq('custom_program_details', program_id);
-  }
+  // getCustomProgramDetails(program_id:number): Observable<any> {
+  //   return this._ApiService.postReq('custom_program_details', program_id);
+  // }
 
-  getCardsOfDates(SubscribtionDetails:any): Observable<any> {
-    return this._ApiService.postReq('cards_of_dates', SubscribtionDetails);
-  }
+  // getCardsOfDates(SubscribtionDetails:any): Observable<any> {
+  //   return this._ApiService.postReq('cards_of_dates', SubscribtionDetails);
+  // }
 
-  getCategories_with_meals(program_id:number): Observable<any> {
-    return this._ApiService.postReq('categories_with_meals_test', program_id);
-  }
+  // getCategories_with_meals(program_id:number): Observable<any> {
+  //   return this._ApiService.postReq('categories_with_meals_test', program_id);
+  // }
 }

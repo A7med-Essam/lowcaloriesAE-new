@@ -11,8 +11,8 @@ export class TermsService {
     private _ApiService:ApiService
   ) { }
 
-  getTerms(): Observable<any> {
-    return this._ApiService.getReq('termsConditions');
-  }
+  // getTerms(): Observable<any> {
+  //   return this._ApiService.getReq('termsConditions');
+  // }
 
 }

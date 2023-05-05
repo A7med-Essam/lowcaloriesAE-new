@@ -6,11 +6,11 @@ import * as fromProgramActions from '../../store/programStore/program.action';
 import * as fromProgramSelector from '../../store/programStore/program.selector';
 
 @Component({
-  selector: 'app-plans',
-  templateUrl: './plans.component.html',
-  styleUrls: ['./plans.component.scss'],
+  selector: 'app-program',
+  templateUrl: './program.component.html',
+  styleUrls: ['./program.component.scss'],
 })
-export class PlansComponent implements OnDestroy {
+export class ProgramComponent implements OnDestroy {
   skeletonMode$: Observable<boolean | null>;
   programs$: Observable<IProgramResponse[] | null>;
   private destroyed$: Subject<void> = new Subject();

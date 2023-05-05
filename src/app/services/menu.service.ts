@@ -7,15 +7,15 @@ import { ApiService } from 'src/app/core/services/api.service';
 })
 export class MenuService {
   constructor(private _ApiService: ApiService) {}
-  shoppingCartItems: BehaviorSubject<any> = new BehaviorSubject(null);
+  // shoppingCartItems: BehaviorSubject<any> = new BehaviorSubject(null);
 
-  getMenu(): Observable<any> {
-    return this._ApiService.postReq('getMenuNew', '');
-  }
+  // getMenu(): Observable<any> {
+  //   return this._ApiService.postReq('getMenuNew', '');
+  // }
 
-  getMeals(): Observable<any> {
-    return this._ApiService.getReq('getMenuNew');
-  }
+  // getMeals(): Observable<any> {
+  //   return this._ApiService.getReq('getMenuNew');
+  // }
 
 
 }

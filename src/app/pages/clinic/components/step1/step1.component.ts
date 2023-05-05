@@ -1,7 +1,7 @@
 import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import { LocationService } from 'src/app/services/location/location.service';
+// import { LocationService } from 'src/app/services/location/location.service';
 
 @Component({
   selector: 'app-step1',
@@ -19,7 +19,7 @@ export class Step1Component implements OnInit, AfterViewChecked {
 
   constructor(
     private _FormBuilder:FormBuilder,
-    private _LocationService:LocationService,
+    // private _LocationService:LocationService,
     private _AuthService:AuthService
   ) { }
 
@@ -40,13 +40,13 @@ export class Step1Component implements OnInit, AfterViewChecked {
   }
 
   getUserInfo(){
-    this._AuthService.currentUser.subscribe((res:any) => {
-      if (res) {
-        this.clinicFormData.controls['name'].setValue(res.name);
-        this.clinicFormData.controls['email'].setValue(res.email);
-        this.clinicFormData.controls['mobile'].setValue(res.mobile);
-      }
-    })
+    // this._AuthService.currentUser.subscribe((res:any) => {
+    //   if (res) {
+    //     this.clinicFormData.controls['name'].setValue(res.name);
+    //     this.clinicFormData.controls['email'].setValue(res.email);
+    //     this.clinicFormData.controls['mobile'].setValue(res.mobile);
+    //   }
+    // })
   }
 
   setClinicForm() {
@@ -95,16 +95,16 @@ export class Step1Component implements OnInit, AfterViewChecked {
 
   getAreas(emirate_id:number){
     this.Areas = [];
-    this._LocationService.getAreas(emirate_id).subscribe( (res:any)=>{
-      res.data.forEach((Area:any) => this.Areas.push(Area));
-      // if (this.translate.currentLang == 'ar') {
-      //   this.Areas.map( a => {
-      //     a.area_en = a.area_ar
-      //   })
-      // }
-      if (emirate_id) {
-        this.clinicFormData.controls['area'].setValue(this.ClinicForm2?.value.area);
-      }
-    })
+    // this._LocationService.getAreas(emirate_id).subscribe( (res:any)=>{
+    //   res.data.forEach((Area:any) => this.Areas.push(Area));
+    //   // if (this.translate.currentLang == 'ar') {
+    //   //   this.Areas.map( a => {
+    //   //     a.area_en = a.area_ar
+    //   //   })
+    //   // }
+    //   if (emirate_id) {
+    //     this.clinicFormData.controls['area'].setValue(this.ClinicForm2?.value.area);
+    //   }
+    // })
   }
 }

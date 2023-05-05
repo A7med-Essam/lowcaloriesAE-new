@@ -15,7 +15,7 @@ export interface IProgramState extends IHttpResponse {
     status: null,
   };
   
-  export const RegisterReducer = createReducer(
+  export const ProgramReducer = createReducer(
     programInitialState,
     on(fromProgramActions.FETCH_PROGRAM_START, (state) => ({
       ...state,

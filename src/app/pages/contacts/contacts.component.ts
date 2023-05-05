@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { SocialMediaService } from 'src/app/services/socialMedia/social-media.service';
+// import { SocialMediaService } from 'src/app/services/socialMedia/social-media.service';
 
 @Component({
   selector: 'app-contacts',
@@ -13,7 +13,7 @@ export class ContactsComponent implements OnInit {
   EmailMessageModal: boolean = false;
   emailMessage: string = '';
   constructor(
-    private _SocialMediaService: SocialMediaService,
+    // private _SocialMediaService: SocialMediaService,
     private _FormBuilder: FormBuilder,
   ) {
   }
@@ -33,11 +33,11 @@ export class ContactsComponent implements OnInit {
 
   onSubmit(data: FormGroup) {
     if (data.valid) {
-      this._SocialMediaService.sendEmail(data.value).subscribe((res) => {
-        this.EmailMessageModal = true;
-        this.emailMessage = res.message;
-        this.EmailForm.reset();
-      });
+      // this._SocialMediaService.sendEmail(data.value).subscribe((res) => {
+      //   this.EmailMessageModal = true;
+      //   this.emailMessage = res.message;
+      //   this.EmailForm.reset();
+      // });
     }
   }
 }

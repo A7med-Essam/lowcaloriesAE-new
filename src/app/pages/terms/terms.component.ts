@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TermsService } from 'src/app/services/terms/terms.service';
+// import { TermsService } from 'src/app/services/terms.service';
 
 @Component({
   selector: 'app-terms',
@@ -8,18 +8,18 @@ import { TermsService } from 'src/app/services/terms/terms.service';
 })
 export class TermsComponent implements OnInit {
   skeletonMode: boolean = false;
-  constructor(private _TermsService: TermsService) {}
+  // constructor(private _TermsService: TermsService) {}
 
   ngOnInit(): void {
-    this.getTerms();
+    // this.getTerms();
   }
 
   terms: any[] = [];
   getTerms() {
     this.skeletonMode = true;
-    this._TermsService.getTerms().subscribe((res) => {
-      this.skeletonMode = false;
-      this.terms = res.data;
-    });
+    // this._TermsService.getTerms().subscribe((res) => {
+    //   this.skeletonMode = false;
+    //   this.terms = res.data;
+    // });
   }
 }
