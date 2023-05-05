@@ -1,40 +1,52 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable,of ,Subject,takeUntil} from 'rxjs';
-import { ICustomPlanResponse } from 'src/app/interfaces/custom-plan.interface';
+import { Observable, of, Subject, takeUntil } from 'rxjs';
+import {
+  ICustomPlanResponse,
+  ISubscriptionData,
+} from 'src/app/interfaces/custom-plan.interface';
 import { SharedService } from 'src/app/services/shared.service';
-import { FETCH_CUSTOMPLAN_START } from 'src/app/store/customPlanStore/customPlan.action';
+import {
+  FETCH_CUSTOMPLAN_START,
+  SAVE_CUSTOM_SUBSCRIPTION,
+} from 'src/app/store/customPlanStore/customPlan.action';
 import * as fromCustomPlanSelector from '../../../../../store/customPlanStore/customPlan.selector';
 
 @Component({
   selector: 'app-set-plan',
   templateUrl: './set-plan.component.html',
-  styleUrls: ['./set-plan.component.scss']
+  styleUrls: ['./set-plan.component.scss'],
 })
-export class SetPlanComponent implements OnInit{
+export class SetPlanComponent implements OnInit {
   private destroyed$: Subject<void> = new Subject();
   program_id: number = 0;
   ProgramDetails!: Observable<ICustomPlanResponse[] | null>;
   ProgramDetailsForm: FormGroup = new FormGroup({});
   skeletonMode$: Observable<boolean | null> = of(false);
-  selectedPlanType!:ICustomPlanResponse;
-  max_meal:string[] = [];
-  max_snack:string[] = [];
-  max_days:string[] = [];
+  selectedPlanType!: ICustomPlanResponse;
+  max_meal: string[] = [];
+  max_snack: string[] = [];
+  max_days: string[] = [];
   @ViewChild('AllWeek') AllWeek!: ElementRef;
   uaeDate!: Date;
-  
+  @ViewChild('deliveredDays') deliveredDays!: ElementRef;
+
   constructor(
     private _ActivatedRoute: ActivatedRoute,
     private _Router: Router,
     private _FormBuilder: FormBuilder,
     private _Store: Store,
     private _SharedService: SharedService,
-    private _ElementRef: ElementRef,
-    // private cdref: ChangeDetectorRef,
-  ) {}
+    private _ElementRef: ElementRef
+  ) // private cdref: ChangeDetectorRef,
+  {}
 
   ngOnInit(): void {
     this._ActivatedRoute.paramMap.subscribe((params) => {
@@ -69,12 +81,12 @@ export class SetPlanComponent implements OnInit{
     });
   }
 
-  getSelectedPlanType(val: ICustomPlanResponse){
-    this.selectedPlanType = val
+  getSelectedPlanType(val: ICustomPlanResponse) {
+    this.selectedPlanType = val;
     this.ProgramDetailsForm.get('Number_of_Meals')?.setValue(null);
     this.ProgramDetailsForm.get('Number_of_Days')?.setValue(null);
     this.ProgramDetailsForm.get('Type_of_Snacks')?.setValue(null);
-    this.getProgramDetails()
+    this.getProgramDetails();
   }
 
   getProgramDetails() {
@@ -86,7 +98,11 @@ export class SetPlanComponent implements OnInit{
         for (let i = 0; i <= this.selectedPlanType.details.max_snack; i++) {
           this.max_snack.push(i.toString());
         }
-        for (let i = this.selectedPlanType.details.min_days; i <= this.selectedPlanType.details.max_days; i++) {
+        for (
+          let i = this.selectedPlanType.details.min_days;
+          i <= this.selectedPlanType.details.max_days;
+          i++
+        ) {
           this.max_days.push(i.toString());
         }
       }
@@ -94,9 +110,51 @@ export class SetPlanComponent implements OnInit{
   }
 
   onSubmit(data: FormGroup) {
-    console.log(data.value);
-    // const subData = this.getSubscriptionData(data);
-    // this._Store.dispatch(FETCH_SHOWMEALS_START({data:subData}))
+    if (data.valid) {
+      this._Store.dispatch(
+        SAVE_CUSTOM_SUBSCRIPTION({ data: this.getSubscriptionData(data) })
+      );
+      this._Router.navigate(["./select-meals"], {relativeTo:this._ActivatedRoute.parent})
+    }
+  }
+
+  getSubscriptionData(data: FormGroup) {
+    let SelectedDate: Date = data.value.Start_Date;
+    let SubscriptionData: ISubscriptionData = {
+      Plan_Type: data.value.Plan_Type,
+      program_id: Number(this.program_id),
+      start_date: SelectedDate.toLocaleDateString('pt-br')
+        .split('/')
+        .reverse()
+        .join('-'),
+      delivery_days: this.getSelectedDeliveryDays(),
+      number_of_Days: data.value.Number_of_Days,
+      number_of_Meals: this.getSelectedMealTypes(
+        Number(data.value.Number_of_Meals)
+      ),
+      number_of_Snacks: Number(data.value.Type_of_Snacks),
+    };
+    return SubscriptionData;
+  }
+
+  getSelectedMealTypes(num: number) {
+    let meals = [];
+    for (let i = 1; i <= num; i++) {
+      meals.push(`Meal ${i}`);
+    }
+    return meals;
+  }
+
+  getSelectedDeliveryDays() {
+    const DeliveredDays = this.deliveredDays.nativeElement.children;
+    let DaysCount: string[] = [];
+    for (let i = 0; i < DeliveredDays.length; i++) {
+      if (DeliveredDays[i].children[0].classList.contains('active')) {
+        DaysCount.push(DeliveredDays[i].children[0].getAttribute('dayName'));
+      }
+    }
+    let FilterDaysCount = DaysCount.filter((e) => e !== null);
+    return FilterDaysCount;
   }
 
   onSelectedDate(SelectedDate: Date, deliveredDays: HTMLElement) {

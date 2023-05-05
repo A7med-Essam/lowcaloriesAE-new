@@ -34,7 +34,7 @@
 <section class="my-5">
     <div class="container">
         <div class="row" *ngIf="ProgramDetails | async as program">
-            <div class="col-lg-7">
+            <div class="col-lg-8">
                 <h1 class="fa-4x">
                     <span class="txt-main text-orange">
                         {{program[0].myprogram.name}}
@@ -119,7 +119,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col-lg-5 flex-center my-3">
+            <div class="col-lg-4 flex-center my-3">
                 <img alt="Program Image" class="w-75" [src]="program[0].myprogram.image">
             </div>
         </div>

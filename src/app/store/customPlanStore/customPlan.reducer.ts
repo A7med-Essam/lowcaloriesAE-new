@@ -1,5 +1,5 @@
 import { createReducer,on } from "@ngrx/store";
-import { ICustomPlanResponse } from "src/app/interfaces/custom-plan.interface";
+import { ICustomPlanResponse, ISubscriptionData } from "src/app/interfaces/custom-plan.interface";
 import { IHttpResponse } from "../appStore";
 import * as fromCustomPlanActions from "../customPlanStore/customPlan.action";
 
@@ -42,6 +42,25 @@ export interface ICustomPlanState extends IHttpResponse {
       status: 0,
     }))
   );
+
+  // =============================================================================================================================
+
+  export interface ICustomSubscriptionState {
+    data: ISubscriptionData | null;
+  }
+  
+  const CustomSubscriptionInitialState: ICustomSubscriptionState = {
+    data: null,
+  };
+  
+  export const CustomSubscriptionReducer = createReducer(
+    CustomSubscriptionInitialState,
+    on(fromCustomPlanActions.SAVE_CUSTOM_SUBSCRIPTION, (state, action) => ({
+      ...state,
+      data: action.data
+    }))
+  );
+
 
   // =============================================================================================================================
 

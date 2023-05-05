@@ -44,3 +44,13 @@ interface PlanPrices {
     five_meal:  number;
     six_meal:   number;
 }
+
+export interface ISubscriptionData {
+    number_of_Days:      string;
+    number_of_Snacks:    number;
+    number_of_Meals:     string[];
+    Plan_Type:           ICustomPlanResponse;
+    start_date:          string;
+    delivery_days:       string[];
+    program_id:          number;
+}

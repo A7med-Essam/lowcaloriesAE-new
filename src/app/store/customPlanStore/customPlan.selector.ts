@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { ICustomPlanState } from "./customPlan.reducer";
+import { ICustomPlanState, ICustomSubscriptionState } from "./customPlan.reducer";
 
 const customPlanFeatureSelector = createFeatureSelector<ICustomPlanState>('customPlan')
 export const customPlanSelector = createSelector(customPlanFeatureSelector, state => state.data)
@@ -10,3 +10,5 @@ export const customPlanLoadingSelector = createSelector(customPlanFeatureSelecto
 // export const showMealsLoadingSelector = createSelector(showMealsFeatureSelector, state => state.loading)
 
 
+const CustomSubscriptionFeatureSelector = createFeatureSelector<ICustomSubscriptionState>('CustomSubscription')
+export const CustomSubscriptionSelector = createSelector(CustomSubscriptionFeatureSelector, state => state.data)
