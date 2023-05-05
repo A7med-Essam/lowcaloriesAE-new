@@ -22,9 +22,14 @@ const routes: Routes = [
       import('./pages/clinic/clinic.module').then((m) => m.ClinicModule),
   },
   {
-    path: 'plan/:id',
+    path: 'normal/:id',
     loadChildren: () =>
       import('./pages/plans/normal/normal.module').then((m) => m.NormalModule),
+  },
+  {
+    path: 'custom/:id',
+    loadChildren: () =>
+      import('./pages/plans/custom/custom.module').then((m) => m.CustomModule),
   },
   { path: 'contacts', component: ContactsComponent },
   { path: 'menu', component: MenuComponent },

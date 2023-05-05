@@ -5,7 +5,9 @@ import { ProgramEffects } from './programStore/program.effect';
 import * as fromAuthStore from './authStore/auth.reducer';
 import * as fromProgramStore from './programStore/program.reducer';
 import * as fromNormalPlanStore from './normalPlanStore/normalPlan.reducer';
+import * as fromCustomPlanStore from './customPlanStore/customPlan.reducer';
 import { NormalPlanEffects } from './normalPlanStore/normalPlan.effect';
+import { CustomPlanEffects } from './customPlanStore/customPlan.effect';
 
 export interface AppState {
   login: fromAuthStore.ILoginState;
@@ -13,6 +15,7 @@ export interface AppState {
   programs:fromProgramStore.IProgramState
   normalPlan:fromNormalPlanStore.INormalPlanState
   showMeals:fromNormalPlanStore.IShowMealsState
+  customPlan:fromCustomPlanStore.ICustomPlanState
 }
 
 export const APP_STORE: ActionReducerMap<AppState> = {
@@ -20,13 +23,15 @@ export const APP_STORE: ActionReducerMap<AppState> = {
   register: fromAuthStore.RegisterReducer,
   programs: fromProgramStore.ProgramReducer,
   normalPlan: fromNormalPlanStore.NormalPlanReducer,
-  showMeals: fromNormalPlanStore.ShowMealsReducer
+  showMeals: fromNormalPlanStore.ShowMealsReducer,
+  customPlan:fromCustomPlanStore.CustomPlanReducer
 };
 
 export const APP_EFFECTS = [
   AuthEffect,
   ProgramEffects,
-  NormalPlanEffects
+  NormalPlanEffects,
+  CustomPlanEffects
 ]
 
 export interface IHttpResponse {

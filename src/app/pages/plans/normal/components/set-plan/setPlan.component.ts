@@ -191,8 +191,10 @@ export class SetPlanComponent implements OnInit, OnDestroy, AfterContentChecked 
   }
 
   onSubmit(data: FormGroup) {
-    const subData = this.getSubscriptionData(data);
-    this._Store.dispatch(FETCH_SHOWMEALS_START({data:subData}))
+    if (data.valid) {
+      const subData = this.getSubscriptionData(data);
+      this._Store.dispatch(FETCH_SHOWMEALS_START({data:subData}))
+    }
   }
 
   getSubscriptionData(data: FormGroup) {
