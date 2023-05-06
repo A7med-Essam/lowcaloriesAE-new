@@ -17,6 +17,7 @@ export interface AppState {
   showMeals:fromNormalPlanStore.IShowMealsState
   customPlan:fromCustomPlanStore.ICustomPlanState
   CustomSubscription:fromCustomPlanStore.ICustomSubscriptionState
+  NormalSubscription:fromNormalPlanStore.INormalSubscriptionState
 }
 
 export const APP_STORE: ActionReducerMap<AppState> = {
@@ -26,7 +27,8 @@ export const APP_STORE: ActionReducerMap<AppState> = {
   normalPlan: fromNormalPlanStore.NormalPlanReducer,
   showMeals: fromNormalPlanStore.ShowMealsReducer,
   customPlan:fromCustomPlanStore.CustomPlanReducer,
-  CustomSubscription:fromCustomPlanStore.CustomSubscriptionReducer
+  CustomSubscription:fromCustomPlanStore.CustomSubscriptionReducer,
+  NormalSubscription:fromNormalPlanStore.NormalSubscriptionReducer
 };
 
 export const APP_EFFECTS = [

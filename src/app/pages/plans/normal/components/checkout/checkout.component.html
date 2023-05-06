@@ -17,19 +17,21 @@
         </h1>
         <div class="row mt-5">
             <div class="col-lg-3 col-md-4 my-3">
-                <div class="item shadow-lg bg-white py-4 rounded text-center h-100">
-                    <img src="http://lowcalories.ae:50/Files/Documents/lw.png" class="img-fluid w-50 mx-auto mb-3" alt="">
-                    <h6>Menu_Name</h6>
-                    <div>
-                        <small>numberofMeals:</small>
-                        <span>0</span>
+                <div class="item shadow-lg bg-white py-4 rounded text-center h-100" *ngIf="subscriptionInfo | async as sub"> 
+                    <div *ngIf="ProgramDetails | async as program">
+                        <img  [src]="program[0].myprogram.image" class="img-fluid w-50 mx-auto mb-3" alt="Program Image">
+                        <h6 class="text-orange">{{program[0].myprogram.name}}</h6>
                     </div>
                     <div>
-                        <small>numberofDays:</small>
-                        <span>0</span>
+                        <small>Meals:</small>
+                        <span>{{sub.meal_types.length}}</span>
+                    </div>
+                    <div>
+                        <small>Days:</small>
+                        <span>{{sub.no_days}}</span>
                     </div>
                     <div class="mt-3">
-                        <a class="txt-main pointer" >View More</a>
+                        <a class="txt-main pointer" (click)="SubscribtionModal=true">View More</a>
                     </div>
                 </div>
             </div>
@@ -83,9 +85,9 @@
                 <div class="item shadow-lg bg-white py-4 rounded-lg text-center">
                     <div class="container">
                         <div class="d-flex justify-content-between flex-wrap">
-                            <h5>enterYourLocation</h5>
-                            <h6 id="locationBtn" class="txt-main pointer ms-4" #LocationBtn>
-                                <u>selectYourCurrentLocation</u>
+                            <h5>Enter Your Location</h5>
+                            <h6  class="txt-main pointer ms-4" *ngIf="login$ | async as user">
+                                <u *ngIf="user.data">Select Your Current Location</u>
                             </h6>
                         </div>
 
@@ -212,45 +214,39 @@
                                 (click)="getCheckOut_WithAuth()">{{"buttons.checkOut" | translate}}</button>
                         </form> -->
 
-                        <!-- <form [formGroup]='AddressForm2' *ngIf="isNewLocation&&isLogin"> -->
-                            <form>
-                            <!-- <div class="my-4 text-start">
-                                <p-dropdown [options]="cities" optionLabel="name" optionValue="id"
-                                    formControlName='city_id' placeholder='emirate'
+                        <form [formGroup]='checkoutForm'>
+                            <div class="my-4 text-start">
+                                <p-dropdown [options]="emirates" optionLabel="name" optionValue="id"
+                                    formControlName='emirate_id' placeholder='Select your emirate'
                                     (ngModelChange)="getAreas($event)"></p-dropdown>
                             </div>
                             <div class="my-4 text-start">
-                                <p-dropdown [options]="Areas" optionLabel="area_en" optionValue="id"
-                                    placeholder='{{"location.area" | translate}}' formControlName='area_id'>
+                                <p-dropdown [options]="areas" optionLabel="area_en" optionValue="id"
+                                    placeholder='Select your area' formControlName='area_id'>
                                 </p-dropdown>
-                            </div> -->
+                            </div>
                             <div class="my-4">
                                 <span class="p-float-label">
-                                    <input type="text" pInputText [style]="{'width':'100%'}"
-                                        formControlName='address' />
+                                    <input type="text" pInputText [style]="{'width':'100%'}" formControlName='address' />
                                     <label>address</label>
                                 </span>
                             </div>
-                            <div class="d-flex justify-content-start align-items-center my-3">
+                            <div class="d-flex justify-content-start align-items-center my-1">
                                 <p class="m-0 font-weight-500">We Accept:</p>
                                 <img src="../../../../../../assets/images/check-out/payment-method.png" id="visa_img"
                                     class="img-fluid mx-1" alt="">
                             </div>
-                            <!-- <div class="d-flex justify-content-start align-items-center my-3">
-                                <input type="checkbox" formControlName='terms' data-bs-toggle="modal"
-                                    data-bs-target="#TermsModal" (click)="getTerms()">
-                                <small class="mx-2 font-weight-500">{{"checkout.IAccept1" | translate}} <a
-                                        class="txt-main pointer" data-bs-toggle="modal" data-bs-target="#TermsModal"
-                                        (click)="getTerms()">{{"checkout.termsAndConditions" | translate}}</a>
-                                    {{"checkout.IAccept2" | translate}}</small>
-                            </div> -->
-                                <a class="button pointer py-2 px-5 ms-2">
-                                    <button class="btn w-100 border-0">Checkout
-                                            <!-- <ng-container *ngIf="nextButtonMode$ | async">
-                                                <i class="fa-solid fa-circle-notch fa-spin p-0"></i>
-                                            </ng-container> -->
-                                    </button>
-                                </a>
+                            <div class="d-flex justify-content-start align-items-center my-1">
+                                <input type="checkbox" formControlName='terms'>
+                                <small class="mx-2 font-weight-500">
+                                    I accepted the<a class="text-orange pointer mx-1">terms & conditions </a>of the meals plan
+                                </small>
+                            </div>
+                            <a class="button pointer py-2 px-5 ms-2">
+                                <button class="btn w-100 border-0">
+                                    Checkout
+                                </button>
+                            </a>
                         </form>
                     </div>
                 </div>
@@ -516,3 +512,51 @@
         </div>
     </div>
 </div> -->
+
+
+<p-dialog header="Subscribtion Info" [(visible)]="SubscribtionModal" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+    <div class="modal-body" *ngIf="subscriptionInfo | async as sub">
+        <div class="text-center" *ngIf="ProgramDetails | async as program">
+            <img  [src]="program[0].myprogram.image" class="img-fluid" style="width: 150px;" alt="Program Image">
+            <h5 class="text-orange mt-2">{{program[0].myprogram.name}}</h5>
+        </div>
+        <h6 class="txt-main">Delivery Days:</h6>
+        <div class="row">
+            <div class="col-sm-4 col-6" *ngFor="let day of sub.delivery_days">
+                <div class="delivery-day bg-main text-white rounded py-2 px-3 position-relative my-1">
+                    {{day | titlecase}}
+                </div>
+            </div>
+        </div>
+        <hr style="height: .5px;">
+        <div class="d-flex justify-content-between">
+            <h6 class="txt-main">Meals:</h6>
+            <span>{{sub.meal_types.length}}</span>
+        </div>
+        <hr class="my-2" style="height: .5px;">
+        <div class="d-flex justify-content-between">
+            <h6 class="txt-main">Snacks:</h6>
+            <span>{{sub.no_snacks}}</span>
+        </div>
+        <hr class="my-2" style="height: .5px;">
+        <div class="d-flex justify-content-between">
+            <h6 class="txt-main">Start Date:</h6>
+            <span>{{sub.start_date}}</span>
+        </div>
+        <hr class="my-2" style="height: .5px;">
+        <div class="d-flex justify-content-between">
+            <h6 class="txt-main">Subscription Days:</h6>
+            <span>{{sub.no_days}}</span>
+        </div>
+        <div class="mt-4 text-center">
+            <button class="btn border-0 p-0" (click)="SubscribtionModal = false">
+                <a class="button mt-20 pointer py-2 px-5">
+                 Close   
+                </a>
+            </button>
+        </div>
+    </div>
+</p-dialog>
+
+
+

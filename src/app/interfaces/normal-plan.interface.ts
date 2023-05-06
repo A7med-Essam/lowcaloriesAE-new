@@ -37,16 +37,6 @@ export interface IOptions {
     price:         string;
 }
 
-export interface IShowMealsData {
-    plan_option_id: number;
-    start_date:     string;
-    delivery_days:  string[];
-    meal_types:     string[];
-    program_id:     number
-    no_snacks:      number
-
-}
-
 export interface IShowMealsResponse {
     day:   string;
     date:  Date;
@@ -70,4 +60,14 @@ interface INormalPlanMeal {
     max_side:         number;
     image:            string;
     image_web:        string;
+}
+
+export interface ISubscriptionData {
+    plan_option_id: number;
+    start_date:     string;
+    delivery_days:  string[];
+    meal_types:     string[];
+    program_id:     number;
+    no_snacks:      number;
+    no_days:        number
 }

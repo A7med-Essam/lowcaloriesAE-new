@@ -1,5 +1,5 @@
 import { createReducer,on } from "@ngrx/store";
-import { INormalPlanResponse, IShowMealsResponse } from "src/app/interfaces/normal-plan.interface";
+import { INormalPlanResponse, IShowMealsResponse, ISubscriptionData } from "src/app/interfaces/normal-plan.interface";
 import { IHttpResponse } from "../appStore";
 import * as fromNormalPlanActions from "../normalPlanStore/normalPlan.action";
 
@@ -43,7 +43,25 @@ export interface INormalPlanState extends IHttpResponse {
     }))
   );
 
-  // =============================================================================================================================
+// =============================================================================================================================
+
+    export interface INormalSubscriptionState {
+      data: ISubscriptionData | null;
+    }
+    
+    const NormalSubscriptionInitialState: INormalSubscriptionState = {
+      data: null,
+    };
+    
+    export const NormalSubscriptionReducer = createReducer(
+      NormalSubscriptionInitialState,
+      on(fromNormalPlanActions.SAVE_NORMAL_SUBSCRIPTION, (state, action) => ({
+        ...state,
+        data: action.data
+      }))
+    );
+
+// =============================================================================================================================
 
   export interface IShowMealsState extends IHttpResponse {
     data: IShowMealsResponse[] | null;
@@ -84,3 +102,4 @@ export interface INormalPlanState extends IHttpResponse {
       status: 0,
     }))
   );
+  

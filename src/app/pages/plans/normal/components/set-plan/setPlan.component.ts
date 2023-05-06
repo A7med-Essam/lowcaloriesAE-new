@@ -17,9 +17,13 @@ import { Observable, of, Subject, takeUntil } from 'rxjs';
 import {
   INormalPlanResponse,
   IOptions,
-  IShowMealsData,
+  ISubscriptionData,
 } from 'src/app/interfaces/normal-plan.interface';
-import { FETCH_NORMALPLAN_START, FETCH_SHOWMEALS_START } from 'src/app/store/normalPlanStore/normalPlan.action';
+import {
+  FETCH_NORMALPLAN_START,
+  FETCH_SHOWMEALS_START,
+  SAVE_NORMAL_SUBSCRIPTION,
+} from 'src/app/store/normalPlanStore/normalPlan.action';
 import * as fromNormalPlanSelector from '../../../../../store/normalPlanStore/normalPlan.selector';
 import { ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { SharedService } from 'src/app/services/shared.service';
@@ -29,7 +33,9 @@ import { SharedService } from 'src/app/services/shared.service';
   templateUrl: './setPlan.component.html',
   styleUrls: ['./setPlan.component.scss'],
 })
-export class SetPlanComponent implements OnInit, OnDestroy, AfterContentChecked {
+export class SetPlanComponent
+  implements OnInit, OnDestroy, AfterContentChecked
+{
   private destroyed$: Subject<void> = new Subject();
   @ViewChild('AllWeek') AllWeek!: ElementRef;
   @ViewChild('deliveredDays') deliveredDays!: ElementRef;
@@ -102,7 +108,7 @@ export class SetPlanComponent implements OnInit, OnDestroy, AfterContentChecked 
     private _Store: Store,
     private cdref: ChangeDetectorRef,
     private _SharedService: SharedService,
-    private _ElementRef: ElementRef,
+    private _ElementRef: ElementRef
   ) {}
 
   ngOnInit(): void {
@@ -121,7 +127,9 @@ export class SetPlanComponent implements OnInit, OnDestroy, AfterContentChecked 
         this.skeletonMode$ = this._Store.select(
           fromNormalPlanSelector.normalPlanLoadingSelector
         );
-        this.nextButtonMode$ = this._Store.select(fromNormalPlanSelector.showMealsLoadingSelector)
+        this.nextButtonMode$ = this._Store.select(
+          fromNormalPlanSelector.showMealsLoadingSelector
+        );
         this.transformProgramDetails();
         this.getUaeDate();
       }
@@ -160,10 +168,12 @@ export class SetPlanComponent implements OnInit, OnDestroy, AfterContentChecked 
         for (let i = 0; i <= res[0].myprogram.no_snacks; i++) {
           this.no_snacks.push(i.toString());
         }
-        this.getSelectedNumberOfMeals(res[0])
+        this.getSelectedNumberOfMeals(res[0]);
         this.ProgramDetailsForm.get('Number_of_Meals')?.setValue(res[0]);
-        this.ProgramDetailsForm.get('Number_of_Days')?.setValue(res[0].options[0].id);
-        this.setDefaultDate()
+        this.ProgramDetailsForm.get('Number_of_Days')?.setValue(
+          res[0].options[0].id
+        );
+        this.setDefaultDate();
       }
     });
   }
@@ -175,7 +185,7 @@ export class SetPlanComponent implements OnInit, OnDestroy, AfterContentChecked 
   setDefaultDate() {
     setTimeout(() => {
       let DefaultDate: Date = this.uaeDate;
-      if (DefaultDate.getDay()=== 5) {
+      if (DefaultDate.getDay() === 5) {
         DefaultDate.setDate(DefaultDate.getDate() + 1);
       }
       let firstDate = DefaultDate.toLocaleDateString('en-US', {
@@ -193,27 +203,40 @@ export class SetPlanComponent implements OnInit, OnDestroy, AfterContentChecked 
   onSubmit(data: FormGroup) {
     if (data.valid) {
       const subData = this.getSubscriptionData(data);
-      this._Store.dispatch(FETCH_SHOWMEALS_START({data:subData}))
+      this._Store.dispatch(SAVE_NORMAL_SUBSCRIPTION({ data: subData }));
+      this._Store.dispatch(FETCH_SHOWMEALS_START({ data: subData }));
     }
   }
 
   getSubscriptionData(data: FormGroup) {
     let SelectedDate: Date = data.value.Start_Date;
-    let SubscriptionData:IShowMealsData = {
+    let SubscriptionData: ISubscriptionData = {
       plan_option_id: data.value.Number_of_Days,
+      no_days: Number(
+        this.getOptionById(
+          data.value.Number_of_Meals.options,
+          data.value.Number_of_Days
+        )?.no_days
+      ),
       start_date: SelectedDate.toLocaleDateString('pt-br')
         .split('/')
         .reverse()
         .join('-'),
       delivery_days: this.getSelectedDeliveryDays(),
-      meal_types:this.getSelectedMealTypes(Number(data.value.Number_of_Meals.no_meals)),
-      program_id:Number(this.program_id),
-      no_snacks:Number(data.value.Type_of_Snacks)
+      meal_types: this.getSelectedMealTypes(
+        Number(data.value.Number_of_Meals.no_meals)
+      ),
+      program_id: Number(this.program_id),
+      no_snacks: Number(data.value.Type_of_Snacks),
     };
     return SubscriptionData;
   }
 
-  getSelectedMealTypes(num:number) {
+  getOptionById(optionsArr: IOptions[], id: number) {
+    return optionsArr.find((option) => option.id === id);
+  }
+
+  getSelectedMealTypes(num: number) {
     let meals = [];
     for (let i = 1; i <= num; i++) {
       meals.push(`Meal ${i}`);
