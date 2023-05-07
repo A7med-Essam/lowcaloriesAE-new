@@ -54,3 +54,4 @@ export interface ISubscriptionData {
     delivery_days:       string[];
     program_id:          number;
 }
+

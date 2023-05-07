@@ -1,17 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, Subject, takeUntil } from 'rxjs';
-import {
-  normalPlanSelector,
-  showMealsSelector,
-} from 'src/app/store/normalPlanStore/normalPlan.selector';
+import { Observable, Subject, takeUntil, of } from 'rxjs';
+import * as fromNormalPlanSelector from 'src/app/store/normalPlanStore/normalPlan.selector';
 import { SharedService } from 'src/app/services/shared.service';
 import {
   INormalPlanResponse,
   IShowMealsResponse,
 } from 'src/app/interfaces/normal-plan.interface';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { FETCH_NORMALPLAN_PRICE_START } from 'src/app/store/normalPlanStore/normalPlan.action';
 
 @Component({
   selector: 'app-showMeals',
@@ -23,6 +21,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   category_index: number = 0;
   ProgramMeals!: Observable<IShowMealsResponse[] | null>;
   ProgramDetails!: Observable<INormalPlanResponse[] | null>;
+  nextButtonMode$: Observable<boolean | null> = of(false);
 
   constructor(
     private _SharedService: SharedService,
@@ -31,12 +30,16 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     private _Store: Store
   ) {
     _Store
-      .select(showMealsSelector)
+      .select(fromNormalPlanSelector.showMealsSelector)
       .pipe(takeUntil(this.destroyed$))
       .subscribe((res) => {
         if (res) {
-          this.ProgramDetails = _Store.select(normalPlanSelector);
-          this.ProgramMeals = _Store.select(showMealsSelector);
+          this.ProgramDetails = _Store.select(
+            fromNormalPlanSelector.normalPlanSelector
+          );
+          this.ProgramMeals = _Store.select(
+            fromNormalPlanSelector.showMealsSelector
+          );
         } else {
           this._Router.navigate(['set-plan'], {
             relativeTo: this._ActivatedRoute.parent,
@@ -75,9 +78,27 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   }
 
   getCheckout() {
-    this._Router.navigate(['checkout'], {
-      relativeTo: this._ActivatedRoute.parent,
-    });
+    this.nextButtonMode$ = this._Store.select(
+      fromNormalPlanSelector.normalPlanPriceLoadingSelector
+    );
+
+    this._Store
+      .select(fromNormalPlanSelector.normalSubscriptionSelector)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((res) => {
+        if (res) {
+          this._Store.dispatch(
+            FETCH_NORMALPLAN_PRICE_START({
+              data: {
+                day_count: res.no_days,
+                meal_count: res.meal_types.length,
+                program_id: res.program_id,
+                snack_count: res.no_snacks,
+              },
+            })
+          );
+        }
+      });
   }
 
   ngOnDestroy() {

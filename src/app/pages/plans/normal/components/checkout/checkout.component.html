@@ -17,9 +17,10 @@
         </h1>
         <div class="row mt-5">
             <div class="col-lg-3 col-md-4 my-3">
-                <div class="item shadow-lg bg-white py-4 rounded text-center h-100" *ngIf="subscriptionInfo | async as sub"> 
+                <div class="item shadow-lg bg-white py-4 rounded text-center h-100"
+                    *ngIf="subscriptionInfo | async as sub">
                     <div *ngIf="ProgramDetails | async as program">
-                        <img  [src]="program[0].myprogram.image" class="img-fluid w-50 mx-auto mb-3" alt="Program Image">
+                        <img [src]="program[0].myprogram.image" class="img-fluid w-50 mx-auto mb-3" alt="Program Image">
                         <h6 class="text-orange">{{program[0].myprogram.name}}</h6>
                     </div>
                     <div>
@@ -43,39 +44,42 @@
                                 class="img-fluid" alt="">
                             <h5 class="text-orange mb-0 mx-2">Gift Code</h5>
                         </div>
-                        <div class="d-flex justify-content-start align-items-center mt-3 mb-4">
-                            <input type="text" class="form-control"
-                                placeholder='Enter Gift Code' #inputGiftCode>
-                                <a class="button pointer py-2 px-4 ms-2" (click)="applyGiftCode(inputGiftCode)">
-                                    <button class="btn w-100 border-0">Apply
-                                            <!-- <ng-container *ngIf="nextButtonMode$ | async">
-                                                <i class="fa-solid fa-circle-notch fa-spin p-0"></i>
-                                            </ng-container> -->
+                        <div class="row mt-3 mb-4">
+                            <div class="col-xl-10 col-lg-9 col-md-8 col-12 my-2">
+                                <input type="text" class="form-control" placeholder='Enter Gift Code' #inputGiftCode>
+                            </div>
+                            <div class="col-xl-2 col-lg-3 col-md-4 col-12 my-2">
+                                <a class="button pointer py-2 px-5 w-100" (click)="applyGiftCode(inputGiftCode)">
+                                    <button class="btn w-100 border-0 flex-center">
+                                        <span class="mx-1">Apply</span>
+                                        <ng-container *ngIf="giftcodeButtonMode$ | async">
+                                            <i class="fa-solid fa-circle-notch fa-spin p-0"></i>
+                                        </ng-container>
                                     </button>
                                 </a>
+                            </div>
                         </div>
                         <hr>
-                        <div class="mt-3">
+                        <div class="mt-3" *ngIf="price$ |async as price">
                             <div class="d-flex justify-content-between my-3 font-weight-500">
-                                <span>total</span> <span
-                                    class="txt-main">50 AED</span>
+                                <span>Total</span> <span class="txt-main">{{price.price.toFixed(2)}} <sub
+                                        class="text-orange">AED</sub></span>
                             </div>
                             <div class="d-flex justify-content-between my-3 font-weight-500">
-                                <span>code_apply</span> <span
-                                    class="txt-main">0</span>
+                                <span>Code</span> <span class="txt-main">{{price.code_apply}}</span>
                             </div>
-                            <div class="d-flex justify-content-between my-3 font-weight-500">
+                            <!-- <div class="d-flex justify-content-between my-3 font-weight-500">
                                 <span>bagPrice</span> <span
                                     class="txt-main">0</span>
-                            </div>
+                            </div> -->
                             <div class="d-flex justify-content-between my-3 font-weight-500">
                                 <span>Vat</span> <span class="txt-main">
-                                     5%
+                                    {{price.vat*100}}%
                                 </span>
                             </div>
                             <div class="d-flex justify-content-between mt-3 font-weight-500">
-                                <span>grandTotal</span> <span
-                                    class="txt-main">100 AED</span>
+                                <span>Grand Total</span> <span class="txt-main">{{price.grand_total.toFixed(2)}} <sub
+                                        class="text-orange">AED</sub></span>
                             </div>
                         </div>
                     </div>
@@ -86,7 +90,7 @@
                     <div class="container">
                         <div class="d-flex justify-content-between flex-wrap">
                             <h5>Enter Your Location</h5>
-                            <h6  class="txt-main pointer ms-4" *ngIf="login$ | async as user">
+                            <h6 class="txt-main pointer ms-4" *ngIf="login$ | async as user">
                                 <u *ngIf="user.data">Select Your Current Location</u>
                             </h6>
                         </div>
@@ -227,7 +231,8 @@
                             </div>
                             <div class="my-4">
                                 <span class="p-float-label">
-                                    <input type="text" pInputText [style]="{'width':'100%'}" formControlName='address' />
+                                    <input type="text" pInputText [style]="{'width':'100%'}"
+                                        formControlName='address' />
                                     <label>address</label>
                                 </span>
                             </div>
@@ -239,7 +244,8 @@
                             <div class="d-flex justify-content-start align-items-center my-1">
                                 <input type="checkbox" formControlName='terms'>
                                 <small class="mx-2 font-weight-500">
-                                    I accepted the<a class="text-orange pointer mx-1">terms & conditions </a>of the meals plan
+                                    I accepted the<a class="text-orange pointer mx-1">terms & conditions </a>of the
+                                    meals plan
                                 </small>
                             </div>
                             <a class="button pointer py-2 px-5 ms-2">
@@ -514,10 +520,11 @@
 </div> -->
 
 
-<p-dialog header="Subscribtion Info" [(visible)]="SubscribtionModal" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+<p-dialog header="Subscribtion Info" [(visible)]="SubscribtionModal" [modal]="true" [style]="{ width: '50vw' }"
+    [draggable]="false" [resizable]="false">
     <div class="modal-body" *ngIf="subscriptionInfo | async as sub">
         <div class="text-center" *ngIf="ProgramDetails | async as program">
-            <img  [src]="program[0].myprogram.image" class="img-fluid" style="width: 150px;" alt="Program Image">
+            <img [src]="program[0].myprogram.image" class="img-fluid" style="width: 150px;" alt="Program Image">
             <h5 class="text-orange mt-2">{{program[0].myprogram.name}}</h5>
         </div>
         <h6 class="txt-main">Delivery Days:</h6>
@@ -551,12 +558,9 @@
         <div class="mt-4 text-center">
             <button class="btn border-0 p-0" (click)="SubscribtionModal = false">
                 <a class="button mt-20 pointer py-2 px-5">
-                 Close   
+                    Close
                 </a>
             </button>
         </div>
     </div>
 </p-dialog>
-
-
-

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { createAction, props } from "@ngrx/store";
-import { INormalPlanResponse, IShowMealsResponse, ISubscriptionData } from "src/app/interfaces/normal-plan.interface";
+import { IGiftCodeData, INormalPlanResponse, INormalProgramPriceResponse, INormalSubscriptionPrice, IShowMealsResponse, ISubscriptionData } from "src/app/interfaces/normal-plan.interface";
 
 export const FETCH_NORMALPLAN_START = createAction('[Normal Plan] FETCH_NORMALPLAN_START', props<{program_id:number}>())
 export const FETCH_NORMALPLAN_SUCCESS = createAction('[Normal Plan] FETCH_NORMALPLAN_SUCCESS', props<{data:INormalPlanResponse[],message:string,status:number}>())
@@ -11,3 +11,11 @@ export const SAVE_NORMAL_SUBSCRIPTION = createAction('[Normal Plan] SAVE_NORMAL_
 export const FETCH_SHOWMEALS_START = createAction('[Normal Plan] FETCH_SHOWMEALS_START', props<{data:ISubscriptionData}>())
 export const FETCH_SHOWMEALS_SUCCESS = createAction('[Normal Plan] FETCH_SHOWMEALS_SUCCESS', props<{data:IShowMealsResponse[],message:string,status:number}>())
 export const FETCH_SHOWMEALS_FAILED = createAction('[Normal Plan] FETCH_SHOWMEALS_FAILED', props<{error:HttpErrorResponse}>())
+
+export const FETCH_NORMALPLAN_PRICE_START = createAction('[Normal Plan] FETCH_NORMALPLAN_PRICE_START', props<{data:INormalSubscriptionPrice}>())
+export const FETCH_NORMALPLAN_PRICE_SUCCESS = createAction('[Normal Plan] FETCH_NORMALPLAN_PRICE_SUCCESS', props<{data:INormalProgramPriceResponse,message:string,status:number}>())
+export const FETCH_NORMALPLAN_PRICE_FAILED = createAction('[Normal Plan] FETCH_NORMALPLAN_PRICE_FAILED', props<{error:HttpErrorResponse}>())
+
+export const FETCH_NORMALPLAN_GIFTCODE_START = createAction('[Normal Plan] FETCH_NORMALPLAN_GIFTCODE_START', props<{data:IGiftCodeData}>())
+export const FETCH_NORMALPLAN_GIFTCODE_SUCCESS = createAction('[Normal Plan] FETCH_NORMALPLAN_GIFTCODE_SUCCESS', props<{data:INormalProgramPriceResponse,message:string,status:number}>())
+export const FETCH_NORMALPLAN_GIFTCODE_FAILED = createAction('[Normal Plan] FETCH_NORMALPLAN_GIFTCODE_FAILED', props<{error:HttpErrorResponse}>())

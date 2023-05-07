@@ -71,3 +71,25 @@ export interface ISubscriptionData {
     no_snacks:      number;
     no_days:        number
 }
+
+export interface INormalProgramPriceResponse{
+    code_id:     number;
+    price:       number;
+    code_apply:  number;
+    vat:         number;
+    grand_total: number;
+}
+
+
+export interface INormalSubscriptionPrice{
+    program_id:     number;
+    meal_count:     number;
+    day_count:      number;
+    snack_count:    number;
+}
+
+export interface IGiftCodeData{
+    program_id:     number;
+    price:          number;
+    code:           string;
+}

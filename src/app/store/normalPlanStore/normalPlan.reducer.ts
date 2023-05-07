@@ -1,5 +1,5 @@
 import { createReducer,on } from "@ngrx/store";
-import { INormalPlanResponse, IShowMealsResponse, ISubscriptionData } from "src/app/interfaces/normal-plan.interface";
+import { INormalPlanResponse, INormalProgramPriceResponse, INormalSubscriptionPrice, IShowMealsResponse, ISubscriptionData } from "src/app/interfaces/normal-plan.interface";
 import { IHttpResponse } from "../appStore";
 import * as fromNormalPlanActions from "../normalPlanStore/normalPlan.action";
 
@@ -103,3 +103,86 @@ export interface INormalPlanState extends IHttpResponse {
     }))
   );
   
+// =============================================================================================================================
+
+export interface INormalPlanPriceState extends IHttpResponse {
+  data: INormalProgramPriceResponse | null;
+}
+
+const normalPlanPriceInitialState: INormalPlanPriceState = {
+  error: null,
+  loading: null,
+  data: null,
+  message: null,
+  status: null,
+};
+
+export const NormalPlanPriceReducer = createReducer(
+  normalPlanPriceInitialState,
+  on(fromNormalPlanActions.FETCH_NORMALPLAN_PRICE_START, (state) => ({
+    ...state,
+    loading: true,
+    data: null,
+    error: null,
+    message: null,
+    status: 0,
+  })),
+  on(fromNormalPlanActions.FETCH_NORMALPLAN_PRICE_SUCCESS, (state, action) => ({
+    ...state,
+    error: null,
+    loading: false,
+    data: action.status == 1 ? action.data : null,
+    message: action.message,
+    status: action.status,
+  })),
+  on(fromNormalPlanActions.FETCH_NORMALPLAN_PRICE_FAILED, (state, action) => ({
+    ...state,
+    error: action.error,
+    data: null,
+    loading: false,
+    message: null,
+    status: 0,
+  }))
+);
+
+// =============================================================================================================================
+
+export interface INormalPlanGiftCodeState extends IHttpResponse {
+  data: INormalProgramPriceResponse | null;
+}
+
+const normalPlanGiftCodeInitialState: INormalPlanGiftCodeState = {
+  error: null,
+  loading: null,
+  data: null,
+  message: null,
+  status: null,
+};
+
+export const NormalPlanGiftCodeReducer = createReducer(
+  normalPlanGiftCodeInitialState,
+  on(fromNormalPlanActions.FETCH_NORMALPLAN_GIFTCODE_START, (state) => ({
+    ...state,
+    loading: true,
+    data: null,
+    error: null,
+    message: null,
+    status: 0,
+  })),
+  on(fromNormalPlanActions.FETCH_NORMALPLAN_GIFTCODE_SUCCESS, (state, action) => ({
+    ...state,
+    error: null,
+    loading: false,
+    data: action.data,
+    message: action.message,
+    status: action.status,
+  })),
+  on(fromNormalPlanActions.FETCH_NORMALPLAN_GIFTCODE_FAILED, (state, action) => ({
+    ...state,
+    error: action.error,
+    data: null,
+    loading: false,
+    message: null,
+    status: 0,
+  }))
+);
