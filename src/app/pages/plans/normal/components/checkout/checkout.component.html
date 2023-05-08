@@ -18,7 +18,7 @@
         <div class="row mt-5">
             <div class="col-lg-3 col-md-4 my-3">
                 <div class="item shadow-lg bg-white py-4 rounded text-center h-100"
-                    *ngIf="subscriptionInfo | async as sub">
+                    *ngIf="subscriptionInfo$ | async as sub">
                     <div *ngIf="ProgramDetails | async as program">
                         <img [src]="program[0].myprogram.image" class="img-fluid w-50 mx-auto mb-3" alt="Program Image">
                         <h6 class="text-orange">{{program[0].myprogram.name}}</h6>
@@ -87,154 +87,26 @@
             </div>
             <div class="col-12 my-3">
                 <div class="item shadow-lg bg-white py-4 rounded-lg text-center">
-                    <div class="container">
+                    <div class="container" *ngIf="login$ | async as user">
                         <div class="d-flex justify-content-between flex-wrap">
-                            <h5>Enter Your Location</h5>
-                            <h6 class="txt-main pointer ms-4" *ngIf="login$ | async as user">
+                            <h5>Checkout Form</h5>
+                            <h6 class="txt-main pointer ms-4">
                                 <u *ngIf="user.data">Select Your Current Location</u>
                             </h6>
                         </div>
 
-                        <!-- <form class="mt-4 text-start" *ngIf="isNewLocation&&!isLogin" [formGroup]='NewAddressForm'>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="my-3">
-                                        <span class="p-float-label">
-                                            <input type="text" pInputText ngClass="w-100" formControlName='name'>
-                                            <label for="float-input">{{"userInfo.username" | translate}}</label>
-                                        </span>
-                                        <small class="text-danger" *ngIf="NewAddressForm.get('name')?.touched &&
-                                        NewAddressForm.get('name')?.invalid">{{"errors.required" | translate}}</small>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="my-3">
-                                        <span class="p-float-label">
-                                            <input type="text" pInputText ngClass="w-100" formControlName='email'>
-                                            <label for="float-input">{{"userInfo.email" | translate}}</label>
-                                        </span>
-                                        <small class="text-danger "
-                                            *ngIf="NewAddressForm.get('email')?.touched && NewAddressForm.get('email')?.hasError('required')">
-                                            {{"errors.required" | translate}}
-                                        </small>
-                                        <small class="text-danger "
-                                            *ngIf="NewAddressForm.get('email')?.touched && NewAddressForm.get('email')?.hasError('email')">
-                                            {{"errors.email" | translate}}
-                                        </small>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="my-3">
-                                        <span class="p-float-label">
-                                            <input type="text" pInputText ngClass="w-100" formControlName='mobile'
-                                                maxlength="10"
-                                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
-                                            <label for="float-input">{{"userInfo.mobile" | translate}}</label>
-                                        </span>
-                                        <div class="text-start">
-                                            <small class="text-danger ms-1" *ngIf="NewAddressForm.get('mobile')?.touched &&
-                                            NewAddressForm.get('mobile')?.hasError('required')">{{"errors.required" |
-                                                translate}}</small>
-                                        </div>
-                                        <div class="text-start">
-                                            <small class="text-danger ms-1" *ngIf="NewAddressForm.get('mobile')?.touched &&
-                                            NewAddressForm.get('mobile')?.hasError('pattern')">{{"errors.mobile" |
-                                                translate}}</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="my-3 text-start">
-                                        <p-dropdown [options]="emirate" optionLabel="name" optionValue="id"
-                                            formControlName='emirate' placeholder='{{"location.emirate" | translate}}'
-                                            (ngModelChange)="getAreas2($event)"></p-dropdown>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="my-3 text-start">
-                                        <p-dropdown [options]="Areas" optionLabel="area_en" optionValue="id"
-                                            placeholder='{{"location.area" | translate}}' formControlName='area_id'>
-                                        </p-dropdown>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="my-3">
-                                        <span class="p-float-label">
-                                            <input type="text" pInputText ngClass="w-100" formControlName='address'>
-                                            <label for="float-input">{{"location.address" | translate}}</label>
-                                        </span>
-                                        <small class="text-danger " *ngIf="NewAddressForm.get('address')?.touched &&
-                                        NewAddressForm.get('address')?.invalid">{{"errors.required" |
-                                            translate}}</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-start align-items-center my-3">
-                                <p class="m-0 font-weight-500">{{"checkout.weAccept" | translate}}:</p>
-                                <img src="../../../../assets/images/check-out/payment-method.png" id="visa_img"
-                                    class="img-fluid mx-1" alt="">
-                            </div>
-                            <div class="d-flex justify-content-start align-items-center my-3">
-                                <input type="checkbox" data-bs-toggle="modal" data-bs-target="#TermsModal"
-                                    (click)="getTerms()" #termsInput formControlName="terms"
-                                    (click)="onTermsChange(termsInput)">
-                                <small class="mx-2 font-weight-500">{{"checkout.IAccept1" | translate}} <a
-                                        class="txt-main pointer" data-bs-toggle="modal" data-bs-target="#TermsModal"
-                                        (click)="getTerms()">{{"checkout.termsAndConditions" | translate}}</a>
-                                    {{"checkout.IAccept2" | translate}}</small>
-                            </div>
-                            <button class="btn bg-main text-white w-100" type="button"
-                                [disabled]="NewAddressForm.invalid"
-                                (click)="getCheckOut_WithOutAuth(NewAddressForm)">{{"buttons.checkOut" |
-                                translate}}</button>
-                        </form>
-
-                        <form class="mt-4" *ngIf="!isNewLocation" [formGroup]='OldAddressForm'>
-                            <div class="form-group text-start">
-                                <label>{{"location.emirate" | translate}}</label>
-                                <input type="text" class="form-control my-2" readonly formControlName='emirate'>
-                                <label>{{"location.area" | translate}}</label>
-                                <input type="text" class="form-control my-2" readonly formControlName='area'>
-                                <label>{{"location.address" | translate}}</label>
-                                <input type="text" class="form-control my-2" readonly formControlName='address'>
-                                <input type="text" class="form-control my-2" readonly hidden
-                                    formControlName="address_id">
-                            </div>
-                            <div class="d-flex justify-content-start align-items-center my-3">
-                                <p class="m-0 font-weight-500">{{"checkout.weAccept" | translate}}:</p>
-                                <img src="../../../../assets/images/check-out/payment-method.png" id="visa_img"
-                                    class="img-fluid mx-1" alt="">
-                            </div>
-                            <div class="d-flex justify-content-start align-items-center my-3">
-                                <input type="checkbox" formControlName='AcceptTerms' data-bs-toggle="modal"
-                                    data-bs-target="#TermsModal" (click)="getTerms()">
-                                <small class="mx-2 font-weight-500">{{"checkout.IAccept1" | translate}} <a
-                                        class="txt-main pointer" data-bs-toggle="modal" data-bs-target="#TermsModal"
-                                        (click)="getTerms()">{{"checkout.termsAndConditions" | translate}}</a>
-                                    {{"checkout.IAccept2" | translate}}</small>
-                            </div>
-                            <button class="btn bg-main text-white w-100" type="button"
-                                [disabled]="OldAddressForm.invalid"
-                                (click)="getCheckOut_WithAuth()">{{"buttons.checkOut" | translate}}</button>
-                        </form> -->
-
-                        <form [formGroup]='checkoutForm'>
+                        <form  *ngIf="user.data" [formGroup]='checkoutForm' (ngSubmit)='checkout_With_Auth(checkoutForm)'>
                             <div class="my-4 text-start">
-                                <p-dropdown [options]="emirates" optionLabel="name" optionValue="id"
-                                    formControlName='emirate_id' placeholder='Select your emirate'
-                                    (ngModelChange)="getAreas($event)"></p-dropdown>
+                                <p-dropdown [options]="emirates | async" optionLabel="en_name" optionValue="id"
+                                    formControlName='emirate_id' placeholder='Select your emirate'></p-dropdown>
                             </div>
                             <div class="my-4 text-start">
-                                <p-dropdown [options]="areas" optionLabel="area_en" optionValue="id"
-                                    placeholder='Select your area' formControlName='area_id'>
-                                </p-dropdown>
+                                <label class="text-muted">Enter your area</label>
+                                <input formControlName="area_id" pInputText type="text">
                             </div>
-                            <div class="my-4">
-                                <span class="p-float-label">
-                                    <input type="text" pInputText [style]="{'width':'100%'}"
-                                        formControlName='address' />
-                                    <label>address</label>
-                                </span>
+                            <div class="my-4 text-start">
+                                <label class="text-muted">Enter your address</label>
+                                <input type="text" pInputText formControlName='address' />
                             </div>
                             <div class="d-flex justify-content-start align-items-center my-1">
                                 <p class="m-0 font-weight-500">We Accept:</p>
@@ -248,11 +120,84 @@
                                     meals plan
                                 </small>
                             </div>
-                            <a class="button pointer py-2 px-5 ms-2">
-                                <button class="btn w-100 border-0">
+                            <button class="btn w-100 border-0" type="submit" [disabled]="checkoutForm.invalid">
+                                <a class="button pointer py-2 px-5 ms-2">
                                     Checkout
-                                </button>
-                            </a>
+                                </a>
+                            </button>
+                        </form>
+
+                        <form  *ngIf="!user.data" [formGroup]='checkoutForm_without_auth'
+                            (ngSubmit)='checkout_Without_Auth(checkoutForm_without_auth)'>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="my-4 text-start">
+                                        <label class="text-muted">first_name</label>
+                                        <input type="text" pInputText formControlName='first_name' />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-4 text-start">
+                                        <label class="text-muted">last_name</label>
+                                        <input type="text" pInputText formControlName='last_name' />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-4 text-start">
+                                        <label class="text-muted">email</label>
+                                        <input type="email" pInputText formControlName='email' />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-4 text-start">
+                                        <label class="text-muted">phone_number</label>
+                                        <input type="text" pInputText formControlName='phone_number' />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-4 text-start">
+                                        <label class="text-muted">password</label>
+                                        <input type="password" pInputText formControlName='password' />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-4 text-start">
+                                        <label class="text-muted">Emirate</label>
+                                        <p-dropdown [options]="emirates | async" optionLabel="en_name" optionValue="id"
+                                            formControlName='emirate_id' placeholder='Select your emirate'></p-dropdown>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-4 text-start">
+                                        <label class="text-muted">Enter your area</label>
+                                        <input formControlName="area_id" pInputText type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-4 text-start">
+                                        <label class="text-muted">Enter your address</label>
+                                        <input formControlName="address" pInputText type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center my-1">
+                                <p class="m-0 font-weight-500">We Accept:</p>
+                                <img src="../../../../../../assets/images/check-out/payment-method.png" id="visa_img"
+                                    class="img-fluid mx-1" alt="">
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center my-1">
+                                <input type="checkbox" formControlName='terms'>
+                                <small class="mx-2 font-weight-500">
+                                    I accepted the<a class="text-orange pointer mx-1">terms & conditions </a>of the
+                                    meals plan
+                                </small>
+                            </div>
+                            <button class="btn w-100 border-0" type="submit"
+                                [disabled]="checkoutForm_without_auth.invalid">
+                                <a class="button pointer py-2 px-5 ms-2">
+                                    Checkout
+                                </a>
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -306,93 +251,6 @@
     </div>
 </div> -->
 
-<!-- <div class="modal fade" id="SubscribtionModal" tabindex="-1" aria-labelledby="SubscribtionModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content rounded-lg">
-            <div class="modal-body">
-                <div class="text-end">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="text-center">
-                    <img [src]="plan_img" class="img-fluid" style="width: 150px;" alt="">
-                    <h5 class="txt-main mt-2">{{Menu_Name}}</h5>
-                </div>
-                <h6 class="txt-main">{{"modals.subscribtion.deliveryDays" | translate}}:</h6>
-                <div class="row">
-                    <div class="col-sm-4 col-6" *ngFor="let day of SubscribtionData?.delivery_days;let i = index">
-                        <div class="delivery-day bg-main text-white rounded py-2 px-3 position-relative my-1">
-                            {{deliveryDays[i]?.[translate.currentLang] | titlecase}}
-                        </div>
-                    </div>
-                </div>
-                <hr style="height: .5px;">
-                <div class="d-flex justify-content-between">
-                    <h6 class="txt-main">{{"modals.subscribtion.numberOfMeals" | translate}}:</h6>
-                    <span>{{SubscribtionData?.meal_types?.length?SubscribtionData?.meal_types?.length:SubscribtionData?.meal_count?SubscribtionData?.meal_count:0}}</span>
-                </div>
-                <hr class="my-2" style="height: .5px;">
-                <div class="d-flex justify-content-between">
-                    <h6 class="txt-main">{{"modals.subscribtion.numberOfSnacks" | translate}}:</h6>
-                    <span>{{SubscribtionData?.SnacksType?.length?SubscribtionData?.SnacksType?.length:SubscribtionData?.snack_count?SubscribtionData?.snack_count:0}}</span>
-                </div>
-                <hr class="my-2" style="height: .5px;">
-                <div class="d-flex justify-content-between">
-                    <h6 class="txt-main">{{"modals.subscribtion.startDate" | translate}}:</h6>
-                    <span>{{SubscribtionData?.start_date}}</span>
-                </div>
-                <hr class="my-2" style="height: .5px;">
-                <div class="d-flex justify-content-between">
-                    <h6 class="txt-main">{{"modals.subscribtion.subscriptionDays" | translate}}:</h6>
-                    <span>{{SubscribtionData?.subscription_days?SubscribtionData?.subscription_days:SubscribtionData?.sub_days}}</span>
-                </div>
-                <div class="mt-4">
-                    <button _ngcontent-qrg-c63="" type="button" data-bs-dismiss="modal"
-                        class="btn bg-main rounded-pill w-100 text-white py-3 txt-font-bold f-size-md">{{"buttons.close"
-                        | translate}}</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-<!-- <div class="modal fade" id="AddNewAddressModal" tabindex="-1" aria-labelledby="AddNewAddressModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h6 class="m-0">{{"checkout.enterNewLocation" | translate}}</h6>
-                <button type="button" class="btn-close bg-main2 m-0" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form [formGroup]='AddressForm' (ngSubmit)='addNewAddress(AddressForm)'>
-                    <div class="my-4">
-                        <p-dropdown [options]="cities" optionLabel="name" optionValue="id" formControlName='city_id'
-                            placeholder='{{"location.emirate" | translate}}' (ngModelChange)="getAreas($event)">
-                        </p-dropdown>
-                    </div>
-                    <div class="my-4">
-                        <p-dropdown [options]="Areas" optionLabel="area_en" optionValue="id"
-                            placeholder='{{"location.area" | translate}}' formControlName='area_id'></p-dropdown>
-                    </div>
-                    <div class="my-4">
-                        <span class="p-float-label">
-                            <input type="text" id="float-input1" pInputText [style]="{'width':'100%'}"
-                                formControlName='address' />
-                            <label for="float-input1">{{"location.address" | translate}}</label>
-                        </span>
-                    </div>
-                    <button type="submit" class="btn bg-main rounded-pill w-100 text-white py-3 txt-font-bold f-size-md"
-                        data-bs-dismiss="modal">{{"buttons.addNewAddress" | translate}}</button>
-                </form>
-            </div>
-            <div class="modal-footer container">
-            </div>
-        </div>
-    </div>
-</div> -->
-
 <!-- <div class="modal fade" id="TermsModal" tabindex="-1" aria-labelledby="TermsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -413,116 +271,10 @@
     </div>
 </div> -->
 
-<!-- <div class="modal fade" id="ConfirmModal" tabindex="-1" aria-labelledby="ConfirmModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h6 class="m-0">{{"checkout.enterNewLocation" | translate}}</h6>
-                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <h5>{{"modals.deleteAddressWarning" | translate}}</h5>
-            </div>
-            <div class="modal-footer container d-flex justify-content-between">
-                <button type="button" class="btn bg-black rounded-pill px-5 text-white py-2 txt-font-bold f-size-md"
-                    data-bs-toggle="modal" data-bs-target="#LocationModal">{{"buttons.back" | translate}}</button>
-                <button type="button" class="btn bg-main rounded-pill px-5 text-white py-2 txt-font-bold f-size-md"
-                    data-bs-dismiss="modal" (click)="deleteLocation()">{{"buttons.confirm" | translate}}</button>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-<!-- <div class="modal fade" id="LoginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="LoginModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5>{{"Auth.login.loginForm" | translate}}</h5>
-                <button type="button" class="btn-close bg-main2 m-0" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <section>
-                    <div class="container">
-                        <div class="row mt-3">
-                            <div class="col-12">
-                                <div class="text-center">
-                                    <img src="../../../../../assets/images/logo/LC_LOGO (1).png" alt=""
-                                        class="img-fluid">
-                                </div>
-                                <h1 class="my-4 text-center h2">
-                                    <span class="txt-main">{{"Auth.login.title" | translate}}</span>
-                                </h1>
-                                <div class="text-center w-75 m-auto txt-font">
-                                    <form [formGroup]='loginForm' (ngSubmit)='onLoginSubmit(loginForm)'>
-                                        <div class="my-3 position-relative">
-                                            <input class="p-3 form-controller"
-                                                placeholder="{{'Auth.login.email' | translate}}" type="email"
-                                                formControlName='email' />
-                                            <fa-icon [icon]="faEnvelope" class="icon-controller txt-main position-left">
-                                            </fa-icon>
-                                            <div class="text-start">
-                                                <small class="text-danger ms-1" *ngIf="loginForm.get('email')?.touched &&
-                                                    loginForm.get('email')?.hasError('email')">{{'errors.email' |
-                                                    translate}}</small>
-                                                <small class="text-danger ms-1" *ngIf="loginForm.get('email')?.touched &&
-                                                    loginForm.get('email')?.hasError('required')">{{'errors.required' |
-                                                    translate}}</small>
-                                            </div>
-                                        </div>
-                                        <div class="my-3 position-relative">
-                                            <input class="p-3 form-controller"
-                                                placeholder="{{'Auth.login.password' | translate}}" type="password"
-                                                #PasswordInput formControlName='password' />
-                                            <fa-icon [icon]="faLock" class="txt-main icon-controller position-left">
-                                            </fa-icon>
-                                            <fa-icon [icon]="faEye" class="txt-main icon-controller position-right"
-                                                (click)="togglePassword(PasswordInput)"></fa-icon>
-                                            <div class="text-start">
-                                                <small class="text-danger ms-1"
-                                                    *ngIf="loginForm.get('password')?.touched &&
-                                                    loginForm.get('password')?.hasError('required')">{{'errors.required' | translate}}</small>
-                                            </div>
-                                        </div>
-                                        <p class="txt-main my-0 text-end" data-bs-dismiss="modal">
-                                            <a [routerLink]="['../../../../auth/forgot-password']"
-                                                class="text-reset text-decoration-none">{{'Auth.login.forgot' |
-                                                translate}}</a>
-                                        </p>
-                                        <p class="txt-main mt-1 mb-4 text-start">
-                                            <input type="checkbox" id="rememberMe"> <label class="mx-1"
-                                                for="rememberMe">{{'Auth.login.remember' | translate}}</label>
-                                        </p>
-                                        <button
-                                            class="btn bg-main text-white rounded-pill px-5 py-3 header-font f-size-md w-100"
-                                            type="submit" data-bs-dismiss="modal"
-                                            [disabled]="loginForm.invalid">{{'Auth.login.login' | translate}}</button>
-                                    </form>
-                                </div>
-                                <div class="text-center mt-4 txt-font" data-bs-dismiss="modal">
-                                    <p>{{'Auth.login.noAccount' | translate}}
-                                        <a class="txt-main"
-                                            [routerLink]="['../../../../auth/register']">{{'Auth.login.register' |
-                                            translate}}</a>
-                                    </p>
-                                    <p>{{'Auth.login.termsAgree' | translate}} <a class="txt-main pointer"
-                                            data-bs-toggle="modal" data-bs-target="#TermsModal"
-                                            (click)="getTerms()">{{'Auth.login.terms' | translate}}</a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div>
-    </div>
-</div> -->
-
 
 <p-dialog header="Subscribtion Info" [(visible)]="SubscribtionModal" [modal]="true" [style]="{ width: '50vw' }"
     [draggable]="false" [resizable]="false">
-    <div class="modal-body" *ngIf="subscriptionInfo | async as sub">
+    <div class="modal-body" *ngIf="subscriptionInfo$ | async as sub">
         <div class="text-center" *ngIf="ProgramDetails | async as program">
             <img [src]="program[0].myprogram.image" class="img-fluid" style="width: 150px;" alt="Program Image">
             <h5 class="text-orange mt-2">{{program[0].myprogram.name}}</h5>

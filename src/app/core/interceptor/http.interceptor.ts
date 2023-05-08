@@ -15,11 +15,9 @@ import { ILoginResponse } from 'src/app/interfaces/auth.interface';
 export class AuthInterceptor implements HttpInterceptor {
   // token: string = '';
   constructor(
-    // private store: Store
+    // private store: Store,
     private _LocalService: LocalService
-  ) {
-
-  }
+  ) {}
 
   // checkToken(): Observable<any> {
   //   const HTTP_HEADER = new HttpHeaders().set('token', this.token);
@@ -51,8 +49,6 @@ export class AuthInterceptor implements HttpInterceptor {
     //       .set('lang', 'en'),
     //   });
     // }
-
-
 
     // return this.store.select(loginSelector).pipe(
     //   map(authState => {
@@ -91,8 +87,12 @@ export class AuthInterceptor implements HttpInterceptor {
 
     if (this._LocalService.getJsonValue('lowcaloriesAE_new')) {
       HttpHeader = request.clone({
-        headers: request.headers
-        .set('Authorization', `Bearer ${this._LocalService.getJsonValue('lowcaloriesAE_new').auth_token}`)
+        headers: request.headers.set(
+          'Authorization',
+          `Bearer ${
+            this._LocalService.getJsonValue('lowcaloriesAE_new').auth_token
+          }`
+        ),
       });
       return next.handle(HttpHeader);
     }

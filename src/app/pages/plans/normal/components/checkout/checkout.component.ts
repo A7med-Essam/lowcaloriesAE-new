@@ -17,6 +17,9 @@ import {
 import { ILoginState } from 'src/app/store/authStore/auth.reducer';
 import { loginSelector } from 'src/app/store/authStore/auth.selector';
 import { FETCH_NORMALPLAN_GIFTCODE_START } from 'src/app/store/normalPlanStore/normalPlan.action';
+import { FETCH_EMIRATE_START } from 'src/app/store/emirateStore/emirate.action';
+import { IEmirateResponse } from 'src/app/interfaces/emirate.interface';
+import { emirateSelector } from 'src/app/store/emirateStore/emirate.selector';
 
 @Component({
   selector: 'app-checkout',
@@ -26,12 +29,14 @@ import { FETCH_NORMALPLAN_GIFTCODE_START } from 'src/app/store/normalPlanStore/n
 export class CheckoutComponent implements OnInit {
   private destroyed$: Subject<void> = new Subject();
   checkoutForm: FormGroup = new FormGroup({});
-  subscriptionInfo: Observable<ISubscriptionData | null> = of(null);
+  checkoutForm_without_auth: FormGroup = new FormGroup({});
+  subscriptionInfo$: Observable<ISubscriptionData | null> = of(null);
   price$: Observable<INormalProgramPriceResponse | null> = of(null);
-  ProgramDetails!: Observable<INormalPlanResponse[] | null>;
-  SubscribtionModal: boolean = false;
-  login$!: Observable<ILoginState>;
   giftcodeButtonMode$: Observable<boolean | null> = of(false);
+  emirates!: Observable<IEmirateResponse[] | any>;
+  ProgramDetails!: Observable<INormalPlanResponse[] | null>;
+  login$!: Observable<ILoginState>;
+  SubscribtionModal: boolean = false;
   program_id: number = 0;
   price: number = 0;
 
@@ -55,12 +60,14 @@ export class CheckoutComponent implements OnInit {
       .subscribe((res) => {
         if (res) {
           this.program_id = res.program_id;
-          this.subscriptionInfo = _Store.select(
+          this.subscriptionInfo$ = _Store.select(
             fromNormalPlanSelector.normalSubscriptionSelector
           );
           this.ProgramDetails = this._Store.select(
             fromNormalPlanSelector.normalPlanSelector
           );
+          this._Store.dispatch(FETCH_EMIRATE_START());
+          this.emirates = this._Store.select(emirateSelector);
         } else {
           this._Router.navigate(['set-plan'], {
             relativeTo: this._ActivatedRoute.parent,
@@ -71,6 +78,7 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.setCheckoutForm();
+    this.setCheckoutForm_Without_Auth();
   }
 
   setCheckoutForm() {
@@ -78,24 +86,26 @@ export class CheckoutComponent implements OnInit {
       address: new FormControl(null, [Validators.required]),
       emirate_id: new FormControl(null, [Validators.required]),
       area_id: new FormControl(null, [Validators.required]),
-      terms: new FormControl(null, [Validators.required]),
+      terms: new FormControl(false, [Validators.requiredTrue]),
     });
   }
 
-  // setCheckoutForm_WithoutAuth() {
-  //   this.checkoutForm = this._FormBuilder.group({
-  //     first_name: new FormControl(null, [Validators.required]),
-  //     last_name: new FormControl(null, [Validators.required]),
-  //     email: new FormControl(null, [Validators.required]),
-  //     phone_number: new FormControl(null, [Validators.required]),
-  //     address: new FormControl(null, [Validators.required]),
-  //     emirate_id: new FormControl(null, [Validators.required]),
-  //     area_id: new FormControl(null, [Validators.required]),
-  //   });
-  // }
+  setCheckoutForm_Without_Auth() {
+    this.checkoutForm_without_auth = this._FormBuilder.group({
+      first_name: new FormControl(null, [Validators.required]),
+      last_name: new FormControl(null, [Validators.required]),
+      email: new FormControl(null, [Validators.required]),
+      password: new FormControl(null, [Validators.required]),
+      phone_number: new FormControl(null, [Validators.required]),
+      address: new FormControl(null, [Validators.required]),
+      emirate_id: new FormControl(null, [Validators.required]),
+      area_id: new FormControl(null, [Validators.required]),
+      terms: new FormControl(false, [Validators.requiredTrue]),
+    });
+  }
 
   applyGiftCode(input: HTMLInputElement) {
-    if (input.value != "") {
+    if (input.value != '') {
       this.giftcodeButtonMode$ = this._Store.select(
         fromNormalPlanSelector.normalPlanGiftCodeLoadingSelector
       );
@@ -108,11 +118,89 @@ export class CheckoutComponent implements OnInit {
           },
         })
       );
-      this.price$ = this._Store.select(fromNormalPlanSelector.normalPlanGiftCodeSelector);
+      this.price$ = this._Store.select(
+        fromNormalPlanSelector.normalPlanGiftCodeSelector
+      );
     }
   }
 
-  getAreas(e: any) {}
-  emirates: any[] = [];
-  areas: any[] = [];
+  checkout_With_Auth(form: FormGroup) {
+    if (form.valid) {
+      let sub: any;
+      let priceinfo: any;
+      this.subscriptionInfo$
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe((res) => (sub = res));
+
+      this.price$
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe((res) => (priceinfo = res));
+
+      const checkout = {
+        delivery_days: sub?.delivery_days,
+        meal_types: sub?.meal_types,
+        no_snacks: sub?.no_snacks,
+        program_id: sub?.program_id,
+        plan_option_id: sub?.plan_option_id,
+        start_date: sub?.start_date,
+        bag: 0,
+        code_id: priceinfo?.code_id,
+        price: priceinfo?.price,
+        grand_total: priceinfo?.grand_total,
+        location: {
+          emirate_id: form.value.emirate_id,
+          area_id: form.value.area_id,
+          property_number: '',
+          landmark: form.value.address,
+        },
+      };
+
+      console.log(checkout);
+    }
+  }
+
+  checkout_Without_Auth(form: FormGroup) {
+    if (form.valid) {
+      let sub: any;
+      let priceinfo: any;
+      this.subscriptionInfo$
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe((res) => (sub = res));
+
+      this.price$
+        .pipe(takeUntil(this.destroyed$))
+        .subscribe((res) => (priceinfo = res));
+
+      const checkout = {
+        delivery_days: sub?.delivery_days,
+        meal_types: sub?.meal_types,
+        no_snacks: sub?.no_snacks,
+        program_id: sub?.program_id,
+        plan_option_id: sub?.plan_option_id,
+        start_date: sub?.start_date,
+        bag: 0,
+        code_id: priceinfo?.code_id,
+        price: priceinfo?.price,
+        grand_total: priceinfo?.grand_total,
+        location: {
+          emirate_id: form.value.emirate_id,
+          area_id: form.value.area_id,
+          property_number: '',
+          landmark: form.value.address,
+        },
+        first_name: form.value.first_name,
+        last_name: form.value.last_name,
+        email: form.value.email,
+        phone_number: form.value.phone_number,
+        password: form.value.password,
+      };
+
+      console.log(checkout);
+    }
+  }
 }
+
+// TODO:retrive user locations and add new form
+// TODO:display terms
+// TODO:set store for checkout for logedin user and non login user
+// TODO:display lottie payment after checkout

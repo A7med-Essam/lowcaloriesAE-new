@@ -22,7 +22,11 @@ export class AuthEffect implements OnInitEffects {
   ngrxOnInitEffects() {
     let user: ILoginResponse =
       this._LocalService.getJsonValue('lowcaloriesAE_new');
-    return fromAuthActions.LOGIN_SUCCESS({ data: user, message: '', status: 1 });
+    return fromAuthActions.LOGIN_SUCCESS({
+      data: user,
+      message: '',
+      status: 1,
+    });
   }
 
   loginEffect = createEffect(() =>
@@ -66,10 +70,8 @@ export class AuthEffect implements OnInitEffects {
             })
           ),
           tap((res) => {
-            if (res.status == 1) {
-              this._LocalService.removeItem('lowcaloriesAE_new');
-              this._Router.navigate(['login']);
-            }
+            this._LocalService.removeItem('lowcaloriesAE_new');
+            this._Router.navigate(['login']);
           }),
           catchError((error: HttpErrorResponse) =>
             of(fromAuthActions.LOGOUT_FAILED({ error: error }))
