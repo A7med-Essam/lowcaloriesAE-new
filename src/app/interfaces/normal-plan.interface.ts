@@ -93,3 +93,28 @@ export interface IGiftCodeData{
     price:          number;
     code:           string;
 }
+
+export interface ICheckout {
+    plan_option_id: number;
+    start_date:     string;
+    delivery_days:  string[];
+    meal_types:     string[];
+    program_id:     number;
+    no_snacks:      number;
+    grand_total:    number;
+    price:          number;
+    code_id:        number;
+    bag:            number;
+    location: {
+        emirate_id:     number;
+        area_id:        string;
+        property_number:any;
+        landmark:       string
+    }
+    first_name? :    string;
+    last_name?:      string;
+    email?:          string;
+    phone_number?:   string;
+    password?:       string;
+}
+

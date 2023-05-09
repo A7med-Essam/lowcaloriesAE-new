@@ -23,6 +23,7 @@ export interface AppState {
   normalPlanPrice:fromNormalPlanStore.INormalPlanPriceState
   normalGiftCode:fromNormalPlanStore.INormalPlanGiftCodeState
   emirate:fromEmirateStore.IEmirateState
+  normalCheckout:fromNormalPlanStore.ICheckoutState
 }
 
 export const APP_STORE: ActionReducerMap<AppState> = {
@@ -36,7 +37,8 @@ export const APP_STORE: ActionReducerMap<AppState> = {
   NormalSubscription:fromNormalPlanStore.NormalSubscriptionReducer,
   normalPlanPrice:fromNormalPlanStore.NormalPlanPriceReducer,
   normalGiftCode:fromNormalPlanStore.NormalPlanGiftCodeReducer,
-  emirate:fromEmirateStore.EmirateReducer
+  emirate:fromEmirateStore.EmirateReducer,
+  normalCheckout:fromNormalPlanStore.NormalPlanCheckoutReducer
 };
 
 export const APP_EFFECTS = [

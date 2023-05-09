@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { INormalPlanGiftCodeState, INormalPlanPriceState, INormalPlanState, INormalSubscriptionState, IShowMealsState } from "./normalPlan.reducer";
+import { ICheckoutState, INormalPlanGiftCodeState, INormalPlanPriceState, INormalPlanState, INormalSubscriptionState, IShowMealsState } from "./normalPlan.reducer";
 
 const normalPlanFeatureSelector = createFeatureSelector<INormalPlanState>('normalPlan')
 export const normalPlanSelector = createSelector(normalPlanFeatureSelector, state => state.data)
@@ -20,3 +20,7 @@ export const normalPlanPriceLoadingSelector = createSelector(normalPlanPriceFeat
 const normalPlanGiftCodeFeatureSelector = createFeatureSelector<INormalPlanGiftCodeState>('normalGiftCode')
 export const normalPlanGiftCodeSelector = createSelector(normalPlanGiftCodeFeatureSelector, state => state.data)
 export const normalPlanGiftCodeLoadingSelector = createSelector(normalPlanGiftCodeFeatureSelector, state => state.loading)
+
+const normalPlanCheckoutFeatureSelector = createFeatureSelector<ICheckoutState>('normalCheckout')
+export const normalPlanCheckoutSelector = createSelector(normalPlanCheckoutFeatureSelector, state => state.data)
+export const normalPlanCheckoutLoadingSelector = createSelector(normalPlanCheckoutFeatureSelector, state => state.loading)

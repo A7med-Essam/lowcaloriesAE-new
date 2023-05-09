@@ -45,4 +45,8 @@ export class AuthService {
   logOut(): Observable<{ status: number; data: null; message: string }> {
     return this._ApiService.postReq('logout', '');
   }
+
+  refreshToken(): Observable<{ status: number; data: string; message: string }>{
+    return this._ApiService.postReq('checkToken', '');
+  }
 }

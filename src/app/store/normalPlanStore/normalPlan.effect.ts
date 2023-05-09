@@ -5,7 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { exhaustMap, map, of, catchError, tap } from 'rxjs';
 import { NormalPlanService } from 'src/app/services/plans/normal-plan.service';
 import * as fromNormalPlanActions from '../normalPlanStore/normalPlan.action';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 @Injectable()
 export class NormalPlanEffects {
@@ -16,7 +16,7 @@ export class NormalPlanEffects {
     private _ActivatedRoute: ActivatedRoute
   ) {}
   @ViewChild('mySwal')
-  
+
   // GET PROGRAM
   normalPlanEffect = createEffect(() =>
     this.actions$.pipe(
@@ -105,7 +105,11 @@ export class NormalPlanEffects {
               }
             }),
             catchError((error: HttpErrorResponse) =>
-              of(fromNormalPlanActions.FETCH_NORMALPLAN_PRICE_FAILED({ error: error }))
+              of(
+                fromNormalPlanActions.FETCH_NORMALPLAN_PRICE_FAILED({
+                  error: error,
+                })
+              )
             )
           )
       )
@@ -113,15 +117,15 @@ export class NormalPlanEffects {
   );
 
   // GIFTCODE
-    giftCodeEffect = createEffect(() =>
+  giftCodeEffect = createEffect(() =>
     this.actions$.pipe(
       ofType(fromNormalPlanActions.FETCH_NORMALPLAN_GIFTCODE_START),
       exhaustMap((action) =>
         this._NormalPlanService
           .applyGiftCode({
-            code:action.data.code,
-            price:action.data.price,
-            program_id:action.data.program_id
+            code: action.data.code,
+            price: action.data.price,
+            program_id: action.data.program_id,
           })
           .pipe(
             map((res) =>
@@ -132,16 +136,41 @@ export class NormalPlanEffects {
               })
             ),
             tap((res) => {
-                Swal.fire(
-                  'Gift Code Applied!',
-                  res.message,
-                  res.status == 1?'success':'error'
-                )
+              Swal.fire(
+                res.message,
+                'Gift Code Applied!',
+                res.status == 1 ? 'success' : 'error'
+              );
             }),
             catchError((error: HttpErrorResponse) =>
-              of(fromNormalPlanActions.FETCH_NORMALPLAN_GIFTCODE_FAILED({ error: error }))
+              of(
+                fromNormalPlanActions.FETCH_NORMALPLAN_GIFTCODE_FAILED({
+                  error: error,
+                })
+              )
             )
           )
+      )
+    )
+  );
+
+  // Checkout
+  checkoutEffect = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromNormalPlanActions.FETCH_CHECKOUT_START),
+      exhaustMap((action) =>
+        this._NormalPlanService.checkout(action.data).pipe(
+          map((res) =>
+            fromNormalPlanActions.FETCH_CHECKOUT_SUCCESS({
+              data: res.data,
+              message: res.message,
+              status: res.status,
+            })
+          ),
+          catchError((error: HttpErrorResponse) =>
+            of(fromNormalPlanActions.FETCH_CHECKOUT_FAILED({ error: error }))
+          )
+        )
       )
     )
   );

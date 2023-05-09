@@ -5775,3 +5775,11 @@ input[type=checkbox]{
         width: fit-content;
         height: auto;
 }
+
+.swal2-styled.swal2-confirm{
+  background-color: #e93e21 !important;
+}
+
+.swal2-styled.swal2-confirm:focus {
+  box-shadow: 0 0 0 3px #e93f219e !important;
+}

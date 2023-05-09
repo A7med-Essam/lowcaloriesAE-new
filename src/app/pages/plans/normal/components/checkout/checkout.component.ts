@@ -10,13 +10,14 @@ import { Store } from '@ngrx/store';
 import * as fromNormalPlanSelector from 'src/app/store/normalPlanStore/normalPlan.selector';
 import { Observable, of, Subject, takeUntil } from 'rxjs';
 import {
+  ICheckout,
   INormalPlanResponse,
   INormalProgramPriceResponse,
   ISubscriptionData,
 } from 'src/app/interfaces/normal-plan.interface';
 import { ILoginState } from 'src/app/store/authStore/auth.reducer';
 import { loginSelector } from 'src/app/store/authStore/auth.selector';
-import { FETCH_NORMALPLAN_GIFTCODE_START } from 'src/app/store/normalPlanStore/normalPlan.action';
+import { FETCH_CHECKOUT_START, FETCH_NORMALPLAN_GIFTCODE_START } from 'src/app/store/normalPlanStore/normalPlan.action';
 import { FETCH_EMIRATE_START } from 'src/app/store/emirateStore/emirate.action';
 import { IEmirateResponse } from 'src/app/interfaces/emirate.interface';
 import { emirateSelector } from 'src/app/store/emirateStore/emirate.selector';
@@ -136,7 +137,7 @@ export class CheckoutComponent implements OnInit {
         .pipe(takeUntil(this.destroyed$))
         .subscribe((res) => (priceinfo = res));
 
-      const checkout = {
+      const checkout:ICheckout = {
         delivery_days: sub?.delivery_days,
         meal_types: sub?.meal_types,
         no_snacks: sub?.no_snacks,
@@ -152,10 +153,9 @@ export class CheckoutComponent implements OnInit {
           area_id: form.value.area_id,
           property_number: '',
           landmark: form.value.address,
-        },
+        }
       };
-
-      console.log(checkout);
+      this._Store.dispatch(FETCH_CHECKOUT_START({data:checkout}))
     }
   }
 
@@ -171,7 +171,7 @@ export class CheckoutComponent implements OnInit {
         .pipe(takeUntil(this.destroyed$))
         .subscribe((res) => (priceinfo = res));
 
-      const checkout = {
+      const checkout:ICheckout = {
         delivery_days: sub?.delivery_days,
         meal_types: sub?.meal_types,
         no_snacks: sub?.no_snacks,
@@ -195,7 +195,7 @@ export class CheckoutComponent implements OnInit {
         password: form.value.password,
       };
 
-      console.log(checkout);
+      this._Store.dispatch(FETCH_CHECKOUT_START({data:checkout}))
     }
   }
 }

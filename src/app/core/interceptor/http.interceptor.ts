@@ -5,86 +5,28 @@ import {
   HttpEvent,
   HttpInterceptor,
 } from '@angular/common/http';
-import { map, Observable, take, exhaustMap } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { loginSelector } from 'src/app/store/authStore/auth.selector';
+import { Observable, switchMap, tap } from 'rxjs';
 import { LocalService } from 'src/app/services/local.service';
-import { ILoginResponse } from 'src/app/interfaces/auth.interface';
+import { AuthService } from 'src/app/services/auth.service';
+import { Store } from '@ngrx/store';
+import { LOGOUT_START, LOGOUT_SUCCESS } from 'src/app/store/authStore/auth.action';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  // token: string = '';
   constructor(
-    // private store: Store,
-    private _LocalService: LocalService
+    private _LocalService: LocalService,
+    private _AuthService: AuthService,
+    private _Store: Store,
+    private _Router:Router
   ) {}
-
-  // checkToken(): Observable<any> {
-  //   const HTTP_HEADER = new HttpHeaders().set('token', this.token);
-  //   return this._ApiService.post_withoutLoader('checkToken', '', HTTP_HEADER);
-  // }
 
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     let HttpHeader;
-
-    // if (this._LocalService.getJsonValue('currentLang') == 'ar') {
-    //   HttpHeader = request.clone({
-    //     headers: request.headers
-    //       .set('Accept', ['application/json'])
-    //       .set('Authorization', `Bearer ${this.token}`)
-    //       .set(
-    //         'api_password',
-    //         `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTY1Mjg2NjczOSwiZXhwIjoxNjUyODcwMzM5LCJuYmYiOjE2NTI4NjY3MzksImp0aSI6InFkTnN1NTZ2ZFYwQkhjOU4iLCJzdWIiOjQsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.Dk_4v17X5MuTD16LCZImtB4BvwvN30HgTM-OtNtE-Ck`
-    //       )
-    //       .set('lang', 'ar'),
-    //   });
-    // } else {
-    //   HttpHeader = request.clone({
-    //     headers: request.headers
-    //       .set('Accept', ['application/json'])
-    //       .set('Authorization', `Bearer ${this.token}`)
-    //       .set('lang', 'en'),
-    //   });
-    // }
-
-    // return this.store.select(loginSelector).pipe(
-    //   map(authState => {
-    //     return authState.data;
-    //   }),
-    //   exhaustMap(user => {
-    //     console.log(user?.access_token,"token");
-    //     if (!user) {
-    //       return next.handle(request);
-    //     }
-    //     else{
-    //       const HttpHeader = request.clone({
-    //         headers: request.headers.set('Authorization', `Bearer ${user.access_token}`)
-    //       });
-    //       return next.handle(HttpHeader);
-    //     }
-    //   })
-    //   );
-
-    // this.store.select(loginSelector)
-
-    // if (this._LocalService.getJsonValue('lowcaloriesAE_new')) {
-    //   const user: ILoginResponse = JSON.parse(
-    //     this._LocalService.getJsonValue('lowcaloriesAE_new')
-    //   );
-    //   console.log(user);
-    //   HttpHeader = request.clone({
-    //     headers: request.headers
-    //       .set('Authorization', `Bearer ${user.access_token}`)
-    //   });
-    //   return next.handle(HttpHeader);
-    // }
-    // else{
-    //   return next.handle(request);
-    // }
-
     if (this._LocalService.getJsonValue('lowcaloriesAE_new')) {
       HttpHeader = request.clone({
         headers: request.headers.set(
@@ -94,7 +36,41 @@ export class AuthInterceptor implements HttpInterceptor {
           }`
         ),
       });
-      return next.handle(HttpHeader);
+      return next.handle(HttpHeader).pipe(
+        tap((res: any) => {
+          if (res?.body?.message === 'unauthenticated') {
+            this._AuthService
+              .refreshToken()
+              .pipe(
+                switchMap((res) => {
+                  if (res.data) {
+                    const item =
+                      this._LocalService.getJsonValue('lowcaloriesAE_new');
+                    item.auth_token = res.data;
+                    this._LocalService.setJsonValue('lowcaloriesAE_new', item);
+                    const newRequest = request.clone({
+                      headers: request.headers.set(
+                        'Authorization',
+                        `Bearer ${
+                          this._LocalService.getJsonValue('lowcaloriesAE_new')
+                            .auth_token
+                        }`
+                      ),
+                    });
+                    return next.handle(newRequest);
+                  } else {
+                    Swal.fire('Session expired!', 'Please login', 'error');
+                    this._Store.dispatch(LOGOUT_SUCCESS({data:null,message:'',status:0}));
+                    this._LocalService.removeItem('lowcaloriesAE_new');
+                    this._Router.navigate(['login']);
+                    return next.handle(request);
+                  }
+                })
+              )
+              .subscribe();
+          }
+        })
+      );
     }
     return next.handle(request);
   }

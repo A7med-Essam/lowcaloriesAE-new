@@ -47,10 +47,11 @@ export const LoginReducer = createReducer(
   on(fromAuthActions.LOGOUT_START, (state) => ({
     ...state,
     loading: true,
+    data:null
   })),
   on(fromAuthActions.LOGOUT_SUCCESS, (state, action) => ({
     ...state,
-    data: action.status == 1 ? null : state.data,
+    data: null,
     loading:false,
     message:null
   }))

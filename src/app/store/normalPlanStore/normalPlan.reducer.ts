@@ -186,3 +186,45 @@ export const NormalPlanGiftCodeReducer = createReducer(
     status: 0,
   }))
 );
+
+// =============================================================================================================================
+
+export interface ICheckoutState extends IHttpResponse {
+  data: string | null;
+}
+
+const NormalCheckoutInitialState: ICheckoutState = {
+  error: null,
+  loading: null,
+  data: null,
+  message: null,
+  status: null,
+};
+
+export const NormalPlanCheckoutReducer = createReducer(
+  NormalCheckoutInitialState,
+  on(fromNormalPlanActions.FETCH_CHECKOUT_START, (state) => ({
+    ...state,
+    loading: true,
+    data: null,
+    error: null,
+    message: null,
+    status: 0,
+  })),
+  on(fromNormalPlanActions.FETCH_CHECKOUT_SUCCESS, (state, action) => ({
+    ...state,
+    error: null,
+    loading: false,
+    data: action.data,
+    message: action.message,
+    status: action.status,
+  })),
+  on(fromNormalPlanActions.FETCH_CHECKOUT_FAILED, (state, action) => ({
+    ...state,
+    error: action.error,
+    data: null,
+    loading: false,
+    message: null,
+    status: 0,
+  }))
+);
