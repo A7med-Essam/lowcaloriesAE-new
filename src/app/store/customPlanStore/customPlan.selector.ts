@@ -12,3 +12,4 @@ export const customPlanLoadingSelector = createSelector(customPlanFeatureSelecto
 
 const CustomSubscriptionFeatureSelector = createFeatureSelector<ICustomSubscriptionState>('CustomSubscription')
 export const CustomSubscriptionSelector = createSelector(CustomSubscriptionFeatureSelector, state => state.data)
+export const CustomSubscriptionErrorSelector = createSelector(CustomSubscriptionFeatureSelector, state => state.data)

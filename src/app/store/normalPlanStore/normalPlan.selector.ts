@@ -24,3 +24,4 @@ export const normalPlanGiftCodeLoadingSelector = createSelector(normalPlanGiftCo
 const normalPlanCheckoutFeatureSelector = createFeatureSelector<ICheckoutState>('normalCheckout')
 export const normalPlanCheckoutSelector = createSelector(normalPlanCheckoutFeatureSelector, state => state.data)
 export const normalPlanCheckoutLoadingSelector = createSelector(normalPlanCheckoutFeatureSelector, state => state.loading)
+export const normalPlanResponseSelector = createSelector(normalPlanCheckoutFeatureSelector, state => state)

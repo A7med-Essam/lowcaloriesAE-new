@@ -7,9 +7,11 @@ import * as fromProgramStore from './programStore/program.reducer';
 import * as fromNormalPlanStore from './normalPlanStore/normalPlan.reducer';
 import * as fromCustomPlanStore from './customPlanStore/customPlan.reducer';
 import * as fromEmirateStore from './emirateStore/emirate.reducer';
+import * as fromAddressStore from './userAddressStore/address.reducer';
 import { NormalPlanEffects } from './normalPlanStore/normalPlan.effect';
 import { CustomPlanEffects } from './customPlanStore/customPlan.effect';
 import { EmirateEffects } from './emirateStore/emirate.effect';
+import { AddressEffects } from './userAddressStore/address.effect';
 
 export interface AppState {
   login: fromAuthStore.ILoginState;
@@ -24,6 +26,7 @@ export interface AppState {
   normalGiftCode:fromNormalPlanStore.INormalPlanGiftCodeState
   emirate:fromEmirateStore.IEmirateState
   normalCheckout:fromNormalPlanStore.ICheckoutState
+  address:fromAddressStore.IAddresseState
 }
 
 export const APP_STORE: ActionReducerMap<AppState> = {
@@ -38,7 +41,8 @@ export const APP_STORE: ActionReducerMap<AppState> = {
   normalPlanPrice:fromNormalPlanStore.NormalPlanPriceReducer,
   normalGiftCode:fromNormalPlanStore.NormalPlanGiftCodeReducer,
   emirate:fromEmirateStore.EmirateReducer,
-  normalCheckout:fromNormalPlanStore.NormalPlanCheckoutReducer
+  normalCheckout:fromNormalPlanStore.NormalPlanCheckoutReducer,
+  address:fromAddressStore.AddressReducer
 };
 
 export const APP_EFFECTS = [
@@ -46,7 +50,8 @@ export const APP_EFFECTS = [
   ProgramEffects,
   NormalPlanEffects,
   CustomPlanEffects,
-  EmirateEffects
+  EmirateEffects,
+  AddressEffects
 ]
 
 export interface IHttpResponse {

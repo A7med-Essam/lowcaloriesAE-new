@@ -17,10 +17,16 @@ import {
 } from 'src/app/interfaces/normal-plan.interface';
 import { ILoginState } from 'src/app/store/authStore/auth.reducer';
 import { loginSelector } from 'src/app/store/authStore/auth.selector';
-import { FETCH_CHECKOUT_START, FETCH_NORMALPLAN_GIFTCODE_START } from 'src/app/store/normalPlanStore/normalPlan.action';
+import {
+  FETCH_CHECKOUT_START,
+  FETCH_NORMALPLAN_GIFTCODE_START,
+} from 'src/app/store/normalPlanStore/normalPlan.action';
 import { FETCH_EMIRATE_START } from 'src/app/store/emirateStore/emirate.action';
 import { IEmirateResponse } from 'src/app/interfaces/emirate.interface';
 import { emirateSelector } from 'src/app/store/emirateStore/emirate.selector';
+import { FETCH_USERADDRESS_START } from 'src/app/store/userAddressStore/address.action';
+import { addressSelector } from 'src/app/store/userAddressStore/address.selector';
+import { IAddressResponse } from 'src/app/interfaces/address.interface';
 
 @Component({
   selector: 'app-checkout',
@@ -34,12 +40,16 @@ export class CheckoutComponent implements OnInit {
   subscriptionInfo$: Observable<ISubscriptionData | null> = of(null);
   price$: Observable<INormalProgramPriceResponse | null> = of(null);
   giftcodeButtonMode$: Observable<boolean | null> = of(false);
-  emirates!: Observable<IEmirateResponse[] | any>;
+  emirates$!: Observable<IEmirateResponse[] | any>;
   ProgramDetails!: Observable<INormalPlanResponse[] | null>;
   login$!: Observable<ILoginState>;
-  SubscribtionModal: boolean = false;
+  subscribtionModal: boolean = false;
   program_id: number = 0;
   price: number = 0;
+  addresses$!: Observable<IAddressResponse[] | null>;
+  addressesModal: boolean = false;
+  termsModal: boolean = false;
+  checkoutResponse$!: Observable<any>;
 
   constructor(
     private _Store: Store,
@@ -68,7 +78,12 @@ export class CheckoutComponent implements OnInit {
             fromNormalPlanSelector.normalPlanSelector
           );
           this._Store.dispatch(FETCH_EMIRATE_START());
-          this.emirates = this._Store.select(emirateSelector);
+          this._Store.dispatch(FETCH_USERADDRESS_START());
+          this.emirates$ = this._Store.select(emirateSelector);
+          this.addresses$ = this._Store.select(addressSelector);
+          this.checkoutResponse$ = this._Store.select(
+            fromNormalPlanSelector.normalPlanResponseSelector
+          );
         } else {
           this._Router.navigate(['set-plan'], {
             relativeTo: this._ActivatedRoute.parent,
@@ -95,7 +110,7 @@ export class CheckoutComponent implements OnInit {
     this.checkoutForm_without_auth = this._FormBuilder.group({
       first_name: new FormControl(null, [Validators.required]),
       last_name: new FormControl(null, [Validators.required]),
-      email: new FormControl(null, [Validators.required]),
+      email: new FormControl(null, [Validators.required,Validators.email]),
       password: new FormControl(null, [Validators.required]),
       phone_number: new FormControl(null, [Validators.required]),
       address: new FormControl(null, [Validators.required]),
@@ -137,7 +152,7 @@ export class CheckoutComponent implements OnInit {
         .pipe(takeUntil(this.destroyed$))
         .subscribe((res) => (priceinfo = res));
 
-      const checkout:ICheckout = {
+      const checkout: ICheckout = {
         delivery_days: sub?.delivery_days,
         meal_types: sub?.meal_types,
         no_snacks: sub?.no_snacks,
@@ -153,9 +168,10 @@ export class CheckoutComponent implements OnInit {
           area_id: form.value.area_id,
           property_number: '',
           landmark: form.value.address,
-        }
+        },
       };
-      this._Store.dispatch(FETCH_CHECKOUT_START({data:checkout}))
+      this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
+      this.redirectToPaymentGateway()
     }
   }
 
@@ -171,7 +187,7 @@ export class CheckoutComponent implements OnInit {
         .pipe(takeUntil(this.destroyed$))
         .subscribe((res) => (priceinfo = res));
 
-      const checkout:ICheckout = {
+      const checkout: ICheckout = {
         delivery_days: sub?.delivery_days,
         meal_types: sub?.meal_types,
         no_snacks: sub?.no_snacks,
@@ -195,12 +211,28 @@ export class CheckoutComponent implements OnInit {
         password: form.value.password,
       };
 
-      this._Store.dispatch(FETCH_CHECKOUT_START({data:checkout}))
+      this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
+      this.redirectToPaymentGateway()
     }
+  }
+
+  redirectToPaymentGateway() {
+    this.checkoutResponse$.pipe(takeUntil(this.destroyed$)).subscribe((res) => {
+      if (res.data) {
+        res.status == 1 && (window.location.href = res.data);
+      }
+    });
+  }
+
+  // *****************************************************Address*****************************************************
+
+  selectAddress(address: IAddressResponse) {
+    this.checkoutForm.get('address')?.setValue(address.landmark);
+    this.checkoutForm.get('emirate_id')?.setValue(address.emirate_id);
+    this.checkoutForm.get('area_id')?.setValue(address.area_id);
+    this.addressesModal = false;
   }
 }
 
-// TODO:retrive user locations and add new form
 // TODO:display terms
-// TODO:set store for checkout for logedin user and non login user
 // TODO:display lottie payment after checkout
