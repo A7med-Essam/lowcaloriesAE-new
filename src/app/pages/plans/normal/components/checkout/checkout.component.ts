@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -27,6 +27,8 @@ import { emirateSelector } from 'src/app/store/emirateStore/emirate.selector';
 import { FETCH_USERADDRESS_START } from 'src/app/store/userAddressStore/address.action';
 import { addressSelector } from 'src/app/store/userAddressStore/address.selector';
 import { IAddressResponse } from 'src/app/interfaces/address.interface';
+import Swal from 'sweetalert2';
+import { AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-checkout',
@@ -50,6 +52,12 @@ export class CheckoutComponent implements OnInit {
   addressesModal: boolean = false;
   termsModal: boolean = false;
   checkoutResponse$!: Observable<any>;
+  options: AnimationOptions = {
+    path: '../../../../../../assets/lottie/payment.json',
+  };
+  @ViewChild('lottie') lottie!: ElementRef;
+
+
 
   constructor(
     private _Store: Store,
@@ -97,6 +105,8 @@ export class CheckoutComponent implements OnInit {
     this.setCheckoutForm_Without_Auth();
   }
 
+  // *****************************************************Reactive Forms*****************************************************
+
   setCheckoutForm() {
     this.checkoutForm = this._FormBuilder.group({
       address: new FormControl(null, [Validators.required]),
@@ -110,7 +120,7 @@ export class CheckoutComponent implements OnInit {
     this.checkoutForm_without_auth = this._FormBuilder.group({
       first_name: new FormControl(null, [Validators.required]),
       last_name: new FormControl(null, [Validators.required]),
-      email: new FormControl(null, [Validators.required,Validators.email]),
+      email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required]),
       phone_number: new FormControl(null, [Validators.required]),
       address: new FormControl(null, [Validators.required]),
@@ -119,6 +129,8 @@ export class CheckoutComponent implements OnInit {
       terms: new FormControl(false, [Validators.requiredTrue]),
     });
   }
+
+  // *****************************************************GiftCode*****************************************************
 
   applyGiftCode(input: HTMLInputElement) {
     if (input.value != '') {
@@ -139,6 +151,8 @@ export class CheckoutComponent implements OnInit {
       );
     }
   }
+
+  // *****************************************************checkout*****************************************************
 
   checkout_With_Auth(form: FormGroup) {
     if (form.valid) {
@@ -171,7 +185,8 @@ export class CheckoutComponent implements OnInit {
         },
       };
       this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
-      this.redirectToPaymentGateway()
+      this.fireSwal();
+      this.redirectToPaymentGateway();
     }
   }
 
@@ -212,12 +227,14 @@ export class CheckoutComponent implements OnInit {
       };
 
       this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
-      this.redirectToPaymentGateway()
+      this.fireSwal();
+      this.redirectToPaymentGateway();
     }
   }
 
   redirectToPaymentGateway() {
     this.checkoutResponse$.pipe(takeUntil(this.destroyed$)).subscribe((res) => {
+      res.loading == false && this.paymentSwal.close();
       if (res.data) {
         res.status == 1 && (window.location.href = res.data);
       }
@@ -232,7 +249,19 @@ export class CheckoutComponent implements OnInit {
     this.checkoutForm.get('area_id')?.setValue(address.area_id);
     this.addressesModal = false;
   }
+
+  // *****************************************************Swal && Lottie*****************************************************
+  paymentSwal:any;
+  fireSwal(){
+    this.paymentSwal = Swal.mixin({
+      showConfirmButton: false,
+      timerProgressBar: false,
+    });
+
+    this.paymentSwal.fire({
+      html: this.lottie.nativeElement,
+    });
+  }
 }
 
 // TODO:display terms
-// TODO:display lottie payment after checkout
