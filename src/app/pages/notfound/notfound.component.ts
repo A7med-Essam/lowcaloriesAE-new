@@ -8,7 +8,7 @@ import { AnimationOptions } from 'ngx-lottie';
 })
 export class NotfoundComponent implements OnInit {
   options: AnimationOptions = {
-    path: '../../../assets/lottie/404.json',
+    path: 'https://assets8.lottiefiles.com/packages/lf20_nvapBV.json',
   };
   constructor() { }
 

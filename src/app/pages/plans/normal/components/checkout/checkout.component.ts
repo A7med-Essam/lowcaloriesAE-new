@@ -53,7 +53,7 @@ export class CheckoutComponent implements OnInit {
   termsModal: boolean = false;
   checkoutResponse$!: Observable<any>;
   options: AnimationOptions = {
-    path: '../../../../../../assets/lottie/payment.json',
+    path: 'https://assets1.lottiefiles.com/packages/lf20_kshjzseu.json',
   };
   @ViewChild('lottie') lottie!: ElementRef;
 
