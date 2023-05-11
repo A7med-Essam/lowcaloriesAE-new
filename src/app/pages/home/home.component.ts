@@ -12,7 +12,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {}
   options: AnimationOptions = {
-    path: 'https://assets4.lottiefiles.com/packages/lf20_4jkk6z.json',
+    path: '../../../assets/lottie/app_store.json',
+    // path: 'https://assets4.lottiefiles.com/packages/lf20_4jkk6z.json',
   };
 
   customOptions: OwlOptions = {
