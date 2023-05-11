@@ -413,13 +413,14 @@ NOTE: This is main stylesheet of template, This file contains the styling for th
 ======================================
 [ End table content ]
 ======================================*/
-
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Recursive:wght@300;400;500;600;700;800;900;1000&display=swap');
 /*************************
     General
 *************************/
 body {
-    font-family: "Open Sans", sans-serif;
-    font-weight: normal;
+    font-family: 'Lilita One', "Open Sans", sans-serif;
+    font-weight: 400;
     font-style: normal;
     font-size: 14px;
   }
@@ -455,7 +456,7 @@ body {
   h4,
   h5,
   h6 {
-    font-family: "Amatic SC", cursive;
+    font-family: "Amatic SC",'Comic Sans MS', cursive;
     font-weight: bold;
     color: #1e2327;
     margin-top: 0px;
@@ -1755,7 +1756,7 @@ body {
     position: relative;
   }
   .head-info h6 {
-    font-family: "Amatic SC", cursive;
+    font-family: "Amatic SC",'Comic Sans MS', cursive;
     font-weight: bold;
     color: #e93e21;
   }
@@ -2976,7 +2977,7 @@ body {
     line-height: 60px;
     display: block;
     font-weight: bold;
-    font-family: "Amatic SC", cursive;
+    font-family: "Amatic SC",'Comic Sans MS', cursive;
     margin: 30px 0px;
   }
   .counter .glyph-icon {
@@ -3379,7 +3380,7 @@ body {
   }
   .book-content .menu-list strong {
     font-size: 40px;
-    font-family: "Amatic SC", cursive;
+    font-family: "Amatic SC",'Comic Sans MS', cursive;
     color: #e93e21;
     font-weight: bold;
   }
@@ -3410,7 +3411,7 @@ body {
     position: relative;
     color: #ffffff;
     padding-right: 60px;
-    font-family: "Amatic SC", cursive;
+    font-family: "Amatic SC", 'Comic Sans MS',cursive;
     font-weight: normal;
     font-size: 40px;
     text-align: center;
@@ -3515,7 +3516,7 @@ body {
   .menu-body .menu-details .price {
     color: #e93e21;
     font-size: 30px;
-    font-family: "Amatic SC", cursive;
+    font-family: "Amatic SC",'Comic Sans MS', cursive;
     line-height: 40px;
     font-weight: 600;
   }
