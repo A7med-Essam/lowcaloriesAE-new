@@ -10,7 +10,7 @@
         </div>
     </div>
 </div>
-<section class="page-section-ptb" *ngIf="skeletonMode">
+<section class="page-section-ptb" *ngIf="skeletonMode$ | async">
     <div class="container">
         <div class="my-5">
             <p-skeleton height="2rem" width="50%" styleClass="mb-3"></p-skeleton>
@@ -23,9 +23,9 @@
 <section class="page-section-ptb">
     <div class="container">
         <main class="mt-5">
-            <div class="section-group text-start my-4" *ngFor="let term of terms">
-                <h2 class="text-orange mb-3">{{term?.header}}</h2>
-                <div [innerHTML]="term?.description" style="line-height: 45px;" class="text-muted">
+            <div class="section-group text-start my-4" *ngFor="let terms of terms$ | async">
+                <h2 class="text-orange mb-3">{{terms?.header}}</h2>
+                <div [innerHTML]="terms?.description" style="line-height: 45px;" class="text-muted">
                 </div>
             </div>
         </main>

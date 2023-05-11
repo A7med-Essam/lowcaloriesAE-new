@@ -29,6 +29,9 @@ import { addressSelector } from 'src/app/store/userAddressStore/address.selector
 import { IAddressResponse } from 'src/app/interfaces/address.interface';
 import Swal from 'sweetalert2';
 import { AnimationOptions } from 'ngx-lottie';
+import { FETCH_TERMS_START } from 'src/app/store/termsStore/terms.action';
+import { ITermsResponse } from 'src/app/interfaces/terms.interface';
+import { termsSelector } from 'src/app/store/termsStore/terms.selector';
 
 @Component({
   selector: 'app-checkout',
@@ -43,6 +46,7 @@ export class CheckoutComponent implements OnInit {
   price$: Observable<INormalProgramPriceResponse | null> = of(null);
   giftcodeButtonMode$: Observable<boolean | null> = of(false);
   emirates$!: Observable<IEmirateResponse[] | any>;
+  terms$!: Observable<ITermsResponse[] | any>;
   ProgramDetails!: Observable<INormalPlanResponse[] | null>;
   login$!: Observable<ILoginState>;
   subscribtionModal: boolean = false;
@@ -88,8 +92,10 @@ export class CheckoutComponent implements OnInit {
           );
           this._Store.dispatch(FETCH_EMIRATE_START());
           this._Store.dispatch(FETCH_USERADDRESS_START());
+          this._Store.dispatch(FETCH_TERMS_START());
           this.emirates$ = this._Store.select(emirateSelector);
           this.addresses$ = this._Store.select(addressSelector);
+          this.terms$ = this._Store.select(termsSelector);
           this.checkoutResponse$ = this._Store.select(
             fromNormalPlanSelector.normalPlanResponseSelector
           );
@@ -263,6 +269,9 @@ export class CheckoutComponent implements OnInit {
       html: this.lottie.nativeElement,
     });
   }
-}
 
-// TODO:display terms
+  // *****************************************************Terms*****************************************************
+  onCheckTermsChange(event: any){
+    event.target.checked && (this.termsModal = true)
+  }
+}

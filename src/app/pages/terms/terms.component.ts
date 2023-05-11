@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-// import { TermsService } from 'src/app/services/terms.service';
+import { Store } from '@ngrx/store';
+import { Observable ,Subject,takeUntil} from 'rxjs';
+import { ITermsResponse } from 'src/app/interfaces/terms.interface';
+import * as fromTermsSelector from '../../store/termsStore/terms.selector';
+import * as fromTermsActions from '../../store/termsStore/terms.action';
 
 @Component({
   selector: 'app-terms',
@@ -7,19 +11,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./terms.component.scss'],
 })
 export class TermsComponent implements OnInit {
-  skeletonMode: boolean = false;
-  // constructor(private _TermsService: TermsService) {}
+  skeletonMode$: Observable<boolean | null>;
+  terms$: Observable<ITermsResponse[] | null>;
+  private destroyed$: Subject<void> = new Subject();
 
-  ngOnInit(): void {
-    // this.getTerms();
+
+    constructor(private _Store: Store) {
+    this.terms$ = this._Store.select(fromTermsSelector.termsSelector);
+    this.skeletonMode$ = this._Store.select(
+      fromTermsSelector.termsLoadingSelector
+    );
+    this.terms$.pipe(takeUntil(this.destroyed$)).subscribe((res) => {
+      res || this._Store.dispatch(fromTermsActions.FETCH_TERMS_START());
+    });
   }
 
-  terms: any[] = [];
-  getTerms() {
-    this.skeletonMode = true;
-    // this._TermsService.getTerms().subscribe((res) => {
-    //   this.skeletonMode = false;
-    //   this.terms = res.data;
-    // });
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
+
+  ngOnInit(): void {}
 }

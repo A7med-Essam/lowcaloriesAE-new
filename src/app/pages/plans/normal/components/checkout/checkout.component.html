@@ -135,9 +135,10 @@
                                     class="img-fluid mx-1" alt="">
                             </div>
                             <div class="d-flex justify-content-start align-items-center my-1">
-                                <input type="checkbox" formControlName='terms'>
+                                <input type="checkbox" formControlName='terms' (change)="onCheckTermsChange($event)">
                                 <small class="mx-2 font-weight-500">
-                                    I accepted the<a class="text-orange pointer mx-1">terms & conditions </a>of the
+                                    I accepted the<a class="text-orange pointer mx-1" (click)="termsModal = true">terms
+                                        & conditions </a>of the
                                     meals plan
                                     <!-- By clicking here, I state that I have read and understood the terms and conditions. -->
                                 </small>
@@ -164,7 +165,8 @@
                                         <input type="text" pInputText formControlName='first_name' />
                                         <div class="text-start">
                                             <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('first_name')?.touched &&
-                                                checkoutForm_without_auth.get('first_name')?.hasError('required')">This field is
+                                                checkoutForm_without_auth.get('first_name')?.hasError('required')">This
+                                                field is
                                                 required</small>
                                         </div>
                                     </div>
@@ -188,8 +190,9 @@
                                             <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('email')?.touched &&
                                         checkoutForm_without_auth.get('email')?.hasError('required')">This field is
                                                 required</small>
-                                                <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('email')?.touched &&
-                                                checkoutForm_without_auth.get('email')?.hasError('email')">Email is not valid.</small>
+                                            <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('email')?.touched &&
+                                                checkoutForm_without_auth.get('email')?.hasError('email')">Email is not
+                                                valid.</small>
                                         </div>
                                     </div>
                                 </div>
@@ -199,7 +202,8 @@
                                         <input type="text" pInputText formControlName='phone_number' />
                                         <div class="text-start">
                                             <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('phone_number')?.touched &&
-                                        checkoutForm_without_auth.get('phone_number')?.hasError('required')">This field is
+                                        checkoutForm_without_auth.get('phone_number')?.hasError('required')">This field
+                                                is
                                                 required</small>
                                         </div>
                                     </div>
@@ -222,7 +226,8 @@
                                             formControlName='emirate_id' placeholder='Select your emirate'></p-dropdown>
                                         <div class="text-start">
                                             <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('emirate_id')?.touched &&
-                                        checkoutForm_without_auth.get('emirate_id')?.hasError('required')">This field is
+                                        checkoutForm_without_auth.get('emirate_id')?.hasError('required')">This field
+                                                is
                                                 required</small>
                                         </div>
                                     </div>
@@ -256,9 +261,10 @@
                                     class="img-fluid mx-1" alt="">
                             </div>
                             <div class="d-flex justify-content-start align-items-center my-1">
-                                <input type="checkbox" formControlName='terms'>
+                                <input type="checkbox" formControlName='terms' (change)="onCheckTermsChange($event)">
                                 <small class="mx-2 font-weight-500">
-                                    I accepted the<a class="text-orange pointer mx-1">terms & conditions </a>of the
+                                    I accepted the<a class="text-orange pointer mx-1" (click)="termsModal=true">terms &
+                                        conditions </a>of the
                                     meals plan
                                 </small>
                             </div>
@@ -355,6 +361,15 @@
             You don't have any addresses yet!
             <br>
             Please enter a new address
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog header="Terms and conditions" [(visible)]="termsModal" [modal]="true" [style]="{ width: '50vw' }"
+    [draggable]="false" [resizable]="false">
+    <div class="section-group text-start my-4" *ngFor="let terms of terms$ | async">
+        <h2 class="text-orange mb-3">{{terms?.header}}</h2>
+        <div [innerHTML]="terms?.description" style="line-height: 45px;" class="text-muted">
         </div>
     </div>
 </p-dialog>
