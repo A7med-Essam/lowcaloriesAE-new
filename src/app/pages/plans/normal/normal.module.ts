@@ -27,7 +27,7 @@ export function playerFactory() {
     CalendarModule,
     DialogModule,
     CarouselModule,
-    LottieModule.forRoot({ player: playerFactory, useWebWorker: true }),
+    LottieModule.forRoot({ player: playerFactory }),
   ],
 })
 export class NormalModule {}

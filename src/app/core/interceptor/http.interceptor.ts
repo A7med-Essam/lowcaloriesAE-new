@@ -9,7 +9,7 @@ import { Observable, switchMap, tap } from 'rxjs';
 import { LocalService } from 'src/app/services/local.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Store } from '@ngrx/store';
-import { LOGOUT_START, LOGOUT_SUCCESS } from 'src/app/store/authStore/auth.action';
+import { LOGOUT_SUCCESS } from 'src/app/store/authStore/auth.action';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
@@ -59,7 +59,11 @@ export class AuthInterceptor implements HttpInterceptor {
                     });
                     return next.handle(newRequest);
                   } else {
-                    Swal.fire('Session expired!', 'Please login', 'error');
+                    Swal.fire({
+                      title:'Session expired!',
+                      text: 'Please login', 
+                      icon:'error'
+                    });
                     this._Store.dispatch(LOGOUT_SUCCESS({data:null,message:'',status:0}));
                     this._LocalService.removeItem('lowcaloriesAE_new');
                     this._Router.navigate(['login']);

@@ -28,7 +28,6 @@ import { StoreModule } from '@ngrx/store';
 import { APP_STORE, APP_EFFECTS } from './store/appStore';
 import { AuthInterceptor } from './core/interceptor/http.interceptor';
 import { LottieModule } from 'ngx-lottie';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 export function playerFactory() {
   return import('lottie-web');
@@ -60,10 +59,9 @@ const APP_PRIMENG_MODULE = [DropdownModule, SkeletonModule, ImageModule];
     BrowserAnimationsModule,
     StoreModule.forRoot(APP_STORE),
     EffectsModule.forRoot(APP_EFFECTS),
-    SweetAlert2Module.forRoot(),
     CarouselModule,
     APP_PRIMENG_MODULE,
-    LottieModule.forRoot({ player: playerFactory, useWebWorker: true }),
+    LottieModule.forRoot({ player: playerFactory }),
   ],
   providers: [
     {

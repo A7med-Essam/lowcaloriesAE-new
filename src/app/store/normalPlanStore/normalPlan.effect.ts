@@ -15,7 +15,7 @@ export class NormalPlanEffects {
     private _Router: Router,
     private _ActivatedRoute: ActivatedRoute
   ) {}
-  @ViewChild('mySwal')
+  // @ViewChild('mySwal')
 
   // GET PROGRAM
   normalPlanEffect = createEffect(() =>
@@ -136,11 +136,11 @@ export class NormalPlanEffects {
               })
             ),
             tap((res) => {
-              Swal.fire(
-                res.message,
-                'Gift Code Applied!',
-                res.status == 1 ? 'success' : 'error'
-              );
+              Swal.fire({
+                title:res.message,
+                text:'Gift Code Applied!',
+                icon:res.status == 1 ? 'success' : 'error'
+              });
             }),
             catchError((error: HttpErrorResponse) =>
               of(
