@@ -1,26 +1,27 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from 'src/app/core/services/api.service';
 import { Observable } from 'rxjs';
+import { IClinicCheckout, IEmirateAppointmentsResponse } from '../interfaces/clinic.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ClinicService {
+  constructor(private _ApiService: ApiService) {}
 
-  constructor(
-    private _ApiService:ApiService
-  ) { }
-
-  getEmiratesForOnline(): Observable<any> {
-    return this._ApiService.postReq('getEmiratesForOnline','');
+  getEmirateAppointments(): Observable<{
+    status: number;
+    message: string;
+    data: IEmirateAppointmentsResponse[];
+  }> {
+    return this._ApiService.postReq('getEmirateAppointments', '');
   }
 
-  getDates(Dates:string[]): Observable<any> {
-    return this._ApiService.postReq('dates_locked_unlocked_clinic', {myDates:Dates});
+  bookAppointmentInClinic(bookInfo: IClinicCheckout): Observable<{
+    status: number;
+    message: string;
+    data: string;
+  }> {
+    return this._ApiService.postReq('bookAppointmentInClinic', bookInfo);
   }
-
-  getClinicCheckOut(SubInfo:any): Observable<any> {
-    return this._ApiService.postReq('checkOutClinicOnline',SubInfo);
-  }
-
 }

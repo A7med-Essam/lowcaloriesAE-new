@@ -1,84 +1,57 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { ClinicService } from 'src/app/services/clinic.service';
+import { IClinicStep1Form } from 'src/app/interfaces/clinic.interface';
 
 @Component({
   selector: 'app-parent',
   templateUrl: './parent.component.html',
-  styleUrls: ['./parent.component.scss']
+  styleUrls: ['./parent.component.scss'],
 })
 export class ParentComponent implements OnInit {
-  currIndex:number = 1;
-  Clinic:any[] = [];
-  Emirate_appointments:any[] = [];
-  isSelectedTime:boolean = false;
+  currIndex: number = 1;
+  Step1Form!:IClinicStep1Form;
   @ViewChild('indicators') indicators!: ElementRef;
   @ViewChild('progressElm') progressElm!: ElementRef;
-  @ViewChild('nextBtn') nextBtn!: ElementRef;
-  constructor(
-    private _ClinicService:ClinicService,
-  ) {
-  }
+  constructor() {}
 
-  ngOnInit(): void {
-    this.getClinicAppointments()
-  }
-  
+  ngOnInit(): void {}
+
   next() {
     this.currIndex++;
-    this.indicators.nativeElement.children[this.currIndex].style.transitionDelay = "0.6s";
-    this.indicators.nativeElement.children[this.currIndex].classList.add("completed");
-    this.progressElm.nativeElement.style.width = `${((this.currIndex -1) / (this.indicators.nativeElement.children.length -2)) * 100}%`;
+    this.indicators.nativeElement.children[
+      this.currIndex
+    ].style.transitionDelay = '0.6s';
+    this.indicators.nativeElement.children[this.currIndex].classList.add(
+      'completed'
+    );
+    this.progressElm.nativeElement.style.width = `${
+      ((this.currIndex - 1) /
+        (this.indicators.nativeElement.children.length - 2)) *
+      100
+    }%`;
   }
 
   previous() {
-      this.indicators.nativeElement.children[this.currIndex].style.transitionDelay = "0s";
-      this.indicators.nativeElement.children[this.currIndex].classList.remove("completed");
-      this.currIndex --;
-      this.progressElm.nativeElement.style.width = `${((this.currIndex-1) / (this.indicators.nativeElement.children.length - 2)) * 100}%`;
-  }
-  
-
-  getClinicAppointments(){
-    this._ClinicService.getEmiratesForOnline().subscribe((res:any)=>{
-      this.Clinic = [...res.data]
-    })
-  }
-
-  InValid:boolean = true;
-  getFormStatus(isValid:boolean){
-    if (isValid) {
-      this.InValid = false;
-      this.nextBtn?.nativeElement.classList.remove("disabled")
-    } 
-    else {
-      this.InValid = true;
-      this.nextBtn?.nativeElement.classList.add("disabled")
-    }
+    this.indicators.nativeElement.children[
+      this.currIndex
+    ].style.transitionDelay = '0s';
+    this.indicators.nativeElement.children[this.currIndex].classList.remove(
+      'completed'
+    );
+    this.currIndex--;
+    this.progressElm.nativeElement.style.width = `${
+      ((this.currIndex - 1) /
+        (this.indicators.nativeElement.children.length - 2)) *
+      100
+    }%`;
   }
 
-  getEmirateId(EmirateId:number){
-    this.Emirate_appointments = this.Clinic.filter(e => e.id == EmirateId);
+  onChildFormSubmit(formData: IClinicStep1Form) {
+    this.Step1Form = formData
+    this.next()
   }
 
-  GetTimeStatus(e:boolean){
-    this.isSelectedTime = e;
+  onReturn(){
+    this.previous()
   }
-
-  ClinicForm!:FormGroup;
-  getClinicForm(clinicForm:FormGroup){
-    this.ClinicForm = clinicForm;
-  }
-
-  SubInfo!:any;
-  GetSubInfo(e:any){
-    this.SubInfo = e;
-  }
-
-  getCheckOut(){
-    this._ClinicService.getClinicCheckOut(this.SubInfo).subscribe((res:any)=>{
-      window.location.href = res.data;
-    })
-  }
-  
 }
+

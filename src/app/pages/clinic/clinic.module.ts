@@ -9,6 +9,10 @@ import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'primeng/api';
+import { LottieModule } from 'ngx-lottie';
+export function playerFactory() {
+  return import('lottie-web');
+}
 
 const APP_PRIMENG_MODULE = [
 	CalendarModule,
@@ -28,7 +32,8 @@ const APP_PRIMENG_MODULE = [
     CalendarModule,
     FormsModule,
     ReactiveFormsModule,
-    APP_PRIMENG_MODULE
+    APP_PRIMENG_MODULE,
+    LottieModule.forRoot({ player: playerFactory }),
   ]
 })
 export class ClinicModule { }

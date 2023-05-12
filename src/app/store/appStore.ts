@@ -9,27 +9,31 @@ import * as fromCustomPlanStore from './customPlanStore/customPlan.reducer';
 import * as fromEmirateStore from './emirateStore/emirate.reducer';
 import * as fromAddressStore from './userAddressStore/address.reducer';
 import * as fromTermsStore from './termsStore/terms.reducer';
+import * as fromClinicStore from './clinicStore/clinic.reducer';
 import { NormalPlanEffects } from './normalPlanStore/normalPlan.effect';
 import { CustomPlanEffects } from './customPlanStore/customPlan.effect';
 import { EmirateEffects } from './emirateStore/emirate.effect';
 import { AddressEffects } from './userAddressStore/address.effect';
 import { TermsEffects } from './termsStore/terms.effect';
+import { ClinicEffects } from './clinicStore/clinic.effect';
 
 export interface AppState {
   login: fromAuthStore.ILoginState;
-  register: fromAuthStore.IRegisterState
-  programs:fromProgramStore.IProgramState
-  normalPlan:fromNormalPlanStore.INormalPlanState
-  showMeals:fromNormalPlanStore.IShowMealsState
-  customPlan:fromCustomPlanStore.ICustomPlanState
-  CustomSubscription:fromCustomPlanStore.ICustomSubscriptionState
-  NormalSubscription:fromNormalPlanStore.INormalSubscriptionState
-  normalPlanPrice:fromNormalPlanStore.INormalPlanPriceState
-  normalGiftCode:fromNormalPlanStore.INormalPlanGiftCodeState
-  emirate:fromEmirateStore.IEmirateState
-  normalCheckout:fromNormalPlanStore.ICheckoutState
-  address:fromAddressStore.IAddresseState
-  terms:fromTermsStore.ITermsState
+  register: fromAuthStore.IRegisterState;
+  programs: fromProgramStore.IProgramState;
+  normalPlan: fromNormalPlanStore.INormalPlanState;
+  showMeals: fromNormalPlanStore.IShowMealsState;
+  customPlan: fromCustomPlanStore.ICustomPlanState;
+  CustomSubscription: fromCustomPlanStore.ICustomSubscriptionState;
+  NormalSubscription: fromNormalPlanStore.INormalSubscriptionState;
+  normalPlanPrice: fromNormalPlanStore.INormalPlanPriceState;
+  normalGiftCode: fromNormalPlanStore.INormalPlanGiftCodeState;
+  emirate: fromEmirateStore.IEmirateState;
+  normalCheckout: fromNormalPlanStore.ICheckoutState;
+  address: fromAddressStore.IAddresseState;
+  terms: fromTermsStore.ITermsState;
+  clinicEmirate: fromClinicStore.IClinicEmirateState;
+  clinicCheckout:fromClinicStore.IClinicCheckoutState
 }
 
 export const APP_STORE: ActionReducerMap<AppState> = {
@@ -38,15 +42,17 @@ export const APP_STORE: ActionReducerMap<AppState> = {
   programs: fromProgramStore.ProgramReducer,
   normalPlan: fromNormalPlanStore.NormalPlanReducer,
   showMeals: fromNormalPlanStore.ShowMealsReducer,
-  customPlan:fromCustomPlanStore.CustomPlanReducer,
-  CustomSubscription:fromCustomPlanStore.CustomSubscriptionReducer,
-  NormalSubscription:fromNormalPlanStore.NormalSubscriptionReducer,
-  normalPlanPrice:fromNormalPlanStore.NormalPlanPriceReducer,
-  normalGiftCode:fromNormalPlanStore.NormalPlanGiftCodeReducer,
-  emirate:fromEmirateStore.EmirateReducer,
-  normalCheckout:fromNormalPlanStore.NormalPlanCheckoutReducer,
-  address:fromAddressStore.AddressReducer,
-  terms:fromTermsStore.TermsReducer
+  customPlan: fromCustomPlanStore.CustomPlanReducer,
+  CustomSubscription: fromCustomPlanStore.CustomSubscriptionReducer,
+  NormalSubscription: fromNormalPlanStore.NormalSubscriptionReducer,
+  normalPlanPrice: fromNormalPlanStore.NormalPlanPriceReducer,
+  normalGiftCode: fromNormalPlanStore.NormalPlanGiftCodeReducer,
+  emirate: fromEmirateStore.EmirateReducer,
+  normalCheckout: fromNormalPlanStore.NormalPlanCheckoutReducer,
+  address: fromAddressStore.AddressReducer,
+  terms: fromTermsStore.TermsReducer,
+  clinicEmirate: fromClinicStore.ClinicEmirateReducer,
+  clinicCheckout:fromClinicStore.ClinicCheckoutReducer
 };
 
 export const APP_EFFECTS = [
@@ -55,8 +61,10 @@ export const APP_EFFECTS = [
   NormalPlanEffects,
   CustomPlanEffects,
   EmirateEffects,
-  AddressEffects,TermsEffects
-]
+  AddressEffects,
+  TermsEffects,
+  ClinicEffects,
+];
 
 export interface IHttpResponse {
   loading: boolean | null;
@@ -64,7 +72,3 @@ export interface IHttpResponse {
   status: number | null;
   message: string | null;
 }
-
-
-
-
