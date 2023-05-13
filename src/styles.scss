@@ -5784,3 +5784,9 @@ input[type=checkbox]{
 .swal2-styled.swal2-confirm:focus {
   box-shadow: 0 0 0 3px #e93f219e !important;
 }
+
+@media all and (max-width:992px) {
+      .p-dialog {
+          width: 75vw !important;
+      }
+}

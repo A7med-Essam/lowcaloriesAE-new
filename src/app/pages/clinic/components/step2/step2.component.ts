@@ -47,7 +47,7 @@ export class Step2Component implements OnInit, OnDestroy {
   selectedAppointment!: IAppointment;
   mobile: string = '971505025430';
   selectedTime: number = 0;
-  selectedMembers: number = 0;
+  selectedMembers: number = 1;
   @ViewChild('lottie') lottie!: ElementRef;
   paymentSwal: any;
   options: AnimationOptions = {

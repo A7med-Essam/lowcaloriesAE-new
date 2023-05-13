@@ -65,7 +65,7 @@ export class SetPlanComponent implements OnInit {
           fromCustomPlanSelector.customPlanLoadingSelector
         );
         // this.nextButtonMode$ = this._Store.select(fromNormalPlanSelector.showMealsLoadingSelector)
-        // this.getUaeDate();
+        this.getUaeDate();
       }
     });
   }

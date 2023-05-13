@@ -1,16 +1,16 @@
-#meal_img{
+#meal_img {
     width: 25px;
 }
 
-#visa_img{
+#visa_img {
     width: 60px;
 }
 
-#locationBtn{
+#locationBtn {
     position: relative;
 }
 
-#locationBtn::after{
+#locationBtn::after {
     position: absolute;
     content: "\f3c5";
     font-family: "Font Awesome 5 Free";
@@ -18,12 +18,12 @@
     left: -20px;
 }
 
-.bg-main2{
+.bg-main2 {
     background-color: #e93e21;
 }
 
 // switch
-    #LocationModal input[type="radio"]{
+#LocationModal input[type="radio"] {
     position: relative;
     width: 100%;
     background: gainsboro;
@@ -33,13 +33,14 @@
     outline: none;
     border-radius: 30px;
     box-shadow: inset 0px 0px 4px 1px rgba(0, 0, 0, 0.08);
-    transition: 0.5s;}
-    
-    #LocationModal input[type="radio"]:checked{
-    background:#e93e21;
-    }
-    
-    #LocationModal input[type="radio"]:before{
+    transition: 0.5s;
+}
+
+#LocationModal input[type="radio"]:checked {
+    background: #e93e21;
+}
+
+#LocationModal input[type="radio"]:before {
     content: '';
     position: absolute;
     width: 20px;
@@ -49,31 +50,32 @@
     box-shadow: 0px 1px 6px 1px gainsboro;
     border-radius: 50%;
     top: 0px;
-    transform: scale(1.1);transition: 0.5s;
-    }
-    
-    #LocationModal input[type="radio"]:checked:before{
-    left:20px;
-    }
+    transform: scale(1.1);
+    transition: 0.5s;
+}
 
-    #LocationModal .switchLocation{
-        width: 40px;
-    }
+#LocationModal input[type="radio"]:checked:before {
+    left: 20px;
+}
 
-    #LocationModal{
-        .modal-body{
-            height: 300px;
-            overflow: auto;
-        }
+#LocationModal .switchLocation {
+    width: 40px;
+}
+
+#LocationModal {
+    .modal-body {
+        height: 300px;
+        overflow: auto;
     }
+}
 
 
-    // Subscription Modal
-    .delivery-day::after{
-        content: "\f058";
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
-        position: absolute;
-        right: 12px;
-        font-size: 18px;
-    }
+// Subscription Modal
+.delivery-day::after {
+    content: "\f058";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    right: 12px;
+    font-size: 18px;
+}

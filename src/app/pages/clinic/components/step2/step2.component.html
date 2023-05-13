@@ -37,7 +37,7 @@
                 <div class="ms-4">
                     <div class="qty flex-center">
                         <span (click)="countDown(people_count)" class="minus">-</span>
-                        <input type="text" class="count meals" name="qty" value="1" readonly min="1" [max]="max_people"
+                        <input type="text" class="count meals" name="qty" [value]="selectedMembers" readonly min="1" [max]="max_people"
                             disabled #people_count>
                         <span (click)="countUp(people_count)" class="plus">+</span>
                     </div>
