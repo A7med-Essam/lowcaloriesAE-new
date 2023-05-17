@@ -77,11 +77,11 @@ export class SetPlanComponent
     },
     {
       id: 11,
-      day_name: 'TUSEDAY',
+      day_name: 'TUESDAY',
       day_name_ar: 'الثلاثاء',
       closed: 0,
       deleted_at: null,
-      day_name_in_view: 'Tuseday',
+      day_name_in_view: 'Tuesday',
     },
     {
       id: 12,

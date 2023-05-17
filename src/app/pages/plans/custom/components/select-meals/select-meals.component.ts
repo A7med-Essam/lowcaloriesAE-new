@@ -113,7 +113,9 @@ export class SelectMealsComponent implements OnDestroy {
     );
     const cards = [];
     let currentDate = startDate;
+    let counter = 0;
     while (cards.length < Number(sub.number_of_Days)) {
+      counter++;
       const currentDay = currentDate.getDay();
       if (uppercaseDeliveryDays.includes(this.getDayName(currentDay))) {
         cards.push({
@@ -124,6 +126,9 @@ export class SelectMealsComponent implements OnDestroy {
         });
       }
       currentDate.setDate(currentDate.getDate() + 1);
+      if (counter > 10000) {
+        break;
+      }
     }
     return cards;
   }
