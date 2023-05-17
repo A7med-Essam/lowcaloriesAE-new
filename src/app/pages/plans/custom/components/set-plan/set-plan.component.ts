@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -14,6 +14,8 @@ import {
 } from 'src/app/interfaces/custom-plan.interface';
 import { SharedService } from 'src/app/services/shared.service';
 import {
+  FETCH_CUSTOMPLAN_SHOWCATEGORIES_START,
+  FETCH_CUSTOMPLAN_SHOWMEALS_START,
   FETCH_CUSTOMPLAN_START,
   SAVE_CUSTOM_SUBSCRIPTION,
 } from 'src/app/store/customPlanStore/customPlan.action';
@@ -24,7 +26,7 @@ import * as fromCustomPlanSelector from '../../../../../store/customPlanStore/cu
   templateUrl: './set-plan.component.html',
   styleUrls: ['./set-plan.component.scss'],
 })
-export class SetPlanComponent implements OnInit {
+export class SetPlanComponent implements OnInit,OnDestroy {
   private destroyed$: Subject<void> = new Subject();
   program_id: number = 0;
   ProgramDetails!: Observable<ICustomPlanResponse[] | null>;
@@ -37,6 +39,12 @@ export class SetPlanComponent implements OnInit {
   @ViewChild('AllWeek') AllWeek!: ElementRef;
   uaeDate!: Date;
   @ViewChild('deliveredDays') deliveredDays!: ElementRef;
+  nextButtonMode$: Observable<boolean | null> = of(false);
+
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  }
 
   constructor(
     private _ActivatedRoute: ActivatedRoute,
@@ -64,7 +72,7 @@ export class SetPlanComponent implements OnInit {
         this.skeletonMode$ = this._Store.select(
           fromCustomPlanSelector.customPlanLoadingSelector
         );
-        // this.nextButtonMode$ = this._Store.select(fromNormalPlanSelector.showMealsLoadingSelector)
+        this.nextButtonMode$ = this._Store.select(fromCustomPlanSelector.showMealsLoadingSelector)
         this.getUaeDate();
       }
     });
@@ -114,7 +122,8 @@ export class SetPlanComponent implements OnInit {
       this._Store.dispatch(
         SAVE_CUSTOM_SUBSCRIPTION({ data: this.getSubscriptionData(data) })
       );
-      this._Router.navigate(["./select-meals"], {relativeTo:this._ActivatedRoute.parent})
+      this._Store.dispatch(FETCH_CUSTOMPLAN_SHOWMEALS_START({plan_id:data.value.Plan_Type.id}))
+      this._Store.dispatch(FETCH_CUSTOMPLAN_SHOWCATEGORIES_START({plan_id:data.value.Plan_Type.id}))
     }
   }
 

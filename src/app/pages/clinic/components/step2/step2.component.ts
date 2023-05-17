@@ -51,8 +51,7 @@ export class Step2Component implements OnInit, OnDestroy {
   @ViewChild('lottie') lottie!: ElementRef;
   paymentSwal: any;
   options: AnimationOptions = {
-    // path: 'https://assets1.lottiefiles.com/packages/lf20_kshjzseu.json',
-    path: '../../../../../../assets/lottie/payment.json',
+    path: '../../../../../../assets/lottie/payment.json'
   };
   checkoutResponse$!: Observable<any>;
   @Output() goBack = new EventEmitter<any>();

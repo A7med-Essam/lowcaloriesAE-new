@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable ,Subject,takeUntil} from 'rxjs';
 import { ITermsResponse } from 'src/app/interfaces/terms.interface';
@@ -10,7 +10,7 @@ import * as fromTermsActions from '../../store/termsStore/terms.action';
   templateUrl: './terms.component.html',
   styleUrls: ['./terms.component.scss'],
 })
-export class TermsComponent implements OnInit {
+export class TermsComponent implements OnInit,OnDestroy {
   skeletonMode$: Observable<boolean | null>;
   terms$: Observable<ITermsResponse[] | null>;
   private destroyed$: Subject<void> = new Subject();

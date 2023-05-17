@@ -22,10 +22,10 @@ export interface AppState {
   register: fromAuthStore.IRegisterState;
   programs: fromProgramStore.IProgramState;
   normalPlan: fromNormalPlanStore.INormalPlanState;
-  showMeals: fromNormalPlanStore.IShowMealsState;
+  normalShowMeals: fromNormalPlanStore.IShowMealsState;
   customPlan: fromCustomPlanStore.ICustomPlanState;
-  CustomSubscription: fromCustomPlanStore.ICustomSubscriptionState;
-  NormalSubscription: fromNormalPlanStore.INormalSubscriptionState;
+  customSubscription: fromCustomPlanStore.ICustomSubscriptionState;
+  normalSubscription: fromNormalPlanStore.INormalSubscriptionState;
   normalPlanPrice: fromNormalPlanStore.INormalPlanPriceState;
   normalGiftCode: fromNormalPlanStore.INormalPlanGiftCodeState;
   emirate: fromEmirateStore.IEmirateState;
@@ -34,6 +34,8 @@ export interface AppState {
   terms: fromTermsStore.ITermsState;
   clinicEmirate: fromClinicStore.IClinicEmirateState;
   clinicCheckout:fromClinicStore.IClinicCheckoutState
+  customShowMeals:fromCustomPlanStore.ICustomShowMealsState
+  customShowCategories:fromCustomPlanStore.ICustomShowCategoriesState
 }
 
 export const APP_STORE: ActionReducerMap<AppState> = {
@@ -41,10 +43,10 @@ export const APP_STORE: ActionReducerMap<AppState> = {
   register: fromAuthStore.RegisterReducer,
   programs: fromProgramStore.ProgramReducer,
   normalPlan: fromNormalPlanStore.NormalPlanReducer,
-  showMeals: fromNormalPlanStore.ShowMealsReducer,
+  normalShowMeals: fromNormalPlanStore.ShowMealsReducer,
   customPlan: fromCustomPlanStore.CustomPlanReducer,
-  CustomSubscription: fromCustomPlanStore.CustomSubscriptionReducer,
-  NormalSubscription: fromNormalPlanStore.NormalSubscriptionReducer,
+  customSubscription: fromCustomPlanStore.CustomSubscriptionReducer,
+  normalSubscription: fromNormalPlanStore.NormalSubscriptionReducer,
   normalPlanPrice: fromNormalPlanStore.NormalPlanPriceReducer,
   normalGiftCode: fromNormalPlanStore.NormalPlanGiftCodeReducer,
   emirate: fromEmirateStore.EmirateReducer,
@@ -52,7 +54,9 @@ export const APP_STORE: ActionReducerMap<AppState> = {
   address: fromAddressStore.AddressReducer,
   terms: fromTermsStore.TermsReducer,
   clinicEmirate: fromClinicStore.ClinicEmirateReducer,
-  clinicCheckout:fromClinicStore.ClinicCheckoutReducer
+  clinicCheckout:fromClinicStore.ClinicCheckoutReducer,
+  customShowMeals:fromCustomPlanStore.ShowMealsReducer,
+  customShowCategories:fromCustomPlanStore.ShowCategoriesReducer
 };
 
 export const APP_EFFECTS = [

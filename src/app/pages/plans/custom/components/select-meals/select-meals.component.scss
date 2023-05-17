@@ -1,0 +1,44 @@
+.categories .item {
+    transition: all .5s;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, .175);
+    margin: 30px 0px;
+    text-align: center;
+    &.active {
+        background-color: #E93E21 !important;
+        color: #fff;
+    }
+
+    &:hover {
+        color: #fff !important;
+        background-color: #E93E21 !important;
+        cursor: pointer;
+    }
+}
+
+.meals .item{
+    text-align: center;
+    min-height: 450px;
+    img{
+        margin: auto;
+        width: 200px;
+        height: 200px;
+    }
+    .detailsBtn{
+        &:hover{
+            background-color: rgb(65, 65, 65) !important;
+        }
+    }
+    .selectBtn{
+        &:hover{
+            background-color: #af331d !important;
+        }
+    }
+}
+
+.cards {
+    .meals,.snacks{
+        .active{
+            color: #E93E21 !important;
+        }
+    }
+}

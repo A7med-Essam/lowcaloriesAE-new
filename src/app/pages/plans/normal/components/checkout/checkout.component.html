@@ -4,7 +4,7 @@
             <h1 class="text-orange">Checkout</h1>
             <p class="text-white">We Know The Secret Of Your Success</p>
             <ul class="page-breadcrumb">
-                <li><a href="#"><i class="fa fa-home"></i> Home</a> <i class="fa fa-angle-double-right"></i></li>
+                <li><a routerLink=""><i class="fa fa-home"></i> Home</a> <i class="fa fa-angle-double-right"></i></li>
                 <li><span>Checkout</span></li>
             </ul>
         </div>
@@ -91,7 +91,7 @@
                         <div class="d-flex justify-content-between flex-wrap">
                             <h5>Checkout Form</h5>
                             <h6 class="txt-main pointer ms-4">
-                                <u *ngIf="user.data" (click)="addressesModal = true">Select Your Current Location</u>
+                                <u *ngIf="user.data" (click)="displayUserAddressModal()">Select Your Current Location</u>
                             </h6>
                         </div>
                         <div *ngIf="checkoutResponse$ | async as res">

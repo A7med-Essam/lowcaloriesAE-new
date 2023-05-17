@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -38,7 +38,7 @@ import { termsSelector } from 'src/app/store/termsStore/terms.selector';
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss'],
 })
-export class CheckoutComponent implements OnInit {
+export class CheckoutComponent implements OnInit, OnDestroy {
   private destroyed$: Subject<void> = new Subject();
   checkoutForm: FormGroup = new FormGroup({});
   checkoutForm_without_auth: FormGroup = new FormGroup({});
@@ -57,7 +57,6 @@ export class CheckoutComponent implements OnInit {
   termsModal: boolean = false;
   checkoutResponse$!: Observable<any>;
   options: AnimationOptions = {
-    // path: 'https://assets1.lottiefiles.com/packages/lf20_kshjzseu.json',
     path: '../../../../../../assets/lottie/payment.json',
   };
   @ViewChild('lottie') lottie!: ElementRef;
@@ -105,6 +104,10 @@ export class CheckoutComponent implements OnInit {
           });
         }
       });
+  }
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 
   ngOnInit(): void {
@@ -249,6 +252,17 @@ export class CheckoutComponent implements OnInit {
   }
 
   // *****************************************************Address*****************************************************
+
+  displayUserAddressModal(){
+    this.addresses$
+    .pipe(takeUntil(this.destroyed$))
+    .subscribe(res=>{
+      if (res == null) {
+        this._Store.dispatch(FETCH_USERADDRESS_START());
+      }
+    })
+    this.addressesModal = true
+  }
 
   selectAddress(address: IAddressResponse) {
     this.checkoutForm.get('address')?.setValue(address.landmark);

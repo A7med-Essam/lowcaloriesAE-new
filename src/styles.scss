@@ -456,11 +456,27 @@ body {
   h4,
   h5,
   h6 {
-    font-family: "Amatic SC",'Comic Sans MS', cursive;
+    font-family: "Amatic SC", cursive;
     font-weight: bold;
     color: #1e2327;
     margin-top: 0px;
   }
+
+  /* Media query for mobile devices */
+@media only screen and (max-width: 767px) {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Comic Sans MS', cursive;
+    font-weight: bold;
+    color: #1e2327;
+    margin-top: 0px;
+  }
+}
+
   h1 a,
   h2 a,
   h3 a,

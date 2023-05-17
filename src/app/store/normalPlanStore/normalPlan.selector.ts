@@ -5,10 +5,10 @@ const normalPlanFeatureSelector = createFeatureSelector<INormalPlanState>('norma
 export const normalPlanSelector = createSelector(normalPlanFeatureSelector, state => state.data)
 export const normalPlanLoadingSelector = createSelector(normalPlanFeatureSelector, state => state.loading)
 
-const NormalSubscriptionFeatureSelector = createFeatureSelector<INormalSubscriptionState>('NormalSubscription')
+const NormalSubscriptionFeatureSelector = createFeatureSelector<INormalSubscriptionState>('normalSubscription')
 export const normalSubscriptionSelector = createSelector(NormalSubscriptionFeatureSelector, state => state.data)
 
-const showMealsFeatureSelector = createFeatureSelector<IShowMealsState>('showMeals')
+const showMealsFeatureSelector = createFeatureSelector<IShowMealsState>('normalShowMeals')
 export const showMealsSelector = createSelector(showMealsFeatureSelector, state => state.data)
 export const showMealsLoadingSelector = createSelector(showMealsFeatureSelector, state => state.loading)
 

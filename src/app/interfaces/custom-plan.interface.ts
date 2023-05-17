@@ -55,3 +55,36 @@ export interface ISubscriptionData {
     program_id:          number;
 }
 
+// ========================================================================== MEALS ==========================================================================
+export interface ICategoriesResponse {
+    id:      number;
+    level:   string;
+    type:    string;
+    name:    string;
+    name_ar: string;
+}
+
+export interface ICustomMealsResponse {
+    id:             number;
+    category_id:    number;
+    image:          string;
+    img:            string;
+    description:    string;
+    description_ar: string;
+    type:           string;
+    mainDish:       IDish;
+    sideDish:       IDish;
+}
+
+export interface IDish {
+    name:      string;
+    name_ar:   string;
+    max_meal: number;
+    unit:      string;
+    calories:  number;
+    carb:      number;
+    protein:   number;
+    fat:       number;
+    kilj:      number;
+    max_side: number;
+}
