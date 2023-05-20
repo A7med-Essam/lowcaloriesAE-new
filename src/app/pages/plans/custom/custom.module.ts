@@ -11,7 +11,10 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
 import { CarouselModule } from 'ngx-owl-carousel-o';
-
+import { LottieModule } from 'ngx-lottie';
+export function playerFactory() {
+  return import('lottie-web');
+}
 @NgModule({
   declarations: [
     SetPlanComponent,
@@ -28,6 +31,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     CalendarModule,
     CarouselModule,
     DialogModule,
+    LottieModule.forRoot({ player: playerFactory }),
   ],
 })
 export class CustomModule {}

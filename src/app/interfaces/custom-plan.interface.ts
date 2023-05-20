@@ -95,3 +95,62 @@ export interface ICards {
     meals: any[];
     snacks: any[];
 }
+// ========================================================================== checkout ==========================================================================
+
+export interface ICustomSubscriptionPrice{
+    plan_id:     number;
+    meal_count:     number;
+    day_count:      number;
+    snack_count:    number;
+}
+
+export interface ICustomProgramPriceResponse{
+    code_id:     number;
+    price:       number;
+    code_apply:  number;
+    vat:         number;
+    grand_total: number;
+}
+
+export interface ICheckout {
+    first_name?:         string;
+    last_name?:          string;
+    email?:              string;
+    phone_number?:       string;
+    password?:           string;
+    bag:                number;
+    plan_id:            number;
+    total_price:        number;
+    price:              number;
+    meals_count:        number;
+    snacks_count:       number;
+    days_count:         number;
+    delivery_days:      string[];
+    start_delivery_day: Date;
+    meal_types:         string[];
+    code_id:            null;
+    location:           ICheckoutLocation;
+    list_days:          ICheckoutListDay[];
+}
+
+ interface ICheckoutListDay {
+    day:   string;
+    date:  Date;
+    meals: ICheckoutMeal[];
+}
+
+ interface ICheckoutMeal {
+    meal_id:   number;
+    main_unit: string;
+    side_unit: string;
+    max_main:  number;
+    max_side:  number;
+    type:      string;
+}
+
+ interface ICheckoutLocation {
+    emirate_id:      number;
+    area_id:         string;
+    property_number: string;
+    landmark:        string;
+}

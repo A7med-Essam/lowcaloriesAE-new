@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { ICustomCardsState, ICustomPlanState, ICustomShowCategoriesState, ICustomShowMealsState, ICustomSubscriptionState } from "./customPlan.reducer";
+import { ICheckoutState, ICustomCardsState, ICustomPlanPriceState, ICustomPlanState, ICustomShowCategoriesState, ICustomShowMealsState, ICustomSubscriptionState } from "./customPlan.reducer";
 
 const customPlanFeatureSelector = createFeatureSelector<ICustomPlanState>('customPlan')
 export const customPlanSelector = createSelector(customPlanFeatureSelector, state => state.data)
@@ -18,3 +18,12 @@ export const showCategoriesLoadingSelector = createSelector(showCategoriesFeatur
 
 const CustomCardsFeatureSelector = createFeatureSelector<ICustomCardsState>('cards')
 export const CustomCardsSelector = createSelector(CustomCardsFeatureSelector, state => state.data)
+
+const customPlanPriceFeatureSelector = createFeatureSelector<ICustomPlanPriceState>('customPlanPrice')
+export const customPlanPriceSelector = createSelector(customPlanPriceFeatureSelector, state => state.data)
+export const customPlanPriceLoadingSelector = createSelector(customPlanPriceFeatureSelector, state => state.loading)
+
+const customPlanCheckoutFeatureSelector = createFeatureSelector<ICheckoutState>('customCheckout')
+export const customPlanCheckoutSelector = createSelector(customPlanCheckoutFeatureSelector, state => state.data)
+export const customPlanCheckoutLoadingSelector = createSelector(customPlanCheckoutFeatureSelector, state => state.loading)
+export const customPlanResponseSelector = createSelector(customPlanCheckoutFeatureSelector, state => state)

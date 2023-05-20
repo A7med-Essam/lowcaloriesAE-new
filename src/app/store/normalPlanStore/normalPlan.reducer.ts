@@ -3,6 +3,9 @@ import { INormalPlanResponse, INormalProgramPriceResponse, INormalSubscriptionPr
 import { IHttpResponse } from "../appStore";
 import * as fromNormalPlanActions from "../normalPlanStore/normalPlan.action";
 
+
+// ==============================================================GET PLAN===============================================================
+
 export interface INormalPlanState extends IHttpResponse {
     data: INormalPlanResponse[] | null;
   }
@@ -43,7 +46,7 @@ export interface INormalPlanState extends IHttpResponse {
     }))
   );
 
-// =============================================================================================================================
+// ==============================================================SAVE SUBSCRIPTION===============================================================
 
     export interface INormalSubscriptionState {
       data: ISubscriptionData | null;
@@ -61,7 +64,7 @@ export interface INormalPlanState extends IHttpResponse {
       }))
     );
 
-// =============================================================================================================================
+// ==========================================================SHOW MEALS===================================================================
 
   export interface IShowMealsState extends IHttpResponse {
     data: IShowMealsResponse[] | null;
@@ -103,7 +106,7 @@ export interface INormalPlanState extends IHttpResponse {
     }))
   );
   
-// =============================================================================================================================
+// ==========================================================PRICE===================================================================
 
 export interface INormalPlanPriceState extends IHttpResponse {
   data: INormalProgramPriceResponse | null;
@@ -145,7 +148,7 @@ export const NormalPlanPriceReducer = createReducer(
   }))
 );
 
-// =============================================================================================================================
+// ===========================================================GIFTCODE==================================================================
 
 export interface INormalPlanGiftCodeState extends IHttpResponse {
   data: INormalProgramPriceResponse | null;
@@ -187,7 +190,7 @@ export const NormalPlanGiftCodeReducer = createReducer(
   }))
 );
 
-// =============================================================================================================================
+// ==============================================================Checkout===============================================================
 
 export interface ICheckoutState extends IHttpResponse {
   data: string | null;

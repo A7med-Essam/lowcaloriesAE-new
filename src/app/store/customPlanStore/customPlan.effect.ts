@@ -11,10 +11,10 @@ export class CustomPlanEffects {
   constructor(
     private actions$: Actions,
     private _CustomPlanService: CustomPlanService,
-    private _Router: Router
-  ) // private _ActivatedRoute:ActivatedRoute
-  {}
+    private _Router: Router // private _ActivatedRoute:ActivatedRoute
+  ) {}
 
+  // GET PROGRAM
   customPlanEffect = createEffect(() =>
     this.actions$.pipe(
       ofType(fromCustomPlanActions.FETCH_CUSTOMPLAN_START),
@@ -40,6 +40,7 @@ export class CustomPlanEffects {
     )
   );
 
+  // get meals
   showMealsEffect = createEffect(() =>
     this.actions$.pipe(
       ofType(fromCustomPlanActions.FETCH_CUSTOMPLAN_SHOWMEALS_START),
@@ -74,28 +75,96 @@ export class CustomPlanEffects {
     )
   );
 
+  // get categories
   showCategoriesEffect = createEffect(() =>
-  this.actions$.pipe(
-    ofType(fromCustomPlanActions.FETCH_CUSTOMPLAN_SHOWCATEGORIES_START),
-    exhaustMap((action) =>
-      this._CustomPlanService.getMealCategories(action.plan_id).pipe(
-        map((res) =>
-          fromCustomPlanActions.FETCH_CUSTOMPLAN_SHOWCATEGORIES_SUCCESS({
-            data: res.data,
-            message: res.message,
-            status: res.status,
-          })
-        ),
-        tap((res) => {
-          if (res.status == 0) {
-            this._Router.navigate(['/plans']);
-          }
-        }),
-        catchError((error: HttpErrorResponse) =>
-          of(fromCustomPlanActions.FETCH_CUSTOMPLAN_SHOWCATEGORIES_FAILED({ error: error }))
+    this.actions$.pipe(
+      ofType(fromCustomPlanActions.FETCH_CUSTOMPLAN_SHOWCATEGORIES_START),
+      exhaustMap((action) =>
+        this._CustomPlanService.getMealCategories(action.plan_id).pipe(
+          map((res) =>
+            fromCustomPlanActions.FETCH_CUSTOMPLAN_SHOWCATEGORIES_SUCCESS({
+              data: res.data,
+              message: res.message,
+              status: res.status,
+            })
+          ),
+          tap((res) => {
+            if (res.status == 0) {
+              this._Router.navigate(['/plans']);
+            }
+          }),
+          catchError((error: HttpErrorResponse) =>
+            of(
+              fromCustomPlanActions.FETCH_CUSTOMPLAN_SHOWCATEGORIES_FAILED({
+                error: error,
+              })
+            )
+          )
         )
       )
     )
-  )
-);
+  );
+
+  // GET PRICE
+  getPriceEffect = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromCustomPlanActions.FETCH_CUSTOMPLAN_PRICE_START),
+      exhaustMap((action) =>
+        this._CustomPlanService
+          .getCustomProgramPrice({
+            day_count: action.data.day_count,
+            meal_count: action.data.meal_count,
+            plan_id: action.data.plan_id,
+            snack_count: action.data.snack_count,
+          })
+          .pipe(
+            map((res) =>
+              fromCustomPlanActions.FETCH_CUSTOMPLAN_PRICE_SUCCESS({
+                data: res.data,
+                message: res.message,
+                status: res.status,
+              })
+            ),
+            tap((res) => {
+              if (res.status == 0) {
+                this._Router.navigate(['/plans']);
+              } else {
+                const currentUrl = this._Router.url.replace('show-meals', '');
+                const otherPath = 'checkout';
+                const newUrl = `${currentUrl}${otherPath}`;
+                this._Router.navigateByUrl(newUrl);
+              }
+            }),
+            catchError((error: HttpErrorResponse) =>
+              of(
+                fromCustomPlanActions.FETCH_CUSTOMPLAN_PRICE_FAILED({
+                  error: error,
+                })
+              )
+            )
+          )
+      )
+    )
+  );
+
+  // Checkout
+  checkoutEffect = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromCustomPlanActions.FETCH_CHECKOUT_START),
+      exhaustMap((action) =>
+        this._CustomPlanService.checkout(action.data).pipe(
+          map((res) =>
+            fromCustomPlanActions.FETCH_CHECKOUT_SUCCESS({
+              data: res.data,
+              message: res.message,
+              status: res.status,
+            })
+          ),
+          catchError((error: HttpErrorResponse) =>
+            of(fromCustomPlanActions.FETCH_CHECKOUT_FAILED({ error: error }))
+          )
+        )
+      )
+    )
+  );
 }
