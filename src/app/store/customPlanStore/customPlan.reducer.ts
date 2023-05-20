@@ -1,5 +1,5 @@
 import { createReducer,on } from "@ngrx/store";
-import { ICategoriesResponse, ICustomMealsResponse, ICustomPlanResponse, ISubscriptionData } from "src/app/interfaces/custom-plan.interface";
+import { ICards, ICategoriesResponse, ICustomMealsResponse, ICustomPlanResponse, ISubscriptionData } from "src/app/interfaces/custom-plan.interface";
 import { IHttpResponse } from "../appStore";
 import * as fromCustomPlanActions from "../customPlanStore/customPlan.action";
 
@@ -43,7 +43,7 @@ export interface ICustomPlanState extends IHttpResponse {
     }))
   );
 
-  // =============================================================================================================================
+  // ============================================================SAVE Subscription step1=================================================================
 
   export interface ICustomSubscriptionState {
     data: ISubscriptionData | null;
@@ -62,7 +62,7 @@ export interface ICustomPlanState extends IHttpResponse {
   );
 
 
-  // =============================================================================================================================
+  // ============================================================SHOW MEALS STEP2=================================================================
 
   export interface ICustomShowMealsState extends IHttpResponse {
     data: ICustomMealsResponse[] | null;
@@ -145,3 +145,21 @@ export interface ICustomPlanState extends IHttpResponse {
         status: 0,
       }))
     );
+
+      // ============================================================SAVE CARDS=================================================================
+
+  export interface ICustomCardsState {
+    data: ICards[] | null;
+  }
+  
+  const CustomCardsInitialState: ICustomCardsState = {
+    data: null,
+  };
+  
+  export const CustomCardsReducer = createReducer(
+    CustomCardsInitialState,
+    on(fromCustomPlanActions.SAVE_CUSTOMPLAN_CARDS, (state, action) => ({
+      ...state,
+      data: action.data
+    }))
+  );

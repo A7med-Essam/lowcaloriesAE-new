@@ -9,6 +9,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SkeletonModule } from 'primeng/skeleton';
 import { CalendarModule } from 'primeng/calendar';
+import { DialogModule } from 'primeng/dialog';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
@@ -16,7 +17,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     SetPlanComponent,
     SelectMealsComponent,
     ShowMealsComponent,
-    CheckoutComponent
+    CheckoutComponent,
   ],
   imports: [
     CommonModule,
@@ -26,6 +27,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     SkeletonModule,
     CalendarModule,
     CarouselModule,
+    DialogModule,
   ],
 })
-export class CustomModule { }
+export class CustomModule {}

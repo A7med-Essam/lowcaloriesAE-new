@@ -59,11 +59,11 @@
                                     </div>
                                     <div
                                         class="d-flex justify-content-between align-items-center mt-3 flex-wrap flex-md-nowrap">
-                                        <button
+                                        <button (click)="openDetails(meal)"
                                             class="btn bg-black text-white px-4 py-2 mt-2 w-100 me-2 font-weight-500 detailsBtn">
                                             Details
                                         </button>
-                                        <button
+                                        <button (click)="pickMeal(meal)"
                                             class="btn bg-main text-white px-4 py-2 mt-2 w-100 ms-2 font-weight-500 selectBtn">
                                             Select
                                         </button>
@@ -78,8 +78,8 @@
                 <div class="bg-white rounded shadow-lg mx-3 p-4 cards" *ngIf="cards.length > 0 ;">
                     <h5 class="mb-2">Selected Meals</h5>
                     <div class="row">
-                        <div class="col-md-6 col-lg-4 col-xl-3 my-2 day-card" #MealsCard
-                            *ngFor="let card of cards;let i = index;" [attr.card]="i+1">
+                        <div class="col-md-6 col-lg-4 col-xl-3 my-2 day-card" *ngFor="let card of cards;let i = index;"
+                            [attr.card]="i+1">
                             <div class="bg-white rounded shadow item px-3 py-2 meal_card">
                                 <div>
                                     <i class="fas fa-calendar-alt text-orange"></i>
@@ -90,14 +90,14 @@
                                 <div class="mt-3">
                                     <h6>Meals</h6>
                                     <div class="d-flex flex-wrap meals">
-                                        <i class="fas fa-check-circle text-muted m-1"
+                                        <i class="fas fa-check-circle text-muted m-1" [class.active]="meal.status"
                                             *ngFor="let meal of card.meals"></i>
                                     </div>
                                 </div>
                                 <div class="mt-3" *ngIf="card.snacks.length">
                                     <h6>Snacks</h6>
                                     <div class="d-flex flex-wrap snacks">
-                                        <i class="fas fa-check-circle text-muted m-1"
+                                        <i class="fas fa-check-circle text-muted m-1" [class.active]="snack.status"
                                             *ngFor="let snack of card.snacks"></i>
                                     </div>
                                 </div>
@@ -106,6 +106,105 @@
                     </div>
                 </div>
             </div>
+            <div class="col-12 my-2">
+                <div class="text-center">
+                    <button class="btn border-0 p-0" [disabled]="!cardsStatus" (click)="getNextStep()">
+                        <a class="button mt-20 pointer py-2 px-5">Apply</a>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </section>
+
+<p-dialog [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="mealDetailsModal"
+    [transitionOptions]="'200ms'" [style]="{ width: '50vw' }">
+    <div *ngIf="mealDetails">
+        <div class="text-center">
+            <img [src]="mealDetails.image" class="img-fluid mb-4" alt="" width="300px">
+            <h5 class="text-orange">
+                {{mealDetails.mainDish.name}}
+            </h5>
+            <span class="font-weight-600 text-muted">
+                {{mealDetails.description}}
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Velit, autem?
+            </span>
+        </div>
+        <!-- <hr>
+        <div class="row text-center">
+            <div class="col-sm-6 border-end">
+                <h6 class="txt-main mb-3 ms-3">
+                    {{MealDetails?.main_dish?.item}}
+                </h6>
+                <div class="qty d-flex align-items-center justify-content-center">
+                    <span class="minus" (click)="countDown(main_dish_counter,5);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.main_dish?.unit)?.toLowerCase() == 'gm'">-</span>
+                    <span class="minus" (click)="countDown(main_dish_counter,1);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.main_dish?.unit)?.toLowerCase() != 'gm'">-</span>
+                    <input type="number" class="count" name="qty" status="main" [attr.haveside]="MealDetails?.side_dish?true:false" disabled
+                    [min]="(MealDetails?.main_dish?.unit)?.toLowerCase() == 'gm'?50:1" 
+                    [value]="MealDetails?.main_dish?.user_max"
+                    [max]="MealDetails?.main_dish?.max"
+                    #main_dish_counter readonly>
+                    <span class="plus" (click)="countUp(main_dish_counter,5);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.main_dish?.unit)?.toLowerCase() == 'gm'">+</span>
+                    <span class="plus" (click)="countUp(main_dish_counter,1);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.main_dish?.unit)?.toLowerCase() != 'gm'">+</span>
+                    <span class="txt-main txt-font ms-2">
+                        {{MealDetails?.main_dish?.unit}}
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-6" [class.d-none]="MealDetails?.side_dish == null">
+                <h6 class="txt-main mb-3 ms-3">
+                    {{MealDetails?.side_dish?.item}}
+                </h6>
+                <div class="qty d-flex align-items-center justify-content-center">
+                    <span class="minus" (click)="countDown(side_dish_counter,5);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.side_dish?.unit)?.toLowerCase() == 'gm'">-</span>
+                    <span class="minus" (click)="countDown(side_dish_counter,1);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.side_dish?.unit)?.toLowerCase() != 'gm'">-</span>
+                    <input type="number" class="count" name="qty"  status="side" disabled
+                    [min]="(MealDetails?.side_dish?.unit)?.toLowerCase() == 'gm'?50:1" 
+                    [value]="MealDetails?.side_dish?.max"
+                    [max]="MealDetails?.side_dish?.max"
+                    #side_dish_counter readonly>
+                    <span class="plus" (click)="countUp(side_dish_counter,5);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.side_dish?.unit)?.toLowerCase() == 'gm'">+</span>
+                    <span class="plus" (click)="countUp(side_dish_counter,1);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.side_dish?.unit)?.toLowerCase() != 'gm'">+</span>
+                    <span class="txt-main txt-font ms-2">
+                        {{MealDetails?.side_dish?.unit}}
+                    </span>
+                </div>
+            </div>
+        </div> -->
+        <hr>
+        <div class="row">
+            <div class="col-sm-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span
+                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">Calories</span>
+                    <span class="txt-font-bold">{{(mealDetails.mainDish.calories).toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span
+                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">Fat</span>
+                    <span class="txt-font-bold">{{(mealDetails.mainDish.fat).toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span
+                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">Protein</span>
+                    <span class="txt-font-bold">{{(mealDetails.mainDish.protein).toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span
+                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">Carb</span>
+                    <span class="txt-font-bold">{{(mealDetails.mainDish.carb).toFixed(2)}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 text-center">
+            <button type="button" class="btn bg-dark rounded-pill text-white py-2 px-5 font-weight-600"
+                (click)="mealDetailsModal=false;pickMeal(mealDetails);">Select</button>
+        </div>
+    </div>
+</p-dialog>

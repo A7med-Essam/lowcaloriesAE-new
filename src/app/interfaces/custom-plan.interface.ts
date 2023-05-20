@@ -88,3 +88,10 @@ export interface IDish {
     kilj:      number;
     max_side: number;
 }
+
+export interface ICards {
+    date: string;
+    day: string;
+    meals: any[];
+    snacks: any[];
+}

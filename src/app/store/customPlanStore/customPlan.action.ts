@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { createAction, props } from "@ngrx/store";
-import { ICategoriesResponse, ICustomMealsResponse, ICustomPlanResponse, ISubscriptionData } from "src/app/interfaces/custom-plan.interface";
+import { ICards, ICategoriesResponse, ICustomMealsResponse, ICustomPlanResponse, ISubscriptionData } from "src/app/interfaces/custom-plan.interface";
 
 export const FETCH_CUSTOMPLAN_START = createAction('[Custom Plan] FETCH_CUSTOMPLAN_START', props<{program_id:number}>())
 export const FETCH_CUSTOMPLAN_SUCCESS = createAction('[Custom Plan] FETCH_CUSTOMPLAN_SUCCESS', props<{data:ICustomPlanResponse[],message:string,status:number}>())
@@ -16,5 +16,5 @@ export const FETCH_CUSTOMPLAN_SHOWMEALS_START = createAction('[Custom Plan] FETC
 export const FETCH_CUSTOMPLAN_SHOWMEALS_SUCCESS = createAction('[Custom Plan] FETCH_CUSTOMPLAN_SHOWMEALS_SUCCESS', props<{data:ICustomMealsResponse[],message:string,status:number}>())
 export const FETCH_CUSTOMPLAN_SHOWMEALS_FAILED = createAction('[Custom Plan] FETCH_CUSTOMPLAN_SHOWMEALS_FAILED', props<{error:HttpErrorResponse}>())
 
-// export const SAVE_CUSTOM_MEALS = createAction('[Custom Plan] SAVE_CUSTOM_MEALS', props<{data:any}>())
+export const SAVE_CUSTOMPLAN_CARDS = createAction('[Custom Plan] SAVE_CUSTOMPLAN_CARDS', props<{data:ICards[]}>())
 

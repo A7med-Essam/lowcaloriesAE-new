@@ -8,8 +8,10 @@ import {
   ICustomMealsResponse,
   ICustomPlanResponse,
   ISubscriptionData,
+  ICards
 } from 'src/app/interfaces/custom-plan.interface';
 import { SharedService } from 'src/app/services/shared.service';
+import { SAVE_CUSTOMPLAN_CARDS } from 'src/app/store/customPlanStore/customPlan.action';
 import {
   customPlanSelector,
   CustomSubscriptionSelector,
@@ -17,11 +19,14 @@ import {
   showMealsSelector,
 } from 'src/app/store/customPlanStore/customPlan.selector';
 
+
+
 @Component({
   selector: 'app-select-meals',
   templateUrl: './select-meals.component.html',
   styleUrls: ['./select-meals.component.scss'],
 })
+
 export class SelectMealsComponent implements OnDestroy {
   private destroyed$: Subject<void> = new Subject();
   category_index: number = 0;
@@ -30,6 +35,8 @@ export class SelectMealsComponent implements OnDestroy {
   categories$!: Observable<ICategoriesResponse[] | null>;
   meals: ICustomMealsResponse[] = [];
   cards: ICards[] = [];
+  mealDetailsModal: boolean = false;
+  cardsStatus: boolean = false;
   categoryOptions: OwlOptions = {
     dots: false,
     nav: false,
@@ -49,6 +56,8 @@ export class SelectMealsComponent implements OnDestroy {
       },
     },
   };
+  mealDetails!: ICustomMealsResponse;
+  selectedMeals: ICustomMealsResponse[] = [];
 
   constructor(
     private _Store: Store,
@@ -111,7 +120,7 @@ export class SelectMealsComponent implements OnDestroy {
     const uppercaseDeliveryDays = sub.delivery_days.map((day) =>
       day.toUpperCase()
     );
-    const cards = [];
+    const cards: ICards[] = [];
     let currentDate = startDate;
     let counter = 0;
     while (cards.length < Number(sub.number_of_Days)) {
@@ -130,6 +139,17 @@ export class SelectMealsComponent implements OnDestroy {
         break;
       }
     }
+
+    cards.forEach((obj) => {
+      obj.meals = obj.meals.map((meal) => {
+        return {
+          name: meal,
+          status: false,
+          details: null,
+        };
+      });
+    });
+
     return cards;
   }
 
@@ -149,15 +169,60 @@ export class SelectMealsComponent implements OnDestroy {
   generateSnackArray(snackCount: number) {
     const snackArray = [];
     for (let i = 1; i <= snackCount; i++) {
-      snackArray.push(`Snack ${i}`);
+      snackArray.push({ name: `Snack ${i}`, status: false, details: null });
     }
     return snackArray;
   }
-}
 
-interface ICards {
-  date: string;
-  day: string;
-  meals: string[];
-  snacks: string[];
+  openDetails(meal: ICustomMealsResponse) {
+    this.mealDetails = meal;
+    this.mealDetailsModal = true;
+  }
+
+  pickMeal(meal: ICustomMealsResponse) {
+    const mealList = meal.type.toLowerCase().includes('snack')
+      ? 'snacks'
+      : 'meals';
+
+    let found = false;
+    let index = 0;
+
+    while (!found && index < this.cards.length) {
+      const element = this.cards[index];
+      const mealIndex = element[mealList].findIndex(
+        (item) => item.details === null
+      );
+
+      if (mealIndex !== -1) {
+        element[mealList][mealIndex].details = meal;
+        element[mealList][mealIndex].status = true;
+        found = true;
+        this.selectedMeals.push(meal);
+      }
+      index++;
+    }
+
+    this.checkValidation(this.cards);
+  }
+
+  checkValidation(arr: ICards[]) {
+    this.cardsStatus = arr.every((element) => {
+      const mealsStatus = element.meals.every((meal) => meal.status === true);
+      const snacksStatus = element.snacks.every(
+        (snack) => snack.status === true
+      );
+      return mealsStatus && snacksStatus;
+    });
+  }
+
+  getNextStep(){
+    if (this.cardsStatus) {
+      this._Store.dispatch(
+        SAVE_CUSTOMPLAN_CARDS({ data: this.cards })
+      );
+      this._Router.navigate(['show-meals'], {
+        relativeTo: this._ActivatedRoute.parent,
+      })
+    }
+  }
 }
