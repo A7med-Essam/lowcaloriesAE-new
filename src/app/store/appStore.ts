@@ -37,6 +37,8 @@ export interface AppState {
   customShowMeals:fromCustomPlanStore.ICustomShowMealsState
   customShowCategories:fromCustomPlanStore.ICustomShowCategoriesState
   cards:fromCustomPlanStore.ICustomCardsState
+  customPlanPrice:fromCustomPlanStore.ICustomPlanPriceState
+  customCheckout:fromCustomPlanStore.ICheckoutState
 }
 
 export const APP_STORE: ActionReducerMap<AppState> = {
@@ -58,7 +60,9 @@ export const APP_STORE: ActionReducerMap<AppState> = {
   clinicCheckout:fromClinicStore.ClinicCheckoutReducer,
   customShowMeals:fromCustomPlanStore.ShowMealsReducer,
   customShowCategories:fromCustomPlanStore.ShowCategoriesReducer,
-  cards:fromCustomPlanStore.CustomCardsReducer
+  cards:fromCustomPlanStore.CustomCardsReducer,
+  customPlanPrice:fromCustomPlanStore.CustomPlanPriceReducer,
+  customCheckout:fromCustomPlanStore.CustomPlanCheckoutReducer
 };
 
 export const APP_EFFECTS = [

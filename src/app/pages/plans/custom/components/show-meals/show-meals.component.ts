@@ -5,7 +5,12 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Observable, of, Subject, takeUntil } from 'rxjs';
 import { ICards } from 'src/app/interfaces/custom-plan.interface';
 import { SharedService } from 'src/app/services/shared.service';
-import { CustomCardsSelector } from 'src/app/store/customPlanStore/customPlan.selector';
+import { FETCH_CUSTOMPLAN_PRICE_START } from 'src/app/store/customPlanStore/customPlan.action';
+import {
+  CustomCardsSelector,
+  customPlanPriceLoadingSelector,
+  CustomSubscriptionSelector,
+} from 'src/app/store/customPlanStore/customPlan.selector';
 
 @Component({
   selector: 'app-show-meals',
@@ -72,19 +77,25 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   }
 
   getCheckout() {
-    // this.nextButtonMode$ = this._Store.select(
-    //   fromNormalPlanSelector.normalPlanPriceLoadingSelector
-    // );
-    // this._Store.dispatch(
-    //   FETCH_NORMALPLAN_PRICE_START({
-    //     data: {
-    //       day_count: res.no_days,
-    //       meal_count: res.meal_types.length,
-    //       program_id: res.program_id,
-    //       snack_count: res.no_snacks,
-    //     },
-    //   })
-    // );
+    this.nextButtonMode$ = this._Store.select(customPlanPriceLoadingSelector);
+
+    this._Store
+      .select(CustomSubscriptionSelector)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((res) => {
+        if (res) {
+          this._Store.dispatch(
+            FETCH_CUSTOMPLAN_PRICE_START({
+              data: {
+                day_count: Number(res.number_of_Days),
+                meal_count: res.number_of_Meals.length,
+                plan_id: res.Plan_Type.id,
+                snack_count: res.number_of_Snacks,
+              },
+            })
+          );
+        }
+      });
   }
 
   ngOnInit(): void {}

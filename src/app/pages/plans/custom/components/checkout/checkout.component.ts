@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -7,20 +13,10 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import * as fromNormalPlanSelector from 'src/app/store/normalPlanStore/normalPlan.selector';
+import * as fromCustomPlanSelector from 'src/app/store/customPlanStore/customPlan.selector';
 import { Observable, of, Subject, takeUntil } from 'rxjs';
-import {
-  ICheckout,
-  INormalPlanResponse,
-  INormalProgramPriceResponse,
-  ISubscriptionData,
-} from 'src/app/interfaces/normal-plan.interface';
 import { ILoginState } from 'src/app/store/authStore/auth.reducer';
 import { loginSelector } from 'src/app/store/authStore/auth.selector';
-import {
-  FETCH_CHECKOUT_START,
-  FETCH_NORMALPLAN_GIFTCODE_START,
-} from 'src/app/store/normalPlanStore/normalPlan.action';
 import { FETCH_EMIRATE_START } from 'src/app/store/emirateStore/emirate.action';
 import { IEmirateResponse } from 'src/app/interfaces/emirate.interface';
 import { emirateSelector } from 'src/app/store/emirateStore/emirate.selector';
@@ -32,6 +28,18 @@ import { AnimationOptions } from 'ngx-lottie';
 import { FETCH_TERMS_START } from 'src/app/store/termsStore/terms.action';
 import { ITermsResponse } from 'src/app/interfaces/terms.interface';
 import { termsSelector } from 'src/app/store/termsStore/terms.selector';
+import {
+  ICheckout,
+  ICustomPlanResponse,
+  ICustomProgramPriceResponse,
+  ISubscriptionData,
+} from 'src/app/interfaces/custom-plan.interface';
+import {
+  normalPlanGiftCodeLoadingSelector,
+  normalPlanGiftCodeSelector,
+} from 'src/app/store/normalPlanStore/normalPlan.selector';
+import { FETCH_NORMALPLAN_GIFTCODE_START } from 'src/app/store/normalPlanStore/normalPlan.action';
+import { FETCH_CHECKOUT_START } from 'src/app/store/customPlanStore/customPlan.action';
 
 @Component({
   selector: 'app-checkout',
@@ -43,11 +51,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   checkoutForm: FormGroup = new FormGroup({});
   checkoutForm_without_auth: FormGroup = new FormGroup({});
   subscriptionInfo$: Observable<ISubscriptionData | null> = of(null);
-  price$: Observable<INormalProgramPriceResponse | null> = of(null);
+  price$: Observable<ICustomProgramPriceResponse | null> = of(null);
   giftcodeButtonMode$: Observable<boolean | null> = of(false);
   emirates$!: Observable<IEmirateResponse[] | any>;
   terms$!: Observable<ITermsResponse[] | any>;
-  ProgramDetails!: Observable<INormalPlanResponse[] | null>;
+  ProgramDetails!: Observable<ICustomPlanResponse[] | null>;
   login$!: Observable<ILoginState>;
   subscribtionModal: boolean = false;
   program_id: number = 0;
@@ -61,8 +69,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   };
   @ViewChild('lottie') lottie!: ElementRef;
 
-
-
   constructor(
     private _Store: Store,
     private _Router: Router,
@@ -70,24 +76,24 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private _ActivatedRoute: ActivatedRoute
   ) {
     this.login$ = _Store.select(loginSelector);
-    this.price$ = _Store.select(fromNormalPlanSelector.normalPlanPriceSelector);
+    this.price$ = _Store.select(fromCustomPlanSelector.customPlanPriceSelector);
     _Store
-      .select(fromNormalPlanSelector.normalPlanPriceSelector)
+      .select(fromCustomPlanSelector.customPlanPriceSelector)
       .pipe(takeUntil(this.destroyed$))
       .subscribe((res) => {
         this.price = res ? res.price : 0;
       });
     _Store
-      .select(fromNormalPlanSelector.normalSubscriptionSelector)
+      .select(fromCustomPlanSelector.CustomSubscriptionSelector)
       .pipe(takeUntil(this.destroyed$))
       .subscribe((res) => {
         if (res) {
           this.program_id = res.program_id;
           this.subscriptionInfo$ = _Store.select(
-            fromNormalPlanSelector.normalSubscriptionSelector
+            fromCustomPlanSelector.CustomSubscriptionSelector
           );
           this.ProgramDetails = this._Store.select(
-            fromNormalPlanSelector.normalPlanSelector
+            fromCustomPlanSelector.customPlanSelector
           );
           this._Store.dispatch(FETCH_EMIRATE_START());
           this._Store.dispatch(FETCH_USERADDRESS_START());
@@ -96,7 +102,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.addresses$ = this._Store.select(addressSelector);
           this.terms$ = this._Store.select(termsSelector);
           this.checkoutResponse$ = this._Store.select(
-            fromNormalPlanSelector.normalPlanResponseSelector
+            fromCustomPlanSelector.customPlanResponseSelector
           );
         } else {
           this._Router.navigate(['set-plan'], {
@@ -145,7 +151,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   applyGiftCode(input: HTMLInputElement) {
     if (input.value != '') {
       this.giftcodeButtonMode$ = this._Store.select(
-        fromNormalPlanSelector.normalPlanGiftCodeLoadingSelector
+        normalPlanGiftCodeLoadingSelector
       );
       this._Store.dispatch(
         FETCH_NORMALPLAN_GIFTCODE_START({
@@ -156,9 +162,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           },
         })
       );
-      this.price$ = this._Store.select(
-        fromNormalPlanSelector.normalPlanGiftCodeSelector
-      );
+      this.price$ = this._Store.select(normalPlanGiftCodeSelector);
     }
   }
 
@@ -166,35 +170,40 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   checkout_With_Auth(form: FormGroup) {
     if (form.valid) {
-      let sub: any;
+      let checkout: ICheckout;
       let priceinfo: any;
       this.subscriptionInfo$
         .pipe(takeUntil(this.destroyed$))
-        .subscribe((res) => (sub = res));
+        .subscribe((res) => {
+          if (res) {
+            checkout = {
+              delivery_days: res.delivery_days,
+              meal_types: res.number_of_Meals,
+              snacks_count: res.number_of_Snacks,
+              plan_id: res.program_id,
+              start_delivery_day: res.start_date,
+              bag: 0,
+              code_id: priceinfo?.code_id,
+              price: priceinfo?.price,
+              total_price: priceinfo?.grand_total,
+              location: {
+                emirate_id: form.value.emirate_id,
+                area_id: form.value.area_id,
+                property_number: '',
+                landmark: form.value.address,
+              },
+              days_count: Number(res?.number_of_Days),
+              meals_count: res.number_of_Meals.length,
+              list_days:[]
+            };
+          }
+          this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
+        });
 
       this.price$
         .pipe(takeUntil(this.destroyed$))
         .subscribe((res) => (priceinfo = res));
 
-      const checkout: ICheckout = {
-        delivery_days: sub?.delivery_days,
-        meal_types: sub?.meal_types,
-        no_snacks: sub?.no_snacks,
-        program_id: sub?.program_id,
-        plan_option_id: sub?.plan_option_id,
-        start_date: sub?.start_date,
-        bag: 0,
-        code_id: priceinfo?.code_id,
-        price: priceinfo?.price,
-        grand_total: priceinfo?.grand_total,
-        location: {
-          emirate_id: form.value.emirate_id,
-          area_id: form.value.area_id,
-          property_number: '',
-          landmark: form.value.address,
-        },
-      };
-      this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
       this.fireSwal();
       this.redirectToPaymentGateway();
     }
@@ -202,41 +211,45 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   checkout_Without_Auth(form: FormGroup) {
     if (form.valid) {
-      let sub: any;
       let priceinfo: any;
+      let checkout: ICheckout;
       this.subscriptionInfo$
         .pipe(takeUntil(this.destroyed$))
-        .subscribe((res) => (sub = res));
+        .subscribe((res) => {
+          if (res) {
+            checkout = {
+              delivery_days: res.delivery_days,
+              meal_types: res.number_of_Meals,
+              snacks_count: res.number_of_Snacks,
+              plan_id: res.program_id,
+              start_delivery_day: res.start_date,
+              bag: 0,
+              code_id: priceinfo?.code_id,
+              price: priceinfo?.price,
+              total_price: priceinfo?.grand_total,
+              location: {
+                emirate_id: form.value.emirate_id,
+                area_id: form.value.area_id,
+                property_number: '',
+                landmark: form.value.address,
+              },
+              first_name: form.value.first_name,
+              last_name: form.value.last_name,
+              email: form.value.email,
+              phone_number: form.value.phone_number,
+              password: form.value.password,
+              days_count: Number(res?.number_of_Days),
+              meals_count: res.number_of_Meals.length,
+              list_days: [],
+            };
+          }
+          this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
+        });
 
       this.price$
         .pipe(takeUntil(this.destroyed$))
         .subscribe((res) => (priceinfo = res));
 
-      const checkout: ICheckout = {
-        delivery_days: sub?.delivery_days,
-        meal_types: sub?.meal_types,
-        no_snacks: sub?.no_snacks,
-        program_id: sub?.program_id,
-        plan_option_id: sub?.plan_option_id,
-        start_date: sub?.start_date,
-        bag: 0,
-        code_id: priceinfo?.code_id,
-        price: priceinfo?.price,
-        grand_total: priceinfo?.grand_total,
-        location: {
-          emirate_id: form.value.emirate_id,
-          area_id: form.value.area_id,
-          property_number: '',
-          landmark: form.value.address,
-        },
-        first_name: form.value.first_name,
-        last_name: form.value.last_name,
-        email: form.value.email,
-        phone_number: form.value.phone_number,
-        password: form.value.password,
-      };
-
-      this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
       this.fireSwal();
       this.redirectToPaymentGateway();
     }
@@ -253,15 +266,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   // *****************************************************Address*****************************************************
 
-  displayUserAddressModal(){
-    this.addresses$
-    .pipe(takeUntil(this.destroyed$))
-    .subscribe(res=>{
+  displayUserAddressModal() {
+    this.addresses$.pipe(takeUntil(this.destroyed$)).subscribe((res) => {
       if (res == null) {
         this._Store.dispatch(FETCH_USERADDRESS_START());
       }
-    })
-    this.addressesModal = true
+    });
+    this.addressesModal = true;
   }
 
   selectAddress(address: IAddressResponse) {
@@ -272,8 +283,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   // *****************************************************Swal && Lottie*****************************************************
-  paymentSwal:any;
-  fireSwal(){
+  paymentSwal: any;
+  fireSwal() {
     this.paymentSwal = Swal.mixin({
       showConfirmButton: false,
       timerProgressBar: false,
@@ -285,7 +296,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   // *****************************************************Terms*****************************************************
-  onCheckTermsChange(event: any){
-    event.target.checked && (this.termsModal = true)
+  onCheckTermsChange(event: any) {
+    event.target.checked && (this.termsModal = true);
   }
 }

@@ -126,7 +126,7 @@ export interface ICheckout {
     snacks_count:       number;
     days_count:         number;
     delivery_days:      string[];
-    start_delivery_day: Date;
+    start_delivery_day: string;
     meal_types:         string[];
     code_id:            null;
     location:           ICheckoutLocation;
