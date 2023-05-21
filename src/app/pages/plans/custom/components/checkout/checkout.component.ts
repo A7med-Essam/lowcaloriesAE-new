@@ -29,7 +29,10 @@ import { FETCH_TERMS_START } from 'src/app/store/termsStore/terms.action';
 import { ITermsResponse } from 'src/app/interfaces/terms.interface';
 import { termsSelector } from 'src/app/store/termsStore/terms.selector';
 import {
+  ICards,
   ICheckout,
+  ICheckoutListDay,
+  ICheckoutMeal,
   ICustomPlanResponse,
   ICustomProgramPriceResponse,
   ISubscriptionData,
@@ -57,6 +60,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   terms$!: Observable<ITermsResponse[] | any>;
   ProgramDetails!: Observable<ICustomPlanResponse[] | null>;
   login$!: Observable<ILoginState>;
+  cards$!: Observable<ICards[] | null>;
   subscribtionModal: boolean = false;
   program_id: number = 0;
   price: number = 0;
@@ -76,6 +80,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private _ActivatedRoute: ActivatedRoute
   ) {
     this.login$ = _Store.select(loginSelector);
+    this.cards$ = _Store.select(fromCustomPlanSelector.CustomCardsSelector);
     this.price$ = _Store.select(fromCustomPlanSelector.customPlanPriceSelector);
     _Store
       .select(fromCustomPlanSelector.customPlanPriceSelector)
@@ -170,40 +175,78 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   checkout_With_Auth(form: FormGroup) {
     if (form.valid) {
-      let checkout: ICheckout;
-      let priceinfo: any;
-      this.subscriptionInfo$
-        .pipe(takeUntil(this.destroyed$))
-        .subscribe((res) => {
-          if (res) {
-            checkout = {
-              delivery_days: res.delivery_days,
-              meal_types: res.number_of_Meals,
-              snacks_count: res.number_of_Snacks,
-              plan_id: res.program_id,
-              start_delivery_day: res.start_date,
-              bag: 0,
-              code_id: priceinfo?.code_id,
-              price: priceinfo?.price,
-              total_price: priceinfo?.grand_total,
-              location: {
-                emirate_id: form.value.emirate_id,
-                area_id: form.value.area_id,
-                property_number: '',
-                landmark: form.value.address,
-              },
-              days_count: Number(res?.number_of_Days),
-              meals_count: res.number_of_Meals.length,
-              list_days:[]
+      this.cards$.pipe(takeUntil(this.destroyed$)).subscribe((cards) => {
+        if (cards) {
+          const list_days: ICheckoutListDay[] = [];
+          cards.forEach((item) => {
+            const cardItem: ICheckoutListDay = {
+              day: item.day,
+              date: item.date,
+              meals: [],
             };
-          }
-          this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
-        });
+            item.meals.forEach((meal) => {
+              const cartMeal: ICheckoutMeal = {
+                meal_id: meal.details.id,
+                main_unit: meal.details.mainDish.unit,
+                side_unit: meal.details?.sideDish?.unit || 'NONE',
+                max_main: meal.details.mainDish.max_meal,
+                max_side: meal.details?.sideDish?.max_meal || 0,
+                type: 'MEAL',
+              };
 
-      this.price$
-        .pipe(takeUntil(this.destroyed$))
-        .subscribe((res) => (priceinfo = res));
+              cardItem.meals.push(cartMeal);
+            });
 
+            item.snacks.forEach((meal) => {
+              const cartMeal: ICheckoutMeal = {
+                meal_id: meal.details.id,
+                main_unit: meal.details.mainDish.unit,
+                side_unit: meal.details?.sideDish?.unit || 'NONE',
+                max_main: meal.details.mainDish.max_meal,
+                max_side: meal.details?.sideDish?.max_meal || 0,
+                type: 'SNACK',
+              };
+
+              cardItem.meals.push(cartMeal);
+            });
+
+            list_days.push(cardItem);
+          });
+          this.price$
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe((priceinfo) => {
+              this.subscriptionInfo$
+                .pipe(takeUntil(this.destroyed$))
+                .subscribe((res) => {
+                  if (res) {
+                    const checkout: ICheckout = {
+                      delivery_days: res.delivery_days,
+                      meal_types: res.number_of_Meals,
+                      snacks_count: res.number_of_Snacks,
+                      plan_id: res.Plan_Type.id,
+                      start_delivery_day: res.start_date,
+                      bag: 0,
+                      code_id: Number(priceinfo?.code_id),
+                      price: Number(priceinfo?.price),
+                      total_price: Number(priceinfo?.grand_total),
+                      location: {
+                        emirate_id: form.value.emirate_id,
+                        area_id: form.value.area_id,
+                        property_number: '',
+                        landmark: form.value.address,
+                      },
+                      days_count: Number(res?.number_of_Days),
+                      meals_count: res.number_of_Meals.length,
+                      list_days: list_days,
+                    };
+                    this._Store.dispatch(
+                      FETCH_CHECKOUT_START({ data: checkout })
+                    );
+                  }
+                });
+            });
+        }
+      });
       this.fireSwal();
       this.redirectToPaymentGateway();
     }
@@ -211,44 +254,83 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   checkout_Without_Auth(form: FormGroup) {
     if (form.valid) {
-      let priceinfo: any;
-      let checkout: ICheckout;
-      this.subscriptionInfo$
-        .pipe(takeUntil(this.destroyed$))
-        .subscribe((res) => {
-          if (res) {
-            checkout = {
-              delivery_days: res.delivery_days,
-              meal_types: res.number_of_Meals,
-              snacks_count: res.number_of_Snacks,
-              plan_id: res.program_id,
-              start_delivery_day: res.start_date,
-              bag: 0,
-              code_id: priceinfo?.code_id,
-              price: priceinfo?.price,
-              total_price: priceinfo?.grand_total,
-              location: {
-                emirate_id: form.value.emirate_id,
-                area_id: form.value.area_id,
-                property_number: '',
-                landmark: form.value.address,
-              },
-              first_name: form.value.first_name,
-              last_name: form.value.last_name,
-              email: form.value.email,
-              phone_number: form.value.phone_number,
-              password: form.value.password,
-              days_count: Number(res?.number_of_Days),
-              meals_count: res.number_of_Meals.length,
-              list_days: [],
+      this.cards$.pipe(takeUntil(this.destroyed$)).subscribe((cards) => {
+        if (cards) {
+          const list_days: ICheckoutListDay[] = [];
+          cards.forEach((item) => {
+            const cardItem: ICheckoutListDay = {
+              day: item.day,
+              date: item.date,
+              meals: [],
             };
-          }
-          this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
-        });
+            item.meals.forEach((meal) => {
+              const cartMeal: ICheckoutMeal = {
+                meal_id: meal.details.id,
+                main_unit: meal.details.mainDish.unit,
+                side_unit: meal.details?.sideDish?.unit || 'NONE',
+                max_main: meal.details.mainDish.max_meal,
+                max_side: meal.details?.sideDish?.max_meal || 0,
+                type: 'MEAL',
+              };
 
-      this.price$
-        .pipe(takeUntil(this.destroyed$))
-        .subscribe((res) => (priceinfo = res));
+              cardItem.meals.push(cartMeal);
+            });
+
+            item.snacks.forEach((meal) => {
+              const cartMeal: ICheckoutMeal = {
+                meal_id: meal.details.id,
+                main_unit: meal.details.mainDish.unit,
+                side_unit: meal.details?.sideDish?.unit || 'NONE',
+                max_main: meal.details.mainDish.max_meal,
+                max_side: meal.details?.sideDish?.max_meal || 0,
+                type: 'SNACK',
+              };
+
+              cardItem.meals.push(cartMeal);
+            });
+
+            list_days.push(cardItem);
+          });
+          this.price$
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe((priceinfo) => {
+              this.subscriptionInfo$
+                .pipe(takeUntil(this.destroyed$))
+                .subscribe((res) => {
+                  if (res) {
+                    const checkout: ICheckout = {
+                      delivery_days: res.delivery_days,
+                      meal_types: res.number_of_Meals,
+                      snacks_count: res.number_of_Snacks,
+                      plan_id: res.Plan_Type.id,
+                      start_delivery_day: res.start_date,
+                      bag: 0,
+                      code_id: Number(priceinfo?.code_id),
+                      price: Number(priceinfo?.price),
+                      total_price: Number(priceinfo?.grand_total),
+                      location: {
+                        emirate_id: form.value.emirate_id,
+                        area_id: form.value.area_id,
+                        property_number: '',
+                        landmark: form.value.address,
+                      },
+                      first_name: form.value.first_name,
+                      last_name: form.value.last_name,
+                      email: form.value.email,
+                      phone_number: form.value.phone_number,
+                      password: form.value.password,
+                      days_count: Number(res?.number_of_Days),
+                      meals_count: res.number_of_Meals.length,
+                      list_days: list_days,
+                    };
+                    this._Store.dispatch(
+                      FETCH_CHECKOUT_START({ data: checkout })
+                    );
+                  }
+                });
+            });
+        }
+      });
 
       this.fireSwal();
       this.redirectToPaymentGateway();

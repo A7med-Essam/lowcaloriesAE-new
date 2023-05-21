@@ -128,18 +128,18 @@ export interface ICheckout {
     delivery_days:      string[];
     start_delivery_day: string;
     meal_types:         string[];
-    code_id:            null;
+    code_id:            number;
     location:           ICheckoutLocation;
     list_days:          ICheckoutListDay[];
 }
 
- interface ICheckoutListDay {
+ export interface ICheckoutListDay {
     day:   string;
-    date:  Date;
+    date:  string;
     meals: ICheckoutMeal[];
 }
 
- interface ICheckoutMeal {
+ export interface ICheckoutMeal {
     meal_id:   number;
     main_unit: string;
     side_unit: string;
