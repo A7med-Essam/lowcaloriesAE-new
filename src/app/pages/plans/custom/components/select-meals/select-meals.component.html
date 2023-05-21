@@ -90,14 +90,14 @@
                                 <div class="mt-3">
                                     <h6>Meals</h6>
                                     <div class="d-flex flex-wrap meals">
-                                        <i class="fas fa-check-circle text-muted m-1" [class.active]="meal.status"
+                                        <i class="fas fa-check-circle text-muted m-1" [class.active]="meal.status" (click)="displaySelectedMeal(meal)"
                                             *ngFor="let meal of card.meals"></i>
                                     </div>
                                 </div>
                                 <div class="mt-3" *ngIf="card.snacks.length">
                                     <h6>Snacks</h6>
                                     <div class="d-flex flex-wrap snacks">
-                                        <i class="fas fa-check-circle text-muted m-1" [class.active]="snack.status"
+                                        <i class="fas fa-check-circle text-muted m-1" [class.active]="snack.status" (click)="displaySelectedMeal(snack)"
                                             *ngFor="let snack of card.snacks"></i>
                                     </div>
                                 </div>
@@ -208,3 +208,58 @@
         </div>
     </div>
 </p-dialog>
+
+
+<p-dialog [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="selectedMealModal"
+    [transitionOptions]="'200ms'" [style]="{ width: '50vw' }">
+    <div *ngIf="mealDetails">
+        <div class="text-center">
+            <img [src]="mealDetails.image" class="img-fluid mb-4" alt="" width="300px">
+            <h5 class="text-orange">
+                {{mealDetails.mainDish.name}}
+            </h5>
+            <span class="font-weight-600 text-muted">
+                {{mealDetails.description}}
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Velit, autem?
+            </span>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span
+                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">Calories</span>
+                    <span class="txt-font-bold">{{(mealDetails.mainDish.calories).toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span
+                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">Fat</span>
+                    <span class="txt-font-bold">{{(mealDetails.mainDish.fat).toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span
+                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">Protein</span>
+                    <span class="txt-font-bold">{{(mealDetails.mainDish.protein).toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span
+                        class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">Carb</span>
+                    <span class="txt-font-bold">{{(mealDetails.mainDish.carb).toFixed(2)}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 text-center">
+            <button type="button" class="btn bg-dark rounded-pill text-white py-2 px-5 font-weight-600"
+                (click)="deleteMeal();">Delete Meal</button>
+        </div>
+    </div>
+</p-dialog>
+
+<p-toast position="top-right" [showTransformOptions]="'translateY(100%)'" [showTransitionOptions]="'300ms'"
+    [hideTransitionOptions]="'300ms'" [showTransformOptions]="'translateX(100%)'"></p-toast>

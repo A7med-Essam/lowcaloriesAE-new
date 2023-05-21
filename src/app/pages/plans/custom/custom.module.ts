@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SkeletonModule } from 'primeng/skeleton';
 import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
+import { ToastModule } from 'primeng/toast';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { LottieModule } from 'ngx-lottie';
 export function playerFactory() {
@@ -31,6 +32,7 @@ export function playerFactory() {
     CalendarModule,
     CarouselModule,
     DialogModule,
+    ToastModule,
     LottieModule.forRoot({ player: playerFactory }),
   ],
 })

@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { MessageService } from 'primeng/api';
 import { Observable, takeUntil, Subject } from 'rxjs';
 import {
   ICategoriesResponse,
@@ -25,6 +26,7 @@ import {
   selector: 'app-select-meals',
   templateUrl: './select-meals.component.html',
   styleUrls: ['./select-meals.component.scss'],
+  providers:[MessageService]
 })
 
 export class SelectMealsComponent implements OnDestroy {
@@ -36,6 +38,7 @@ export class SelectMealsComponent implements OnDestroy {
   meals: ICustomMealsResponse[] = [];
   cards: ICards[] = [];
   mealDetailsModal: boolean = false;
+  selectedMealModal: boolean = false;
   cardsStatus: boolean = false;
   categoryOptions: OwlOptions = {
     dots: false,
@@ -57,12 +60,12 @@ export class SelectMealsComponent implements OnDestroy {
     },
   };
   mealDetails!: ICustomMealsResponse;
-  selectedMeals: ICustomMealsResponse[] = [];
 
   constructor(
     private _Store: Store,
     private _SharedService: SharedService,
     private _Router: Router,
+    private _MessageService: MessageService,
     private _ActivatedRoute: ActivatedRoute
   ) {
     this.meals$ = this._Store.select(showMealsSelector);
@@ -197,7 +200,12 @@ export class SelectMealsComponent implements OnDestroy {
         element[mealList][mealIndex].details = meal;
         element[mealList][mealIndex].status = true;
         found = true;
-        this.selectedMeals.push(meal);
+        this._MessageService.add({
+          severity: 'success',
+          summary: 'Item Added',
+          detail: `${meal.mainDish.name} has been added successfully`,
+          life:3000
+        });
       }
       index++;
     }
@@ -223,6 +231,24 @@ export class SelectMealsComponent implements OnDestroy {
       this._Router.navigate(['show-meals'], {
         relativeTo: this._ActivatedRoute.parent,
       })
+    }
+  }
+
+  currentMeal:any;
+  displaySelectedMeal(meal:any){
+    if (meal.status) {
+      this.currentMeal = meal
+      this.mealDetails = meal.details
+      this.selectedMealModal = true
+    }
+  }
+
+  deleteMeal(){
+    if (this.currentMeal.status) {
+      this.currentMeal.status = false
+      this.currentMeal.details = null
+      this.selectedMealModal = false;
+      this.checkValidation(this.cards);
     }
   }
 }
