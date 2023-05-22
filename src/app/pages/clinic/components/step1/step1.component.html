@@ -38,11 +38,17 @@
         </div>
         <div class="col-lg-6 my-2">
             <div class="mb-2"><label for="">whatsApp<span class="text-danger">*</span></label></div>
-            <input type="number" pInputText placeholder='Enter whatsApp number' [style]="{'width':'100%'}"
+            <input type="text" pInputText placeholder='Enter whatsApp number' [style]="{'width':'100%'}"
+            maxlength="10" minlength="10"
+            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                 formControlName="whatsApp" />
             <div class="text-start">
                 <small class="text-danger ms-1" *ngIf="clinicForm.get('whatsApp')?.touched &&
                 clinicForm.get('whatsApp')?.hasError('required')">This field is required.</small>
+            </div>
+            <div class="text-start">
+                <small class="text-danger ms-1" *ngIf="clinicForm.get('whatsApp')?.touched &&
+                clinicForm.get('whatsApp')?.hasError('pattern')">WhatsApp number must be 10 digit</small>
             </div>
         </div>
         <div class="col-lg-6 my-2">

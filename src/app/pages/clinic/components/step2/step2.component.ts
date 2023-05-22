@@ -201,6 +201,14 @@ export class Step2Component implements OnInit, OnDestroy {
       res.loading == false && this.paymentSwal.close();
       if (res.data) {
         res.status == 1 && (window.location.href = res.data);
+      }else{
+        if (res.message !== null && res.status == 0) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: res.message,
+          })
+        }
       }
     });
   }

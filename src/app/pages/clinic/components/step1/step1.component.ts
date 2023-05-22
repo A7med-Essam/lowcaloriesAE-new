@@ -53,7 +53,7 @@ export class Step1Component implements OnInit, OnDestroy {
         Validators.pattern('^[\\d]{10}$'),
       ]),
       emirate_id: new FormControl(null, [Validators.required]),
-      whatsApp: new FormControl(null, [Validators.required]),
+      whatsApp: new FormControl(null, [Validators.required,Validators.pattern('^[\\d]{10}$')]),
       address: new FormControl(null, [Validators.required]),
     });
   }

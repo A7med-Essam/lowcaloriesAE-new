@@ -133,7 +133,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       last_name: new FormControl(null, [Validators.required]),
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required]),
-      phone_number: new FormControl(null, [Validators.required]),
+      phone_number: new FormControl(null, [Validators.required,Validators.pattern('^[\\d]{10}$')]),
       address: new FormControl(null, [Validators.required]),
       emirate_id: new FormControl(null, [Validators.required]),
       area_id: new FormControl(null, [Validators.required]),
@@ -248,6 +248,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       res.loading == false && this.paymentSwal.close();
       if (res.data) {
         res.status == 1 && (window.location.href = res.data);
+      }else{
+        if (res.message !== null && res.status == 0) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: res.message,
+          })
+        }
       }
     });
   }

@@ -12,6 +12,7 @@ import { Observable, Subscription } from 'rxjs';
 import { ILoginState } from 'src/app/store/authStore/auth.reducer';
 import { loginSelector } from 'src/app/store/authStore/auth.selector';
 import { LOGIN_START } from '../../store/authStore/auth.action';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -31,6 +32,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.login$ = _Store.select(loginSelector);
     this.subscribe$ = this.login$.subscribe((res) => {
       res.data && this._Router.navigate(['/home']);
+      if (res.error?.error.message !== undefined) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: res.error?.error.message,
+        })
+      }
     });
   }
 

@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -26,7 +32,7 @@ import * as fromCustomPlanSelector from '../../../../../store/customPlanStore/cu
   templateUrl: './set-plan.component.html',
   styleUrls: ['./set-plan.component.scss'],
 })
-export class SetPlanComponent implements OnInit,OnDestroy {
+export class SetPlanComponent implements OnInit, OnDestroy {
   private destroyed$: Subject<void> = new Subject();
   program_id: number = 0;
   ProgramDetails!: Observable<ICustomPlanResponse[] | null>;
@@ -53,8 +59,7 @@ export class SetPlanComponent implements OnInit,OnDestroy {
     private _Store: Store,
     private _SharedService: SharedService,
     private _ElementRef: ElementRef
-  ) // private cdref: ChangeDetectorRef,
-  {}
+  ) {}
 
   ngOnInit(): void {
     this._ActivatedRoute.paramMap.subscribe((params) => {
@@ -72,7 +77,9 @@ export class SetPlanComponent implements OnInit,OnDestroy {
         this.skeletonMode$ = this._Store.select(
           fromCustomPlanSelector.customPlanLoadingSelector
         );
-        this.nextButtonMode$ = this._Store.select(fromCustomPlanSelector.showMealsLoadingSelector)
+        this.nextButtonMode$ = this._Store.select(
+          fromCustomPlanSelector.showMealsLoadingSelector
+        );
         this.getUaeDate();
       }
     });
@@ -122,8 +129,14 @@ export class SetPlanComponent implements OnInit,OnDestroy {
       this._Store.dispatch(
         SAVE_CUSTOM_SUBSCRIPTION({ data: this.getSubscriptionData(data) })
       );
-      this._Store.dispatch(FETCH_CUSTOMPLAN_SHOWMEALS_START({plan_id:data.value.Plan_Type.id}))
-      this._Store.dispatch(FETCH_CUSTOMPLAN_SHOWCATEGORIES_START({plan_id:data.value.Plan_Type.id}))
+      this._Store.dispatch(
+        FETCH_CUSTOMPLAN_SHOWMEALS_START({ plan_id: data.value.Plan_Type.id })
+      );
+      this._Store.dispatch(
+        FETCH_CUSTOMPLAN_SHOWCATEGORIES_START({
+          plan_id: data.value.Plan_Type.id,
+        })
+      );
     }
   }
 

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {  Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { exhaustMap, map, of, catchError, tap } from 'rxjs';
 import { CustomPlanService } from 'src/app/services/plans/custom-plan.service';
@@ -11,7 +11,7 @@ export class CustomPlanEffects {
   constructor(
     private actions$: Actions,
     private _CustomPlanService: CustomPlanService,
-    private _Router: Router // private _ActivatedRoute:ActivatedRoute
+    private _Router: Router 
   ) {}
 
   // GET PROGRAM

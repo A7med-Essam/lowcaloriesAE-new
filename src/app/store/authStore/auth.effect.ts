@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import * as fromAuthActions from './auth.action';
 import { Router } from '@angular/router';
 import { LocalService } from 'src/app/services/local.service';
-import { Action, Store } from '@ngrx/store';
+import {  Store } from '@ngrx/store';
 import { ILoginResponse } from 'src/app/interfaces/auth.interface';
 
 @Injectable()
@@ -127,6 +127,3 @@ export class AuthEffect implements OnInitEffects {
     )
   );
 }
-
-// 'carloskiro217@gmail.com'
-// '123123123'

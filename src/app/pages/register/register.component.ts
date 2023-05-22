@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControlOptions,
   FormBuilder,
@@ -7,24 +7,41 @@ import {
   Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { IRegisterState } from 'src/app/store/authStore/auth.reducer';
 import { registerSelector } from 'src/app/store/authStore/auth.selector';
 import { REGISTER_START } from '../../store/authStore/auth.action';
 import { ConfirmedValidator } from './ConfirmedValidator';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit,OnDestroy {
   gender: string[] = ['male', 'female'];
   registerForm: FormGroup = new FormGroup({});
   register$!: Observable<IRegisterState>;
+  subscribe$!: Subscription;
 
   constructor(private _FormBuilder: FormBuilder, private _Store: Store) {
     this.register$ = _Store.select(registerSelector);
+
+    this.subscribe$ = _Store.select(registerSelector)
+    .subscribe(res=>{
+      if (res.message !== null && res.status == 0) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: res.message,
+        })
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscribe$.unsubscribe();
   }
 
   ngOnInit(): void {

@@ -1,5 +1,5 @@
 import { createReducer,on } from "@ngrx/store";
-import { INormalPlanResponse, INormalProgramPriceResponse, INormalSubscriptionPrice, IShowMealsResponse, ISubscriptionData } from "src/app/interfaces/normal-plan.interface";
+import { INormalPlanResponse, INormalProgramPriceResponse, IShowMealsResponse, ISubscriptionData } from "src/app/interfaces/normal-plan.interface";
 import { IHttpResponse } from "../appStore";
 import * as fromNormalPlanActions from "../normalPlanStore/normalPlan.action";
 

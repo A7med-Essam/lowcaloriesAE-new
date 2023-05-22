@@ -16,20 +16,6 @@ import {
 export class AuthService {
   constructor(private _ApiService: ApiService) {}
 
-  // resetPassword_profile(password: any): Observable<any> {
-  //   return this._ApiService.postReq('resetPassword', password);
-  // }
-
-  // sendResetMail(email: string): Observable<any> {
-  //   return this._ApiService.postReq('sendResetMail', { email: email });
-  // }
-
-  // resetPassword(newPassword: any): Observable<any> {
-  //   return this._ApiService.postReq('getResetMail', newPassword);
-  // }
-
-  // ===========================================================================
-
   signIn(
     signInData: ISignInData
   ): Observable<{ status: number; data: ILoginResponse; message: string }> {

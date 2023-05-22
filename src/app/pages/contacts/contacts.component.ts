@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-// import { SocialMediaService } from 'src/app/services/socialMedia/social-media.service';
 
 @Component({
   selector: 'app-contacts',
@@ -13,7 +12,6 @@ export class ContactsComponent implements OnInit {
   EmailMessageModal: boolean = false;
   emailMessage: string = '';
   constructor(
-    // private _SocialMediaService: SocialMediaService,
     private _FormBuilder: FormBuilder,
   ) {
   }

@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { createReducer, on } from '@ngrx/store';
 import {
   IRegisterResponse,

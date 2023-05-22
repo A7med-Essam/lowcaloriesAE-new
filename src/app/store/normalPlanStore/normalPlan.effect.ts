@@ -1,11 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Injectable, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Injectable } from '@angular/core';
+import {  Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { exhaustMap, map, of, catchError, tap } from 'rxjs';
 import { NormalPlanService } from 'src/app/services/plans/normal-plan.service';
 import * as fromNormalPlanActions from '../normalPlanStore/normalPlan.action';
-import Swal from 'sweetalert2';
 
 @Injectable()
 export class NormalPlanEffects {
@@ -13,9 +12,7 @@ export class NormalPlanEffects {
     private actions$: Actions,
     private _NormalPlanService: NormalPlanService,
     private _Router: Router,
-    private _ActivatedRoute: ActivatedRoute
   ) {}
-  // @ViewChild('mySwal')
 
   // GET PROGRAM
   normalPlanEffect = createEffect(() =>
