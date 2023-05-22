@@ -116,43 +116,6 @@ export class NormalPlanEffects {
     )
   );
 
-  // GIFTCODE
-  giftCodeEffect = createEffect(() =>
-    this.actions$.pipe(
-      ofType(fromNormalPlanActions.FETCH_NORMALPLAN_GIFTCODE_START),
-      exhaustMap((action) =>
-        this._NormalPlanService
-          .applyGiftCode({
-            code: action.data.code,
-            price: action.data.price,
-            program_id: action.data.program_id,
-          })
-          .pipe(
-            map((res) =>
-              fromNormalPlanActions.FETCH_NORMALPLAN_GIFTCODE_SUCCESS({
-                data: res.data,
-                message: res.message,
-                status: res.status,
-              })
-            ),
-            tap((res) => {
-              Swal.fire({
-                title:res.message,
-                text:'Gift Code Applied!',
-                icon:res.status == 1 ? 'success' : 'error'
-              });
-            }),
-            catchError((error: HttpErrorResponse) =>
-              of(
-                fromNormalPlanActions.FETCH_NORMALPLAN_GIFTCODE_FAILED({
-                  error: error,
-                })
-              )
-            )
-          )
-      )
-    )
-  );
 
   // Checkout
   checkoutEffect = createEffect(() =>

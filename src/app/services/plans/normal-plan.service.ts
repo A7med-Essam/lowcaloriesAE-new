@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { ApiService } from 'src/app/core/services/api.service';
-import { ICheckout, IGiftCodeData, INormalProgramPriceResponse, INormalSubscriptionPrice } from 'src/app/interfaces/normal-plan.interface';
+import { ICheckout, INormalProgramPriceResponse, INormalSubscriptionPrice } from 'src/app/interfaces/normal-plan.interface';
 import { INormalPlanResponse, IShowMealsResponse, ISubscriptionData } from 'src/app/interfaces/normal-plan.interface';
 
 @Injectable({
@@ -22,10 +22,6 @@ export class NormalPlanService {
 
   getNormalProgramPrice(subscription:INormalSubscriptionPrice) : Observable<{status:number,data:INormalProgramPriceResponse, message:string}>{
     return this._ApiService.postReq('getNormalPrices', subscription);
-  }
-
-  applyGiftCode(subscription:IGiftCodeData): Observable<{status:number,data:INormalProgramPriceResponse, message:string}>{
-    return this._ApiService.postReq('giftCode', subscription);
   }
 
   checkout(checkout:ICheckout): Observable<{status:number,data:string, message:string}>{

@@ -37,12 +37,9 @@ import {
   ICustomProgramPriceResponse,
   ISubscriptionData,
 } from 'src/app/interfaces/custom-plan.interface';
-import {
-  normalPlanGiftCodeLoadingSelector,
-  normalPlanGiftCodeSelector,
-} from 'src/app/store/normalPlanStore/normalPlan.selector';
-import { FETCH_NORMALPLAN_GIFTCODE_START } from 'src/app/store/normalPlanStore/normalPlan.action';
 import { FETCH_CHECKOUT_START } from 'src/app/store/customPlanStore/customPlan.action';
+import { FETCH_GIFTCODE_START } from 'src/app/store/giftcodeStore/giftcode.action';
+import { giftCodeLoadingSelector, giftCodeSelector } from 'src/app/store/giftcodeStore/giftcode.selector';
 
 @Component({
   selector: 'app-checkout',
@@ -156,10 +153,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   applyGiftCode(input: HTMLInputElement) {
     if (input.value != '') {
       this.giftcodeButtonMode$ = this._Store.select(
-        normalPlanGiftCodeLoadingSelector
+        giftCodeLoadingSelector
       );
       this._Store.dispatch(
-        FETCH_NORMALPLAN_GIFTCODE_START({
+        FETCH_GIFTCODE_START({
           data: {
             code: input.value,
             price: this.price,
@@ -167,7 +164,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           },
         })
       );
-      this.price$ = this._Store.select(normalPlanGiftCodeSelector);
+      this.price$ = this._Store.select(
+        giftCodeSelector
+      );
     }
   }
 

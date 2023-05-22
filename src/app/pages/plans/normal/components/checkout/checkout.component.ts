@@ -19,7 +19,6 @@ import { ILoginState } from 'src/app/store/authStore/auth.reducer';
 import { loginSelector } from 'src/app/store/authStore/auth.selector';
 import {
   FETCH_CHECKOUT_START,
-  FETCH_NORMALPLAN_GIFTCODE_START,
 } from 'src/app/store/normalPlanStore/normalPlan.action';
 import { FETCH_EMIRATE_START } from 'src/app/store/emirateStore/emirate.action';
 import { IEmirateResponse } from 'src/app/interfaces/emirate.interface';
@@ -32,6 +31,8 @@ import { AnimationOptions } from 'ngx-lottie';
 import { FETCH_TERMS_START } from 'src/app/store/termsStore/terms.action';
 import { ITermsResponse } from 'src/app/interfaces/terms.interface';
 import { termsSelector } from 'src/app/store/termsStore/terms.selector';
+import { giftCodeLoadingSelector, giftCodeSelector } from 'src/app/store/giftcodeStore/giftcode.selector';
+import { FETCH_GIFTCODE_START } from 'src/app/store/giftcodeStore/giftcode.action';
 
 @Component({
   selector: 'app-checkout',
@@ -145,10 +146,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   applyGiftCode(input: HTMLInputElement) {
     if (input.value != '') {
       this.giftcodeButtonMode$ = this._Store.select(
-        fromNormalPlanSelector.normalPlanGiftCodeLoadingSelector
+        giftCodeLoadingSelector
       );
       this._Store.dispatch(
-        FETCH_NORMALPLAN_GIFTCODE_START({
+        FETCH_GIFTCODE_START({
           data: {
             code: input.value,
             price: this.price,
@@ -157,7 +158,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         })
       );
       this.price$ = this._Store.select(
-        fromNormalPlanSelector.normalPlanGiftCodeSelector
+        giftCodeSelector
       );
     }
   }

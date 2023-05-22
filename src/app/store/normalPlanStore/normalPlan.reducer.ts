@@ -148,48 +148,6 @@ export const NormalPlanPriceReducer = createReducer(
   }))
 );
 
-// ===========================================================GIFTCODE==================================================================
-
-export interface INormalPlanGiftCodeState extends IHttpResponse {
-  data: INormalProgramPriceResponse | null;
-}
-
-const normalPlanGiftCodeInitialState: INormalPlanGiftCodeState = {
-  error: null,
-  loading: null,
-  data: null,
-  message: null,
-  status: null,
-};
-
-export const NormalPlanGiftCodeReducer = createReducer(
-  normalPlanGiftCodeInitialState,
-  on(fromNormalPlanActions.FETCH_NORMALPLAN_GIFTCODE_START, (state) => ({
-    ...state,
-    loading: true,
-    data: null,
-    error: null,
-    message: null,
-    status: 0,
-  })),
-  on(fromNormalPlanActions.FETCH_NORMALPLAN_GIFTCODE_SUCCESS, (state, action) => ({
-    ...state,
-    error: null,
-    loading: false,
-    data: action.data,
-    message: action.message,
-    status: action.status,
-  })),
-  on(fromNormalPlanActions.FETCH_NORMALPLAN_GIFTCODE_FAILED, (state, action) => ({
-    ...state,
-    error: action.error,
-    data: null,
-    loading: false,
-    message: null,
-    status: 0,
-  }))
-);
-
 // ==============================================================Checkout===============================================================
 
 export interface ICheckoutState extends IHttpResponse {

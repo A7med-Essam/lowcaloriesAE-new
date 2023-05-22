@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { createAction, props } from "@ngrx/store";
-import { ICheckout, IGiftCodeData, INormalPlanResponse, INormalProgramPriceResponse, INormalSubscriptionPrice, IShowMealsResponse, ISubscriptionData } from "src/app/interfaces/normal-plan.interface";
+import { ICheckout, INormalPlanResponse, INormalProgramPriceResponse, INormalSubscriptionPrice, IShowMealsResponse, ISubscriptionData } from "src/app/interfaces/normal-plan.interface";
 
 export const FETCH_NORMALPLAN_START = createAction('[Normal Plan] FETCH_NORMALPLAN_START', props<{program_id:number}>())
 export const FETCH_NORMALPLAN_SUCCESS = createAction('[Normal Plan] FETCH_NORMALPLAN_SUCCESS', props<{data:INormalPlanResponse[],message:string,status:number}>())
@@ -15,11 +15,6 @@ export const FETCH_SHOWMEALS_FAILED = createAction('[Normal Plan] FETCH_SHOWMEAL
 export const FETCH_NORMALPLAN_PRICE_START = createAction('[Normal Plan] FETCH_NORMALPLAN_PRICE_START', props<{data:INormalSubscriptionPrice}>())
 export const FETCH_NORMALPLAN_PRICE_SUCCESS = createAction('[Normal Plan] FETCH_NORMALPLAN_PRICE_SUCCESS', props<{data:INormalProgramPriceResponse,message:string,status:number}>())
 export const FETCH_NORMALPLAN_PRICE_FAILED = createAction('[Normal Plan] FETCH_NORMALPLAN_PRICE_FAILED', props<{error:HttpErrorResponse}>())
-
-export const FETCH_NORMALPLAN_GIFTCODE_START = createAction('[Normal Plan] FETCH_NORMALPLAN_GIFTCODE_START', props<{data:IGiftCodeData}>())
-export const FETCH_NORMALPLAN_GIFTCODE_SUCCESS = createAction('[Normal Plan] FETCH_NORMALPLAN_GIFTCODE_SUCCESS', props<{data:INormalProgramPriceResponse,message:string,status:number}>())
-export const FETCH_NORMALPLAN_GIFTCODE_FAILED = createAction('[Normal Plan] FETCH_NORMALPLAN_GIFTCODE_FAILED', props<{error:HttpErrorResponse}>())
-
 
 export const FETCH_CHECKOUT_START = createAction('[Normal Plan] FETCH_CHECKOUT_START', props<{data:ICheckout}>())
 export const FETCH_CHECKOUT_SUCCESS = createAction('[Normal Plan] FETCH_CHECKOUT_SUCCESS', props<{data:string,message:string,status:number}>())
