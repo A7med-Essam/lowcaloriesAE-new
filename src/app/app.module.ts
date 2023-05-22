@@ -22,6 +22,7 @@ import { FaqComponent } from './pages/faq/faq.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { DropdownModule } from 'primeng/dropdown';
 import { SkeletonModule } from 'primeng/skeleton';
+import { CalendarModule } from 'primeng/calendar';
 import { ImageModule } from 'primeng/image';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -33,7 +34,12 @@ export function playerFactory() {
   return import('lottie-web');
 }
 
-const APP_PRIMENG_MODULE = [DropdownModule, SkeletonModule, ImageModule];
+const APP_PRIMENG_MODULE = [
+  DropdownModule,
+  SkeletonModule,
+  ImageModule,
+  CalendarModule,
+];
 @NgModule({
   declarations: [
     AppComponent,

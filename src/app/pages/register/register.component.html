@@ -93,8 +93,8 @@
                         <div class="group">
                             <label class="text-muted">Birth Date</label>
                             <br>
-                            <input formControlName="birthday" type="date" class="text-muted w-100" required="" name="birthday"
-                                max="2005-01-01">
+                                <p-calendar dateFormat="dd-mm-yy DD" [showIcon]="true" 
+                                formControlName='birthday' [maxDate]="maxBirthdate"></p-calendar>
                         </div>
                         <div class="text-start">
                             <small class="text-danger ms-1" *ngIf="registerForm.get('birthday')?.touched &&

@@ -39,7 +39,7 @@
                 </owl-carousel-o>
             </div>
             <div class="col-12">
-                <owl-carousel-o *ngIf="meals.length > 0" ngClass="meals">
+                <owl-carousel-o [options]="customOptions" *ngIf="meals.length > 0" ngClass="meals">
                     <ng-container>
                         <ng-container *ngFor="let meal of meals;let i = index">
                             <ng-template carouselSlide>

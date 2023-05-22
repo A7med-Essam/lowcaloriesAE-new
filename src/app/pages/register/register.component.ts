@@ -24,8 +24,9 @@ export class RegisterComponent implements OnInit,OnDestroy {
   registerForm: FormGroup = new FormGroup({});
   register$!: Observable<IRegisterState>;
   subscribe$!: Subscription;
-
+  maxBirthdate:Date;
   constructor(private _FormBuilder: FormBuilder, private _Store: Store) {
+    this.maxBirthdate = new Date("2005-12-31")
     this.register$ = _Store.select(registerSelector);
 
     this.subscribe$ = _Store.select(registerSelector)
@@ -56,7 +57,7 @@ export class RegisterComponent implements OnInit,OnDestroy {
       last_name: new FormControl(null, [Validators.required, Validators.maxLength(20), Validators.minLength(1)]),
       phone_number: new FormControl(null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]),
       gender: new FormControl(null, [Validators.required]),
-      birthday: new FormControl(null, [Validators.required]),
+      birthday: new FormControl(this.maxBirthdate, [Validators.required]),
       height: new FormControl(null, [Validators.required, Validators.maxLength(3), Validators.minLength(1)]),
       Weight: new FormControl(null, [Validators.required, Validators.maxLength(3), Validators.minLength(1)]),
       confirm_password: new FormControl(null),

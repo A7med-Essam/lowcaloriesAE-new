@@ -18,7 +18,7 @@
                     <i class="fas fa-2x fa-utensils"></i>
                     <h2 class="text-orange">Login</h2>
                 </div>
-                <div class="body mt-5">
+                <div class="body">
                     <ng-container *ngIf="login$ | async as login">
                         <div *ngIf="login.status == 0 && login.error" class="text-danger text-center mb-2">
                             {{login.message}}

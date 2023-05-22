@@ -189,7 +189,7 @@ body {
   ***********************/
   .section-title {
     margin-bottom: 50px;
-    padding: 0 100px;
+    // padding: 0 100px;
   }
   .section-title h2 {
     font-size: 50px;
@@ -3177,6 +3177,12 @@ body {
   .menu-body.menu-left .menu-details {
     display: table-cell;
   }
+  @media (max-width:450px){
+    .menu-body.menu-left .menu-details {
+      display: block;
+      text-align: center;
+    }
+  }
   .menu-body.menu-left .menu-title {
     display: block;
     border-bottom: 1px dashed #909090;
@@ -3228,6 +3234,15 @@ body {
   .menu-body.menu-left.simple .menu-description p {
     font-style: italic;
     margin-top: 10px;
+  }
+
+  @media (max-width:768px){
+    .menu-body .menu-details .price{
+      font-family: "Lilita One", "Open Sans", sans-serif;
+    }
+    .tabs ul.tabs-link li{
+      font-family: "Lilita One", "Open Sans", sans-serif;
+    }
   }
   
   /*menu list page*/
@@ -4773,7 +4788,7 @@ body {
   }
   .footer .newsletter .newsletter-input input {
     background: rgba(255, 255, 255, 0.05);
-    color: #ffffff;
+    color: #adadad;
     border: 0px;
     border-radius: 3px;
   }
@@ -4785,6 +4800,7 @@ body {
     position: absolute;
     right: 15px;
     top: 15px;
+    cursor: pointer;
     transition: all 0.5s ease-in-out;
     -webkit-transition: all 0.5s ease-in-out;
     -o-transition: all 0.5s ease-in-out;
@@ -4792,7 +4808,7 @@ body {
     -ms-transition: all 0.5s ease-in-out;
   }
   .footer .newsletter .newsletter-input i:hover {
-    color: #ffffff;
+    color: #3a3a3a;
   }
   .footer .tweet .tweet-block .icon {
     display: table-cell;

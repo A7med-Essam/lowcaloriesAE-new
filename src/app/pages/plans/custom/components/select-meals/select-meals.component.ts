@@ -342,4 +342,24 @@ export class SelectMealsComponent implements OnDestroy {
     );
   }
 
+  // slider meals
+  
+  customOptions: OwlOptions = {
+    loop: false,
+    autoplay: false,
+    margin: 10,
+    items: 1,
+    responsive: {
+      0: {
+        items: 1,
+      },
+      400: {
+        items: 2,
+      },
+      768: {
+        items: 3,
+      },
+    },
+  };
+
 }
