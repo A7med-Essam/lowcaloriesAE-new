@@ -47,14 +47,13 @@
                                     class="item bg-white p-3 shadow rounded mx-3 h-100 d-flex flex-column justify-content-between mb-4">
                                     <div>
                                         <img [src]="meal?.image" class="img-fluid rounded-lg" alt="Meal Image">
-                                        <h5 class="txt-black mt-3">
-                                            {{meal?.mainDish?.name}}
-                                        </h5>
+                                        <h5 class="txt-black mt-3" *ngIf="!meal.sideDish">{{meal.mainDish.name}}</h5>
+                                        <h5 class="txt-black mt-3" *ngIf="meal.sideDish">{{meal.mainDish.name}} /
+                                            {{meal.sideDish.name}}</h5>
                                     </div>
                                     <div class="text-muted">
                                         <p class="my-1">
                                             {{meal?.description}}
-                                            Lorem ipsum dolor sit amet.
                                         </p>
                                     </div>
                                     <div
@@ -76,7 +75,7 @@
             </div>
             <div class="col-12 mt-4">
                 <div class="bg-white rounded shadow-lg mx-3 p-4 cards" *ngIf="cards.length > 0 ;">
-                    <h5 class="mb-2">Selected Meals</h5>
+                    <h5 class="mb-2">Your Cards</h5>
                     <div class="row">
                         <div class="col-md-6 col-lg-4 col-xl-3 my-2 day-card" *ngFor="let card of cards;let i = index;"
                             [attr.card]="i+1">
@@ -90,14 +89,15 @@
                                 <div class="mt-3">
                                     <h6>Meals</h6>
                                     <div class="d-flex flex-wrap meals">
-                                        <i class="fas fa-check-circle text-muted m-1" [class.active]="meal.status" (click)="displaySelectedMeal(meal)"
-                                            *ngFor="let meal of card.meals"></i>
+                                        <i class="fas fa-check-circle text-muted m-1 fa-2x" [class.active]="meal.status"
+                                            (click)="displaySelectedMeal(meal)" *ngFor="let meal of card.meals"></i>
                                     </div>
                                 </div>
                                 <div class="mt-3" *ngIf="card.snacks.length">
                                     <h6>Snacks</h6>
                                     <div class="d-flex flex-wrap snacks">
-                                        <i class="fas fa-check-circle text-muted m-1" [class.active]="snack.status" (click)="displaySelectedMeal(snack)"
+                                        <i class="fas fa-check-circle text-muted m-1 fa-2x"
+                                            [class.active]="snack.status" (click)="displaySelectedMeal(snack)"
                                             *ngFor="let snack of card.snacks"></i>
                                     </div>
                                 </div>
@@ -122,83 +122,78 @@
     <div *ngIf="mealDetails">
         <div class="text-center">
             <img [src]="mealDetails.image" class="img-fluid mb-4" alt="" width="300px">
-            <h5 class="text-orange">
-                {{mealDetails.mainDish.name}}
-            </h5>
+            <h5 class="text-orange" *ngIf="!mealDetails.sideDish">{{mealDetails.mainDish.name}}</h5>
+            <h5 class="text-orange" *ngIf="mealDetails.sideDish">{{mealDetails.mainDish.name}} /
+                {{mealDetails.sideDish.name}}</h5>
             <span class="font-weight-600 text-muted">
                 {{mealDetails.description}}
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Velit, autem?
             </span>
         </div>
-        <!-- <hr>
+        <hr>
         <div class="row text-center">
-            <div class="col-sm-6 border-end">
-                <h6 class="txt-main mb-3 ms-3">
-                    {{MealDetails?.main_dish?.item}}
+            <div class="col-sm-6 border-end my-3">
+                <h6 class="txt-main mb-3 me-4">
+                    {{mealDetails.mainDish.name}}
                 </h6>
                 <div class="qty d-flex align-items-center justify-content-center">
-                    <span class="minus" (click)="countDown(main_dish_counter,5);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.main_dish?.unit)?.toLowerCase() == 'gm'">-</span>
-                    <span class="minus" (click)="countDown(main_dish_counter,1);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.main_dish?.unit)?.toLowerCase() != 'gm'">-</span>
-                    <input type="number" class="count" name="qty" status="main" [attr.haveside]="MealDetails?.side_dish?true:false" disabled
-                    [min]="(MealDetails?.main_dish?.unit)?.toLowerCase() == 'gm'?50:1" 
-                    [value]="MealDetails?.main_dish?.user_max"
-                    [max]="MealDetails?.main_dish?.max"
-                    #main_dish_counter readonly>
-                    <span class="plus" (click)="countUp(main_dish_counter,5);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.main_dish?.unit)?.toLowerCase() == 'gm'">+</span>
-                    <span class="plus" (click)="countUp(main_dish_counter,1);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.main_dish?.unit)?.toLowerCase() != 'gm'">+</span>
+                    <span class="minus" (click)="changeNutration(mealDetails,false)">-</span>
+                    <input type="text" class="count" [value]="mealDetails.mainDish.max_meal" disabled readonly>
+                    <span class="plus" (click)="changeNutration(mealDetails,true)">+</span>
                     <span class="txt-main txt-font ms-2">
-                        {{MealDetails?.main_dish?.unit}}
+                        {{mealDetails.mainDish.unit}}
                     </span>
                 </div>
             </div>
-            <div class="col-sm-6" [class.d-none]="MealDetails?.side_dish == null">
-                <h6 class="txt-main mb-3 ms-3">
-                    {{MealDetails?.side_dish?.item}}
+            <div class="col-sm-6 my-3" *ngIf="mealDetails.sideDish">
+                <h6 class="txt-main mb-3 me-4">
+                    {{mealDetails.sideDish.name}}
                 </h6>
                 <div class="qty d-flex align-items-center justify-content-center">
-                    <span class="minus" (click)="countDown(side_dish_counter,5);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.side_dish?.unit)?.toLowerCase() == 'gm'">-</span>
-                    <span class="minus" (click)="countDown(side_dish_counter,1);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.side_dish?.unit)?.toLowerCase() != 'gm'">-</span>
-                    <input type="number" class="count" name="qty"  status="side" disabled
-                    [min]="(MealDetails?.side_dish?.unit)?.toLowerCase() == 'gm'?50:1" 
-                    [value]="MealDetails?.side_dish?.max"
-                    [max]="MealDetails?.side_dish?.max"
-                    #side_dish_counter readonly>
-                    <span class="plus" (click)="countUp(side_dish_counter,5);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.side_dish?.unit)?.toLowerCase() == 'gm'">+</span>
-                    <span class="plus" (click)="countUp(side_dish_counter,1);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.side_dish?.unit)?.toLowerCase() != 'gm'">+</span>
+                    <span class="minus" (click)="changeNutration(mealDetails,false)">-</span>
+                    <input type="text" class="count" [value]="mealDetails.sideDish.max_side" disabled readonly>
+                    <span class="plus" (click)="changeNutration(mealDetails,true)">+</span>
                     <span class="txt-main txt-font ms-2">
-                        {{MealDetails?.side_dish?.unit}}
+                        {{mealDetails.sideDish.unit}}
                     </span>
                 </div>
             </div>
-        </div> -->
+        </div>
         <hr>
         <div class="row">
-            <div class="col-sm-3 col-6 my-2 postion-relative">
+            <div class="col-md-3 col-6 my-2 postion-relative">
                 <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
                     <span
                         class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">Calories</span>
-                    <span class="txt-font-bold">{{(mealDetails.mainDish.calories).toFixed(2)}}</span>
+                    <span *ngIf="!mealDetails.sideDish">{{(mealDetails.mainDish.calories).toFixed(2)}}</span>
+                    <span
+                        *ngIf="mealDetails.sideDish">{{(mealDetails.mainDish.calories+mealDetails.sideDish.calories).toFixed(2)}}</span>
                 </div>
             </div>
-            <div class="col-sm-3 col-6 my-2 postion-relative">
+            <div class="col-md-3 col-6 my-2 postion-relative">
                 <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
                     <span
                         class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">Fat</span>
-                    <span class="txt-font-bold">{{(mealDetails.mainDish.fat).toFixed(2)}}</span>
+                    <span *ngIf="!mealDetails.sideDish">{{(mealDetails.mainDish.fat).toFixed(2)}}</span>
+                    <span
+                        *ngIf="mealDetails.sideDish">{{(mealDetails.mainDish.fat+mealDetails.sideDish.fat).toFixed(2)}}</span>
                 </div>
             </div>
-            <div class="col-sm-3 col-6 my-2 postion-relative">
+            <div class="col-md-3 col-6 my-2 postion-relative">
                 <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
                     <span
                         class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">Protein</span>
-                    <span class="txt-font-bold">{{(mealDetails.mainDish.protein).toFixed(2)}}</span>
+                    <span *ngIf="!mealDetails.sideDish">{{(mealDetails.mainDish.protein).toFixed(2)}}</span>
+                    <span
+                        *ngIf="mealDetails.sideDish">{{(mealDetails.mainDish.protein+mealDetails.sideDish.protein).toFixed(2)}}</span>
                 </div>
             </div>
-            <div class="col-sm-3 col-6 my-2 postion-relative">
+            <div class="col-md-3 col-6 my-2 postion-relative">
                 <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
                     <span
                         class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">Carb</span>
-                    <span class="txt-font-bold">{{(mealDetails.mainDish.carb).toFixed(2)}}</span>
+                    <span *ngIf="!mealDetails.sideDish">{{(mealDetails.mainDish.carb).toFixed(2)}}</span>
+                    <span
+                        *ngIf="mealDetails.sideDish">{{(mealDetails.mainDish.carb+mealDetails.sideDish.carb).toFixed(2)}}</span>
                 </div>
             </div>
         </div>
@@ -209,48 +204,58 @@
     </div>
 </p-dialog>
 
-
 <p-dialog [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="selectedMealModal"
     [transitionOptions]="'200ms'" [style]="{ width: '50vw' }">
     <div *ngIf="mealDetails">
         <div class="text-center">
             <img [src]="mealDetails.image" class="img-fluid mb-4" alt="" width="300px">
-            <h5 class="text-orange">
-                {{mealDetails.mainDish.name}}
-            </h5>
+            <h5 class="text-orange" *ngIf="!mealDetails.sideDish">{{mealDetails.mainDish.name}}</h5>
+            <h5 class="text-orange" *ngIf="mealDetails.sideDish">{{mealDetails.mainDish.name}} /
+                {{mealDetails.sideDish.name}}</h5>
+            <h5 class="text-dark" *ngIf="!mealDetails.sideDish">{{mealDetails.mainDish.max_meal}}
+                {{mealDetails.mainDish.unit}}</h5>
+            <h5 class="text-dark" *ngIf="mealDetails.sideDish">{{mealDetails.mainDish.max_meal}}
+                {{mealDetails.mainDish.unit}} / {{mealDetails.sideDish.max_side}} {{mealDetails.sideDish.unit}}</h5>
             <span class="font-weight-600 text-muted">
                 {{mealDetails.description}}
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Velit, autem?
             </span>
         </div>
         <hr>
         <div class="row">
-            <div class="col-sm-3 col-6 my-2 postion-relative">
+            <div class="col-md-3 col-6 my-2 postion-relative">
                 <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
                     <span
                         class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">Calories</span>
-                    <span class="txt-font-bold">{{(mealDetails.mainDish.calories).toFixed(2)}}</span>
+                    <span *ngIf="!mealDetails.sideDish">{{(mealDetails.mainDish.calories).toFixed(2)}}</span>
+                    <span
+                        *ngIf="mealDetails.sideDish">{{(mealDetails.mainDish.calories+mealDetails.sideDish.calories).toFixed(2)}}</span>
                 </div>
             </div>
-            <div class="col-sm-3 col-6 my-2 postion-relative">
+            <div class="col-md-3 col-6 my-2 postion-relative">
                 <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
                     <span
                         class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">Fat</span>
-                    <span class="txt-font-bold">{{(mealDetails.mainDish.fat).toFixed(2)}}</span>
+                    <span *ngIf="!mealDetails.sideDish">{{(mealDetails.mainDish.fat).toFixed(2)}}</span>
+                    <span
+                        *ngIf="mealDetails.sideDish">{{(mealDetails.mainDish.fat+mealDetails.sideDish.fat).toFixed(2)}}</span>
                 </div>
             </div>
-            <div class="col-sm-3 col-6 my-2 postion-relative">
+            <div class="col-md-3 col-6 my-2 postion-relative">
                 <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
                     <span
                         class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">Protein</span>
-                    <span class="txt-font-bold">{{(mealDetails.mainDish.protein).toFixed(2)}}</span>
+                    <span *ngIf="!mealDetails.sideDish">{{(mealDetails.mainDish.protein).toFixed(2)}}</span>
+                    <span
+                        *ngIf="mealDetails.sideDish">{{(mealDetails.mainDish.protein+mealDetails.sideDish.protein).toFixed(2)}}</span>
                 </div>
             </div>
-            <div class="col-sm-3 col-6 my-2 postion-relative">
+            <div class="col-md-3 col-6 my-2 postion-relative">
                 <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
                     <span
                         class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">Carb</span>
-                    <span class="txt-font-bold">{{(mealDetails.mainDish.carb).toFixed(2)}}</span>
+                    <span *ngIf="!mealDetails.sideDish">{{(mealDetails.mainDish.carb).toFixed(2)}}</span>
+                    <span
+                        *ngIf="mealDetails.sideDish">{{(mealDetails.mainDish.carb+mealDetails.sideDish.carb).toFixed(2)}}</span>
                 </div>
             </div>
         </div>

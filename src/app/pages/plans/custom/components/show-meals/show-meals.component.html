@@ -38,23 +38,36 @@
                 <div
                     class="bg-white p-3 shadow rounded mx-3 text-start d-flex flex-column justify-content-between h-100">
                     <img [src]="meal.details.image" class="img-fluid rounded m-auto" alt="" width="300px">
-                    <h5 class="txt-black mt-3">
-                        {{meal.details.mainDish.name}}
-                    </h5>
+                    <h5 class="txt-black mt-3" *ngIf="!meal.details.sideDish">{{meal.details.mainDish.name}}</h5>
+                    <h5 class="txt-black mt-3" *ngIf="meal.details.sideDish">{{meal.details.mainDish.name}} / {{meal.details.sideDish.name}}</h5>
                     <div class="text-muted ">
                         <p class="my-1">
                             {{meal.details.description}}
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, ipsa.
                         </p>
                     </div>
                     <div class="text-orange d-flex justify-content-between">
                         <div>
-                            <small><i>calories: </i>{{(meal.details.mainDish.calories)?.toFixed(2)}}</small> <br>
-                            <small><i>fat: </i>{{meal.details.mainDish.fat?.toFixed(2)}} </small>
+                            <small><i>calories: </i>
+                                <span *ngIf="!meal.details.sideDish">{{(meal.details.mainDish.calories).toFixed(2)}}</span>
+                                <span
+                                    *ngIf="meal.details.sideDish">{{(meal.details.mainDish.calories+meal.details.sideDish.calories).toFixed(2)}}</span>
+                            </small> <br>
+                            <small><i>fat: </i>
+                                <span *ngIf="!meal.details.sideDish">{{(meal.details.mainDish.fat).toFixed(2)}}</span>
+                                <span *ngIf="meal.details.sideDish">{{(meal.details.mainDish.fat+meal.details.sideDish.fat).toFixed(2)}}</span>
+                            </small>
                         </div>
                         <div>
-                            <small><i>protein: </i>{{meal.details.mainDish.protein?.toFixed(2)}} </small> <br>
-                            <small><i>carb: </i>{{meal.details.mainDish.carb?.toFixed(2)}}</small>
+                            <small><i>protein: </i>
+                                <span *ngIf="!meal.details.sideDish">{{(meal.details.mainDish.protein).toFixed(2)}}</span>
+                                <span
+                                    *ngIf="meal.details.sideDish">{{(meal.details.mainDish.protein+meal.details.sideDish.protein).toFixed(2)}}</span>
+                            </small> <br>
+                            <small><i>carb: </i>
+                                <span *ngIf="!meal.details.sideDish">{{(meal.details.mainDish.carb).toFixed(2)}}</span>
+                                <span
+                                    *ngIf="meal.details.sideDish">{{(meal.details.mainDish.carb+meal.details.sideDish.carb).toFixed(2)}}</span>
+                            </small>
                         </div>
                     </div>
                 </div>
@@ -68,23 +81,36 @@
                 <div
                     class="bg-white p-3 shadow rounded mx-3 text-start d-flex flex-column justify-content-between h-100">
                     <img [src]="meal.details.image" class="img-fluid rounded m-auto" alt="" width="300px">
-                    <h5 class="txt-black mt-3">
-                        {{meal.details.mainDish.name}}
-                    </h5>
+                    <h5 class="txt-black mt-3" *ngIf="!meal.details.sideDish">{{meal.details.mainDish.name}}</h5>
+                    <h5 class="txt-black mt-3" *ngIf="meal.details.sideDish">{{meal.details.mainDish.name}} / {{meal.details.sideDish.name}}</h5>
                     <div class="text-muted ">
                         <p class="my-1">
                             {{meal.details.description}}
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, ipsa.
                         </p>
                     </div>
                     <div class="text-orange d-flex justify-content-between">
                         <div>
-                            <small><i>calories: </i>{{(meal.details.mainDish.calories)?.toFixed(2)}}</small> <br>
-                            <small><i>fat: </i>{{meal.details.mainDish.fat?.toFixed(2)}} </small>
+                            <small><i>calories: </i>
+                                <span *ngIf="!meal.details.sideDish">{{(meal.details.mainDish.calories).toFixed(2)}}</span>
+                                <span
+                                    *ngIf="meal.details.sideDish">{{(meal.details.mainDish.calories+meal.details.sideDish.calories).toFixed(2)}}</span>
+                            </small> <br>
+                            <small><i>fat: </i>
+                                <span *ngIf="!meal.details.sideDish">{{(meal.details.mainDish.fat).toFixed(2)}}</span>
+                                <span *ngIf="meal.details.sideDish">{{(meal.details.mainDish.fat+meal.details.sideDish.fat).toFixed(2)}}</span>
+                            </small>
                         </div>
                         <div>
-                            <small><i>protein: </i>{{meal.details.mainDish.protein?.toFixed(2)}} </small> <br>
-                            <small><i>carb: </i>{{meal.details.mainDish.carb?.toFixed(2)}}</small>
+                            <small><i>protein: </i>
+                                <span *ngIf="!meal.details.sideDish">{{(meal.details.mainDish.protein).toFixed(2)}}</span>
+                                <span
+                                    *ngIf="meal.details.sideDish">{{(meal.details.mainDish.protein+meal.details.sideDish.protein).toFixed(2)}}</span>
+                            </small> <br>
+                            <small><i>carb: </i>
+                                <span *ngIf="!meal.details.sideDish">{{(meal.details.mainDish.carb).toFixed(2)}}</span>
+                                <span
+                                    *ngIf="meal.details.sideDish">{{(meal.details.mainDish.carb+meal.details.sideDish.carb).toFixed(2)}}</span>
+                            </small>
                         </div>
                     </div>
                 </div>
@@ -97,9 +123,9 @@
     <div class="text-center">
         <a class="button mt-20 pointer py-1 px-5" (click)="getCheckout()">
             <button class="btn w-100 border-0">Proceed to checkout
-                    <ng-container *ngIf="nextButtonMode$ | async">
-                        <i class="fa-solid fa-circle-notch fa-spin p-0"></i>
-                    </ng-container>
+                <ng-container *ngIf="nextButtonMode$ | async">
+                    <i class="fa-solid fa-circle-notch fa-spin p-0"></i>
+                </ng-container>
             </button>
         </a>
     </div>

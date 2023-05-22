@@ -251,4 +251,10 @@ export class SelectMealsComponent implements OnDestroy {
       this.checkValidation(this.cards);
     }
   }
+
+  // ================================================ nutration section ================================================
+
+  changeNutration(meal:any, increase:boolean){
+
+  }
 }
