@@ -560,6 +560,10 @@ body {
   .font-weight-500{
     font-weight: 500;
   }
+
+  .disable-selection {
+    user-select: none;
+  }
   
   /***************************
   Page section margin padding 
@@ -5813,4 +5817,15 @@ input[type=checkbox]{
       .p-dialog {
           width: 75vw !important;
       }
+}
+
+.p-toast .p-toast-message.p-toast-message-success {
+  background: #fdf2f0;
+  border: solid #e93e21;
+  border-width: 0 0 0 6px;
+  color: #e93e21;
+}
+
+.p-toast .p-toast-message.p-toast-message-success .p-toast-message-icon, .p-toast .p-toast-message.p-toast-message-success .p-toast-icon-close {
+  color: #e93e21;
 }

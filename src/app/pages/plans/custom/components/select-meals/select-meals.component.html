@@ -135,10 +135,10 @@
                 <h6 class="txt-main mb-3 me-4">
                     {{mealDetails.mainDish.name}}
                 </h6>
-                <div class="qty d-flex align-items-center justify-content-center">
-                    <span class="minus" (click)="changeNutration(mealDetails,false)">-</span>
+                <div class="qty d-flex align-items-center justify-content-center disable-selection">
+                    <span class="minus" (click)="changeMainDishNutrition(mealDetails,false)">-</span>
                     <input type="text" class="count" [value]="mealDetails.mainDish.max_meal" disabled readonly>
-                    <span class="plus" (click)="changeNutration(mealDetails,true)">+</span>
+                    <span class="plus" (click)="changeMainDishNutrition(mealDetails,true)">+</span>
                     <span class="txt-main txt-font ms-2">
                         {{mealDetails.mainDish.unit}}
                     </span>
@@ -148,10 +148,10 @@
                 <h6 class="txt-main mb-3 me-4">
                     {{mealDetails.sideDish.name}}
                 </h6>
-                <div class="qty d-flex align-items-center justify-content-center">
-                    <span class="minus" (click)="changeNutration(mealDetails,false)">-</span>
+                <div class="qty d-flex align-items-center justify-content-center disable-selection">
+                    <span class="minus" (click)="changeSideDishNutrition(mealDetails,false)">-</span>
                     <input type="text" class="count" [value]="mealDetails.sideDish.max_side" disabled readonly>
-                    <span class="plus" (click)="changeNutration(mealDetails,true)">+</span>
+                    <span class="plus" (click)="changeSideDishNutrition(mealDetails,true)">+</span>
                     <span class="txt-main txt-font ms-2">
                         {{mealDetails.sideDish.unit}}
                     </span>

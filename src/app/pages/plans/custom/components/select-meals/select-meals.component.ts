@@ -9,7 +9,8 @@ import {
   ICustomMealsResponse,
   ICustomPlanResponse,
   ISubscriptionData,
-  ICards
+  ICards,
+  IDish,
 } from 'src/app/interfaces/custom-plan.interface';
 import { SharedService } from 'src/app/services/shared.service';
 import { SAVE_CUSTOMPLAN_CARDS } from 'src/app/store/customPlanStore/customPlan.action';
@@ -20,15 +21,12 @@ import {
   showMealsSelector,
 } from 'src/app/store/customPlanStore/customPlan.selector';
 
-
-
 @Component({
   selector: 'app-select-meals',
   templateUrl: './select-meals.component.html',
   styleUrls: ['./select-meals.component.scss'],
-  providers:[MessageService]
+  providers: [MessageService],
 })
-
 export class SelectMealsComponent implements OnDestroy {
   private destroyed$: Subject<void> = new Subject();
   category_index: number = 0;
@@ -200,11 +198,12 @@ export class SelectMealsComponent implements OnDestroy {
         element[mealList][mealIndex].details = meal;
         element[mealList][mealIndex].status = true;
         found = true;
+        this._MessageService.clear();
         this._MessageService.add({
           severity: 'success',
           summary: 'Item Added',
           detail: `${meal.mainDish.name} has been added successfully`,
-          life:3000
+          life: 3000,
         });
       }
       index++;
@@ -223,30 +222,28 @@ export class SelectMealsComponent implements OnDestroy {
     });
   }
 
-  getNextStep(){
+  getNextStep() {
     if (this.cardsStatus) {
-      this._Store.dispatch(
-        SAVE_CUSTOMPLAN_CARDS({ data: this.cards })
-      );
+      this._Store.dispatch(SAVE_CUSTOMPLAN_CARDS({ data: this.cards }));
       this._Router.navigate(['show-meals'], {
         relativeTo: this._ActivatedRoute.parent,
-      })
+      });
     }
   }
 
-  currentMeal:any;
-  displaySelectedMeal(meal:any){
+  currentMeal: any;
+  displaySelectedMeal(meal: any) {
     if (meal.status) {
-      this.currentMeal = meal
-      this.mealDetails = meal.details
-      this.selectedMealModal = true
+      this.currentMeal = meal;
+      this.mealDetails = meal.details;
+      this.selectedMealModal = true;
     }
   }
 
-  deleteMeal(){
+  deleteMeal() {
     if (this.currentMeal.status) {
-      this.currentMeal.status = false
-      this.currentMeal.details = null
+      this.currentMeal.status = false;
+      this.currentMeal.details = null;
       this.selectedMealModal = false;
       this.checkValidation(this.cards);
     }
@@ -254,7 +251,95 @@ export class SelectMealsComponent implements OnDestroy {
 
   // ================================================ nutration section ================================================
 
-  changeNutration(meal:any, increase:boolean){
+  changeMainDishNutrition(meal: ICustomMealsResponse, increase: boolean) {
+    const [originalMeal] = this.meals.filter((obj) => obj.id === meal.id);
+    const modifiedMeal: ICustomMealsResponse = { ...meal };
+    const mainDish: IDish = { ...meal.mainDish };
+    const increment = modifiedMeal.mainDish.unit === 'GM' ? 5 : 1;
+    const newMaxMeal = increase
+      ? Math.min(mainDish.max_meal + increment, originalMeal.mainDish.max_meal)
+      : Math.max(mainDish.max_meal - increment, increment);
 
+    mainDish.max_meal = newMaxMeal;
+    mainDish.calories = this.changeCalories(mainDish, originalMeal, true);
+    mainDish.fat = this.changeFat(mainDish, originalMeal, true);
+    mainDish.carb = this.changeCarb(mainDish, originalMeal, true);
+    mainDish.protein = this.changeProtein(mainDish, originalMeal, true);
+    modifiedMeal.mainDish = mainDish;
+    this.mealDetails = modifiedMeal;
   }
+
+  changeSideDishNutrition(meal: ICustomMealsResponse, increase: boolean) {
+    const [originalMeal] = this.meals.filter((obj) => obj.id === meal.id);
+    const modifiedMeal: ICustomMealsResponse = { ...meal };
+    const sideDish: IDish = { ...meal.sideDish };
+    const increment = modifiedMeal.sideDish.unit === 'GM' ? 5 : 1;
+    const newMaxSide = increase
+      ? Math.min(sideDish.max_side + increment, originalMeal.sideDish.max_side)
+      : Math.max(sideDish.max_side - increment, increment);
+    sideDish.max_side = newMaxSide;
+    sideDish.calories = this.changeCalories(sideDish, originalMeal, false);
+    sideDish.fat = this.changeFat(sideDish, originalMeal, false);
+    sideDish.carb = this.changeCarb(sideDish, originalMeal, false);
+    sideDish.protein = this.changeProtein(sideDish, originalMeal, false);
+    modifiedMeal.sideDish = sideDish;
+    this.mealDetails = modifiedMeal;
+  }
+
+  changeCalories(
+    meal: IDish,
+    originalMeal: ICustomMealsResponse,
+    isMainDish: boolean
+  ) {
+    const mainDish: IDish = { ...meal };
+    const caloriesPercentage = isMainDish
+      ? originalMeal.mainDish.calories / originalMeal.mainDish.max_meal
+      : originalMeal.sideDish.calories / originalMeal.sideDish.max_side;
+    return (
+      caloriesPercentage * (isMainDish ? mainDish.max_meal : mainDish.max_side)
+    );
+  }
+
+  changeFat(
+    meal: IDish,
+    originalMeal: ICustomMealsResponse,
+    isMainDish: boolean
+  ) {
+    const mainDish: IDish = { ...meal };
+    const fatPercentage = isMainDish
+      ? originalMeal.mainDish.fat / originalMeal.mainDish.max_meal
+      : originalMeal.sideDish.fat / originalMeal.sideDish.max_side;
+    return (
+      fatPercentage * (isMainDish ? mainDish.max_meal : mainDish.max_side)
+    );
+  }
+
+  changeCarb(
+    meal: IDish,
+    originalMeal: ICustomMealsResponse,
+    isMainDish: boolean
+  ) {
+    const mainDish: IDish = { ...meal };
+    const carbPercentage = isMainDish
+      ? originalMeal.mainDish.carb / originalMeal.mainDish.max_meal
+      : originalMeal.sideDish.carb / originalMeal.sideDish.max_side;
+    return (
+      carbPercentage * (isMainDish ? mainDish.max_meal : mainDish.max_side)
+    );
+  }
+
+  changeProtein(
+    meal: IDish,
+    originalMeal: ICustomMealsResponse,
+    isMainDish: boolean
+  ) {
+    const mainDish: IDish = { ...meal };
+    const proteinPercentage = isMainDish
+      ? originalMeal.mainDish.protein / originalMeal.mainDish.max_meal
+      : originalMeal.sideDish.protein / originalMeal.sideDish.max_side;
+    return (
+      proteinPercentage * (isMainDish ? mainDish.max_meal : mainDish.max_side)
+    );
+  }
+
 }

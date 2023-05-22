@@ -38,13 +38,20 @@
                 <div
                     class="bg-white p-3 shadow rounded mx-3 text-start d-flex flex-column justify-content-between h-100">
                     <img [src]="meal.details.image" class="img-fluid rounded m-auto" alt="" width="300px">
-                    <h5 class="txt-black mt-3" *ngIf="!meal.details.sideDish">{{meal.details.mainDish.name}}</h5>
-                    <h5 class="txt-black mt-3" *ngIf="meal.details.sideDish">{{meal.details.mainDish.name}} / {{meal.details.sideDish.name}}</h5>
-                    <div class="text-muted ">
+                    <h6 class="txt-black mt-3" *ngIf="!meal.details.sideDish">
+                        {{meal.details.mainDish.name}}
+                    </h6>
+                    <span *ngIf="!meal.details.sideDish">{{meal.details.mainDish.max_meal}}{{meal.details.mainDish.unit}}</span>
+                    <h6 class="txt-black mt-3" *ngIf="meal.details.sideDish">
+                        {{meal.details.mainDish.name}} / {{meal.details.sideDish.name}}
+                    </h6>
+                    <span *ngIf="meal.details.sideDish">{{meal.details.mainDish.max_meal}} {{meal.details.mainDish.unit}} / {{meal.details.sideDish.max_side}} {{meal.details.sideDish.unit}}</span>
+                    <div class="text-muted">
                         <p class="my-1">
                             {{meal.details.description}}
                         </p>
                     </div>
+                    <hr>
                     <div class="text-orange d-flex justify-content-between">
                         <div>
                             <small><i>calories: </i>
