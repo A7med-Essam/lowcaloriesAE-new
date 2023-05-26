@@ -1,4 +1,4 @@
-<p-dialog header="Email Confirmation" [style]="{width: '35vw'}" [modal]="true" [draggable]="false" [resizable]="false"
+<!-- <p-dialog header="Email Confirmation" [style]="{width: '35vw'}" [modal]="true" [draggable]="false" [resizable]="false"
     [(visible)]="EmailMessageModal" [transitionOptions]="'200ms'">
     <div class="text-center">
         <h6>{{emailMessage}}</h6>
@@ -7,7 +7,7 @@
         <button type="button" class="btn bg-dark rounded-pill text-white py-3 txt-font-bold f-size-md w-100"
             (click)="EmailMessageModal=false">Close</button>
     </div>
-</p-dialog>
+</p-dialog> -->
 
 
 <div class="inner-intro parallax bg-overlay-black-70 bg-darkImg">
@@ -25,7 +25,6 @@
 
 <section class="contact white-bg page-section-ptb">
     <div class="container">
-
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="contact-box text-center">
@@ -78,7 +77,7 @@
                 <form class="form-horizontal" id="contactform" [formGroup]='EmailForm' (ngSubmit)='onSubmit(EmailForm)'>
                     <div class="contact-form">
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="form-field">
                                     <i class="fa fa-user"></i>
                                     <input id="name" type="text" placeholder="Name*" class="placeholder" name="name"
@@ -89,7 +88,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="form-field">
                                     <i class="fa-solid fa-paperclip"></i>
                                     <input type="text" placeholder="Subject*" class="placeholder" name="subject"
@@ -100,7 +99,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="form-field">
                                     <i class="fa fa-envelope"></i>
                                     <input type="email" placeholder="Email*" class="placeholder" name="email"
@@ -112,6 +111,17 @@
                                     <div class="text-start">
                                         <small class="text-danger ms-1" *ngIf="EmailForm.get('email')?.touched &&
                                     EmailForm.get('email')?.hasError('email')">Email is not valid</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-12">
+                                <div class="form-field">
+                                    <i class="fa fa-phone"></i>
+                                    <input type="text" placeholder="Mobile*" class="placeholder" name="mobile"
+                                        formControlName="mobile">
+                                    <div class="text-start">
+                                        <small class="text-danger ms-1" *ngIf="EmailForm.get('mobile')?.touched &&
+                                    EmailForm.get('mobile')?.hasError('required')">This field is required</small>
                                     </div>
                                 </div>
                             </div>
@@ -129,8 +139,12 @@
                         </div>
                         <div class="form-submit mt-10 text-center">
                             <input type="hidden" name="action" value="sendEmail" />
-                            <button id="submit" name="Submit" type="submit" value="Send" class="button"> Send
-                                Message</button>
+                            <button id="submit" name="Submit" type="submit" value="Send" class="button">
+                                Send Message
+                                <ng-container *ngIf="sendMailBtnStatus">
+                                    <i class="fa-solid fa-circle-notch fa-spin p-0"></i>
+                                </ng-container>
+                            </button>
                         </div>
                     </div>
                 </form>

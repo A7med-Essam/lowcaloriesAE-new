@@ -18,6 +18,8 @@ import { EmirateEffects } from './emirateStore/emirate.effect';
 import { AddressEffects } from './userAddressStore/address.effect';
 import { TermsEffects } from './termsStore/terms.effect';
 import { ClinicEffects } from './clinicStore/clinic.effect';
+import { MenuEffects } from './menuStore/menu.effect';
+import * as fromMenuStore from './menuStore/menu.reducer';
 
 export interface AppState {
   login: fromAuthStore.ILoginState;
@@ -41,6 +43,7 @@ export interface AppState {
   customPlanPrice: fromCustomPlanStore.ICustomPlanPriceState;
   customCheckout: fromCustomPlanStore.ICheckoutState;
   giftCode: fromGiftcodeStore.IGiftCodeState;
+  menu:fromMenuStore.IMenuState
 }
 
 export const APP_STORE: ActionReducerMap<AppState> = {
@@ -65,6 +68,7 @@ export const APP_STORE: ActionReducerMap<AppState> = {
   customPlanPrice: fromCustomPlanStore.CustomPlanPriceReducer,
   customCheckout: fromCustomPlanStore.CustomPlanCheckoutReducer,
   giftCode: fromGiftcodeStore.GiftCodeReducer,
+  menu:fromMenuStore.MenuReducer
 };
 
 export const APP_EFFECTS = [
@@ -76,7 +80,8 @@ export const APP_EFFECTS = [
   AddressEffects,
   TermsEffects,
   ClinicEffects,
-  GiftcodeEffects
+  GiftcodeEffects,
+  MenuEffects
 ];
 
 export interface IHttpResponse {

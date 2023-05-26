@@ -1,20 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { ContactsService } from 'src/app/services/contacts.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
-  styleUrls: ['./contacts.component.scss']
+  styleUrls: ['./contacts.component.scss'],
 })
 export class ContactsComponent implements OnInit {
-
   EmailForm: FormGroup = new FormGroup({});
-  EmailMessageModal: boolean = false;
-  emailMessage: string = '';
+  sendMailBtnStatus: boolean = false;
   constructor(
     private _FormBuilder: FormBuilder,
-  ) {
-  }
+    private _ContactsService: ContactsService
+  ) {}
 
   ngOnInit(): void {
     this.setEmailForm();
@@ -23,6 +28,7 @@ export class ContactsComponent implements OnInit {
   setEmailForm() {
     this.EmailForm = this._FormBuilder.group({
       name: new FormControl(null, [Validators.required]),
+      mobile: new FormControl(null, [Validators.required]),
       email: new FormControl(null, [Validators.required, Validators.email]),
       subject: new FormControl(null, [Validators.required]),
       message: new FormControl(null, [Validators.required]),
@@ -31,11 +37,24 @@ export class ContactsComponent implements OnInit {
 
   onSubmit(data: FormGroup) {
     if (data.valid) {
-      // this._SocialMediaService.sendEmail(data.value).subscribe((res) => {
-      //   this.EmailMessageModal = true;
-      //   this.emailMessage = res.message;
-      //   this.EmailForm.reset();
-      // });
+      this.sendMailBtnStatus = true;
+      this._ContactsService.sendContactMail(data.value).subscribe((res) => {
+        this.sendMailBtnStatus = false;
+        if (res.status == 1) {
+          this.EmailForm.reset();
+          this.fireSwal(res.message, true);
+        } else {
+          this.fireSwal(res.message, false);
+        }
+      });
     }
+  }
+
+  fireSwal(message: string, status: boolean) {
+    Swal.fire({
+      icon: status ? 'success' : 'error',
+      title: 'Mail Service',
+      text: message,
+    });
   }
 }
