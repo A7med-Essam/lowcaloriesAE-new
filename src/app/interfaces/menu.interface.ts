@@ -20,7 +20,4 @@ export interface IMenu {
     image:          string;
     created_at:     string;
     updated_at:     string;
-    price_100:      string
-    price_150:      string
-    price_200:      string
 }
