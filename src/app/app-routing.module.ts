@@ -9,6 +9,7 @@ import { MenuComponent } from './pages/menu/menu.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { ProgramComponent } from './pages/program/program.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { TermsComponent } from './pages/terms/terms.component';
 
 const routes: Routes = [
@@ -35,8 +36,9 @@ const routes: Routes = [
   { path: 'menu', component: MenuComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'questions', component: FaqComponent },
-  { path: 'reset', component: ForgetPasswordComponent },
+  // { path: 'questions', component: FaqComponent },
+  { path: 'forget-password', component: ForgetPasswordComponent },
+  { path: 'reset', component: ResetPasswordComponent },
   { path: '**', component: NotfoundComponent },
 ];
 

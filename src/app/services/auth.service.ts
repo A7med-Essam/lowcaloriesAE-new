@@ -35,4 +35,12 @@ export class AuthService {
   refreshToken(): Observable<{ status: number; data: string; message: string }>{
     return this._ApiService.postReq('checkToken', '');
   }
+
+  forgetPassword(email:string): Observable<{ status: number; data: null; message: string }>{
+    return this._ApiService.postReq('sendResetMailService', {email});
+  }
+
+  resetPassword(acc:any): Observable<{ status: number; data: null; message: string }>{
+    return this._ApiService.postReq('getResetMailService', acc);
+  }
 }

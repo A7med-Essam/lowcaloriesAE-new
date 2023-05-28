@@ -29,6 +29,7 @@ import { StoreModule } from '@ngrx/store';
 import { APP_STORE, APP_EFFECTS } from './store/appStore';
 import { AuthInterceptor } from './core/interceptor/http.interceptor';
 import { LottieModule } from 'ngx-lottie';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 
 export function playerFactory() {
   return import('lottie-web');
@@ -55,6 +56,7 @@ const APP_PRIMENG_MODULE = [
     NotfoundComponent,
     ForgetPasswordComponent,
     FaqComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,
