@@ -68,6 +68,7 @@ export class RegisterComponent implements OnInit,OnDestroy {
 
   onSubmit(data: FormGroup) {
     if (data.valid) {
+      data.get("birthday")?.patchValue(new Date(this.registerForm.value.birthday).toLocaleDateString('en-CA'))
       this._Store.dispatch(REGISTER_START({ data: data.value }));
     }
   }
