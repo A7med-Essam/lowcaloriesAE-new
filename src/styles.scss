@@ -1,3 +1,12 @@
+*::-webkit-scrollbar-thumb {
+  background-color: #FE9F4B;
+  border-radius: 10px;
+  border: 3px solid #ffffff;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+}
+// ================================= end scroll style ================================= 
 .text-orange{
     color: #E93E21;
 }
@@ -1469,7 +1478,7 @@ body {
   .header {
     background: transparent;
     z-index: 999;
-    padding: 15px 0 20px;
+    // padding: 15px 0 20px;
     position: absolute;
     width: 100%;
   }
@@ -1478,6 +1487,8 @@ body {
   .topbar {
     position: relative;
     z-index: 1000;
+    background-color: #1E2327;
+    padding: 10px 0px;
   }
   .topbar ul li {
     display: inline-block;

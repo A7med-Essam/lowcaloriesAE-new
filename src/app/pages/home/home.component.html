@@ -2,24 +2,41 @@
   <div class="owl">
     <owl-carousel-o [options]="customOptions">
       <ng-template carouselSlide>
-        <div class="text-center py-5">
-          <span class="text-white">We Serve (Since 2018)</span>
-          <h3 class="text-orange">welcome to low calories</h3>
-          <img src="../../../assets/images/slider/carousel/1.png" alt="" class="img-fluid m-auto" style="width: 350px;">
+        <div class="text-center py-5" id="slider-1">
+          <!-- <span class="text-white">We Serve (Since 2018)</span> -->
+          <!-- <h3 class="text-orange">welcome to low calories</h3> -->
+          <div class="m-5">
+            <button class="btn slider-btns btn-readmore" routerLink="../plans">Read More</button>
+            <button class="btn slider-btns btn-contacts" routerLink="../contacts">Contact Us</button>
+          </div>
         </div>
       </ng-template>
       <ng-template carouselSlide>
-        <div class="text-center py-5">
-          <span class="text-white">We Serve you</span>
-          <h3 class="text-orange">We serve you Healthy food</h3>
-          <img src="../../../assets/images/slider/carousel/2.png" alt="" class="img-fluid m-auto" style="width: 350px;">
+        <div class="text-center py-5" id="slider-2">
+          <!-- <span class="text-white">We Serve you</span>
+          <h3 class="text-orange">We serve you Healthy food</h3> -->
+          <!-- <img src="../../../assets/images/slider/carousel/2.png" alt="" class="img-fluid m-auto" style="width: 350px;"> -->
+          <div class="mx-3">
+            <button class="btn slider-btns btn-readmore" routerLink="../plans">Read More</button>
+          </div>
+          <div class="mx-3">
+            <button class="btn slider-btns btn-contacts" routerLink="../contacts">Contact Us</button>
+          </div>
         </div>
       </ng-template>
       <ng-template carouselSlide>
-        <div class="text-center py-5">
+        <div class="text-center py-5" id="slider-3">
           <span class="text-white">We provide awesome and delicious food</span>
           <h3 class="text-orange">Experience The Finest Quality Food</h3>
-          <img src="../../../assets/images/slider/carousel/3.png" alt="" class="img-fluid m-auto" style="width: 350px;">
+          <!-- <img src="../../../assets/images/slider/carousel/3.png" alt="" class="img-fluid m-auto" style="width: 350px;"> -->
+          <div class="slider3-btns">
+            <div class="mx-3">
+              <button class="btn slider-btns btn-readmore" routerLink="../plans">Read More</button>
+            </div>
+            <div class="mx-3">
+              <button class="btn slider-btns btn-contacts" routerLink="../contacts">Contact Us</button>
+            </div>
+          </div>
         </div>
       </ng-template>
     </owl-carousel-o>

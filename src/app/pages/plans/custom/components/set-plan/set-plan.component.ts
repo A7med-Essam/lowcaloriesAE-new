@@ -118,7 +118,8 @@ export class SetPlanComponent implements OnInit, OnDestroy {
           i <= this.selectedPlanType.details.max_days;
           i++
         ) {
-          this.max_days.push(i.toString());
+          // this.max_days.push(i.toString());
+          this.max_days = ["7","14","21","28"]
         }
       }
     });

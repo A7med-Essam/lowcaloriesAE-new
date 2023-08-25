@@ -58,11 +58,12 @@
 }
 .mega-menu > section.menu-list-items {
   margin: 0;
-  padding: 35px 0;
+  // padding: 35px 0;
+  background-color: #fff;
   display: block;
   float: left;
   width: 100%;
-  background-color: transparent;
+  // background-color: transparent;
 }
 .mega-menu .menu-logo {
   /*----------------------------------- MENU LOGO */
@@ -102,7 +103,8 @@
   display: inline-block;
   float: left;
   width: 100%;
-  color: #ffffff;
+  // color: #ffffff;
+  color: #1E2327 !important;
   font-size: 0.8125em;
   /*padding: 0 20px 0 45px;*/
   line-height: 50px;
@@ -215,7 +217,9 @@
   display: inline-block;
   float: none;
   width: 100%;
-  color: #ffffff;
+  // color: #ffffff;
+  color: #1E2327;
+  font-weight: 600;
   font-size: 0.933em;
   line-height: 64px;
   position: relative;

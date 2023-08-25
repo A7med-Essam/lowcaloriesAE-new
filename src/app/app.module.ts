@@ -40,6 +40,7 @@ const APP_PRIMENG_MODULE = [
   SkeletonModule,
   ImageModule,
   CalendarModule,
+  DialogModule
 ];
 @NgModule({
   declarations: [
@@ -62,7 +63,6 @@ const APP_PRIMENG_MODULE = [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    DialogModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     StoreModule.forRoot(APP_STORE),

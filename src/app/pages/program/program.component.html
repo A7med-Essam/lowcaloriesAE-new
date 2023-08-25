@@ -32,7 +32,7 @@
         <div class="col-xl-4 col-lg-6 my-4" *ngFor="let program of programs$ | async">
           <div class="pricing-table h-100 plan-format bg-white shadow-lg my-4 rounded position-relative overflow-hidden">
             <div class="pricing-title">
-              <img class="img-fluid rounded-top" alt="Program Image" [src]="program?.image">
+              <img class="img-fluid rounded-top" alt="Program Image" [src]="'https://lowcalories.ae/'+program?.image_new">
               <h2 class="mt-4">{{program?.name}}</h2>
               <p class="px-3">{{program?.description}}</p>
             </div>
