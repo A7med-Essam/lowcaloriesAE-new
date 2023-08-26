@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Observable, of, Subject, takeUntil } from 'rxjs';
+import { I18nService } from 'src/app/core/i18n/i18n.service';
 import { ICards } from 'src/app/interfaces/custom-plan.interface';
 import { SharedService } from 'src/app/services/shared.service';
 import { FETCH_CUSTOMPLAN_PRICE_START } from 'src/app/store/customPlanStore/customPlan.action';
@@ -22,12 +24,16 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   nextButtonMode$: Observable<boolean | null> = of(false);
   CurrentIndex: number = 0;
   cards!: Observable<ICards[] | null>;
+ 
   constructor(
+    private _I18nService: I18nService,
+    public translate: TranslateService,
     private _Store: Store,
     private _SharedService: SharedService,
     private _Router: Router,
     private _ActivatedRoute: ActivatedRoute
   ) {
+    this._I18nService.getCurrentLang(this.translate);
     this.cards = _Store.select(CustomCardsSelector);
     _Store
       .select(CustomCardsSelector)

@@ -13,11 +13,11 @@
 <div class="inner-intro parallax bg-overlay-black-70 bg-darkImg">
     <div class="container">
         <div class="row text-center intro-title">
-            <h1 class="text-orange">Contact Us</h1>
-            <p class="text-white">We Know The Secret Of Your Success</p>
+            <h1 class="text-orange">{{"pages.contacts.title"|translate}}</h1>
+            <p class="text-white">{{"pages.contacts.desc"|translate}}</p>
             <ul class="page-breadcrumb">
-                <li><a routerLink=""><i class="fa fa-home"></i> Home</a> <i class="fa fa-angle-double-right"></i></li>
-                <li><span>Contact</span></li>
+                <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home"|translate}}</a> <i class="fa fa-angle-double-right"></i></li>
+                <li><span>{{"pages.contacts.title"|translate}}</span></li>
             </ul>
         </div>
     </div>
@@ -29,10 +29,10 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="contact-box text-center">
                     <i class="fa-solid fa-location-dot"></i>
-                    <h5>Address</h5>
+                    <h5>{{"pages.contacts.form.address.title"|translate}}</h5>
                     <p>
                         <a class="text-reset" target="_blank" href="https://goo.gl/maps/sKRWE3gFhBUfXsLR8?coh=178571&entry=tt">
-                            Abu Dhabi New Shahama-Block 137
+                            {{"pages.contacts.form.address.desc"|translate}}
                         </a>
                     </p>
                 </div>
@@ -40,10 +40,10 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="contact-box text-center">
                     <i class="fa fa-phone"></i>
-                    <h5>Phone</h5>
+                    <h5>{{"pages.contacts.form.phone"|translate}}</h5>
                     <p>
                         <a class="text-reset" target="_blank" href="tel:+(04)5973939">
-                            (04)5973939
+                            04-5973939
                         </a>
                     </p>
                 </div>
@@ -51,7 +51,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="contact-box text-center">
                     <i class="fa-regular fa-envelope"></i>
-                    <h5>Email</h5>
+                    <h5>{{"pages.contacts.form.email"|translate}}</h5>
                     <p>
                         <a class="text-reset" target="_blank" href="mailto:info@Lowcalories.ae">
                             info@Lowcalories.ae
@@ -62,7 +62,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="contact-box text-center">
                     <i class="fa-brands fa-whatsapp"></i>
-                    <h5>WhatsApp</h5>
+                    <h5>{{"pages.contacts.form.whats"|translate}}</h5>
                     <p>
                         <a class="text-reset" href="https://api.whatsapp.com/send?phone=971524007387" target="_blank">
                             +971 52 400 7387
@@ -80,48 +80,48 @@
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="form-field">
                                     <i class="fa fa-user"></i>
-                                    <input id="name" type="text" placeholder="Name*" class="placeholder" name="name"
+                                    <input id="name" type="text" placeholder='{{"pages.contacts.form.name"|translate}}' class="placeholder" name="name"
                                         formControlName="name">
                                     <div class="text-start">
                                         <small class="text-danger ms-1" *ngIf="EmailForm.get('name')?.touched &&
-                                        EmailForm.get('name')?.hasError('required')">This field is required</small>
+                                        EmailForm.get('name')?.hasError('required')">{{"validations.required"|translate}}</small>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="form-field">
                                     <i class="fa-solid fa-paperclip"></i>
-                                    <input type="text" placeholder="Subject*" class="placeholder" name="subject"
+                                    <input type="text" placeholder='{{"pages.contacts.form.subject"|translate}}' class="placeholder" name="subject"
                                         formControlName="subject">
                                     <div class="text-start">
                                         <small class="text-danger ms-1" *ngIf="EmailForm.get('subject')?.touched &&
-                                    EmailForm.get('subject')?.hasError('required')">This field is required</small>
+                                    EmailForm.get('subject')?.hasError('required')">{{"validations.required"|translate}}</small>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="form-field">
                                     <i class="fa fa-envelope"></i>
-                                    <input type="email" placeholder="Email*" class="placeholder" name="email"
+                                    <input type="email" placeholder='{{"pages.contacts.form.email"|translate}}' class="placeholder" name="email"
                                         formControlName="email">
                                     <div class="text-start">
                                         <small class="text-danger ms-1" *ngIf="EmailForm.get('email')?.touched &&
-                                    EmailForm.get('email')?.hasError('required')">This field is required</small>
+                                    EmailForm.get('email')?.hasError('required')">{{"validations.required"|translate}}</small>
                                     </div>
                                     <div class="text-start">
                                         <small class="text-danger ms-1" *ngIf="EmailForm.get('email')?.touched &&
-                                    EmailForm.get('email')?.hasError('email')">Email is not valid</small>
+                                    EmailForm.get('email')?.hasError('email')">{{"validations.email"|translate}}</small>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="form-field">
                                     <i class="fa fa-phone"></i>
-                                    <input type="text" placeholder="Mobile*" class="placeholder" name="mobile"
+                                    <input type="text" placeholder='{{"pages.contacts.form.phone"|translate}}' class="placeholder" name="mobile"
                                         formControlName="mobile">
                                     <div class="text-start">
                                         <small class="text-danger ms-1" *ngIf="EmailForm.get('mobile')?.touched &&
-                                    EmailForm.get('mobile')?.hasError('required')">This field is required</small>
+                                    EmailForm.get('mobile')?.hasError('required')">{{"validations.required"|translate}}</small>
                                     </div>
                                 </div>
                             </div>
@@ -130,17 +130,17 @@
                             <div class="col-lg-12">
                                 <div class="form-field">
                                     <i class="fa fa-pencil"></i>
-                                    <textarea class="input-message placeholder" placeholder="Message*" rows="7"
+                                    <textarea class="input-message placeholder" placeholder='{{"pages.contacts.form.message"|translate}}' rows="7"
                                         formControlName="message" name="message"></textarea>
                                     <small class="text-danger ms-1" *ngIf="EmailForm.get('message')?.touched &&
-                                        EmailForm.get('message')?.hasError('required')">This field is required</small>
+                                        EmailForm.get('message')?.hasError('required')">{{"validations.required"|translate}}</small>
                                 </div>
                             </div>
                         </div>
                         <div class="form-submit mt-10 text-center">
                             <input type="hidden" name="action" value="sendEmail" />
                             <button id="submit" name="Submit" type="submit" value="Send" class="button">
-                                Send Message
+                                {{"buttons.send"|translate}}
                                 <ng-container *ngIf="sendMailBtnStatus">
                                     <i class="fa-solid fa-circle-notch fa-spin p-0"></i>
                                 </ng-container>

@@ -1,11 +1,11 @@
 <div class="inner-intro parallax bg-overlay-black-70 bg-darkImg">
     <div class="container">
         <div class="row text-center intro-title">
-            <h1 class="text-orange">Menu</h1>
-            <p class="text-white">We Know The Secret Of Your Success</p>
+            <h1 class="text-orange">{{"pages.menu.title"|translate}}</h1>
+            <p class="text-white">{{"pages.menu.desc"|translate}}</p>
             <ul class="page-breadcrumb">
-                <li><a routerLink=""><i class="fa fa-home"></i> Home</a> <i class="fa fa-angle-double-right"></i></li>
-                <li><span>Menu</span></li>
+                <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home"|translate}}</a> <i class="fa fa-angle-double-right"></i></li>
+                <li><span>{{"pages.menu.title"|translate}}</span></li>
             </ul>
         </div>
     </div>
@@ -104,12 +104,12 @@
                         <div class="menu-title clearfix">
                             <h4>{{item.name}}</h4>
                             <span class="price" *ngIf="!item.price.includes('=>')">
-                                {{item.price}} <sub>AED</sub>
+                                {{item.price}} <sub>{{"currency"|translate}}</sub>
                             </span>
                             <ul class="price text-end" style="font-size: small;line-height: normal;" *ngIf="item.price.includes('=>')">
-                                <ol>{{item.price.split("AED")[0]}} AED</ol>
-                                <ol>{{item.price.split("AED")[1]}} AED</ol>
-                                <ol>{{item.price.split("AED")[2]}} AED</ol>
+                                <ol>{{item.price.split("AED")[0]}} {{"currency"|translate}}</ol>
+                                <ol>{{item.price.split("AED")[1]}} {{"currency"|translate}}</ol>
+                                <ol>{{item.price.split("AED")[2]}} {{"currency"|translate}}</ol>
                             </ul>
                         </div>
                         <div class="menu-description">

@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'lowcaloriesAE-new';
-  welcomeModal:boolean = true;
+  title = 'Low-Calories';
+  // welcomeModal:boolean = true;
 }

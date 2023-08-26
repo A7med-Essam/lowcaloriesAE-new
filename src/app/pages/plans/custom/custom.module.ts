@@ -13,6 +13,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { LottieModule } from 'ngx-lottie';
+import { I18nModule } from 'src/app/core/i18n/i18n.module';
 export function playerFactory() {
   return import('lottie-web');
 }
@@ -34,6 +35,7 @@ export function playerFactory() {
     DialogModule,
     ToastModule,
     LottieModule.forRoot({ player: playerFactory }),
+    I18nModule
   ],
 })
 export class CustomModule {}

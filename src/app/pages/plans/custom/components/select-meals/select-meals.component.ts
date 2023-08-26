@@ -1,9 +1,11 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { MessageService } from 'primeng/api';
 import { Observable, takeUntil, Subject } from 'rxjs';
+import { I18nService } from 'src/app/core/i18n/i18n.service';
 import {
   ICategoriesResponse,
   ICustomMealsResponse,
@@ -64,8 +66,11 @@ export class SelectMealsComponent implements OnDestroy {
     private _SharedService: SharedService,
     private _Router: Router,
     private _MessageService: MessageService,
-    private _ActivatedRoute: ActivatedRoute
+    private _ActivatedRoute: ActivatedRoute,
+    private _I18nService: I18nService,
+    public translate: TranslateService,
   ) {
+    this._I18nService.getCurrentLang(this.translate);
     this.meals$ = this._Store.select(showMealsSelector);
     this.categories$ = this._Store.select(showCategoriesSelector);
     this.ProgramDetails = this._Store.select(customPlanSelector);

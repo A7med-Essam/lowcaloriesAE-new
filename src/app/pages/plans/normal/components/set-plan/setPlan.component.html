@@ -54,7 +54,7 @@
                                 placeholder='Choose a number of meals' optionLabel="no_meals">
                             </p-dropdown>
                             <small class="text-danger " *ngIf="ProgramDetailsForm.get('Number_of_Meals')?.touched &&
-                            ProgramDetailsForm.get('Number_of_Meals')?.invalid">This field is required.</small>
+                            ProgramDetailsForm.get('Number_of_Meals')?.invalid">{{"validations.required"|translate}}</small>
                         </div>
                         <div class="col-12 my-2">
                             <div class="mb-2"><label>Number Of Days<span class="text-danger">*</span></label></div>
@@ -63,7 +63,7 @@
                                 placeholder='Choose a number of days'>
                             </p-dropdown>
                             <small class="text-danger " *ngIf="ProgramDetailsForm.get('Number_of_Days')?.touched &&
-                            ProgramDetailsForm.get('Number_of_Days')?.invalid">This field is required.</small>
+                            ProgramDetailsForm.get('Number_of_Days')?.invalid">{{"validations.required"|translate}}</small>
                         </div>
                         <div class="col-12 my-2">
                             <label>Number Of Snacks</label>
@@ -77,7 +77,7 @@
                                 (onSelect)="onSelectedDate($event,deliveredDays)" placeholder="dd-mm-yy"
                                 formControlName='Start_Date' [minDate]="uaeDate" [disabledDays]="[5]"></p-calendar>
                             <small class="text-danger" *ngIf="ProgramDetailsForm.get('Start_Date')?.touched &&
-                            ProgramDetailsForm.get('Start_Date')?.invalid">This field is required.</small>
+                            ProgramDetailsForm.get('Start_Date')?.invalid">{{"validations.required"|translate}}</small>
                         </div>
                         <div class="col-12 my-2">
                             <label>Delivery Days <span class="text-danger">*</span></label>
@@ -107,7 +107,7 @@
                         <div class="col-12 my-2">
                             <div class="text-center">
                                 <button class="btn border-0 p-0" type="submit" [disabled]="ProgramDetailsForm.invalid">
-                                    <a class="button mt-20 pointer py-2 px-5">Apply
+                                    <a class="button mt-20 pointer py-2 px-5">{{"buttons.apply"|translate}}
                                         <ng-container *ngIf="nextButtonMode$ | async">
                                             <i class="fa-solid fa-circle-notch fa-spin p-0"></i>
                                         </ng-container>

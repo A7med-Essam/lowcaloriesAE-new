@@ -2,11 +2,11 @@
 <div class="inner-intro parallax bg-overlay-black-70 bg-darkImg">
   <div class="container">
       <div class="row text-center intro-title">
-          <h1 class="text-orange">MONTHLY PLANS</h1>
-          <p class="text-white">Choose the meal plan for your goals</p>
+          <h1 class="text-orange">{{"pages.plans.title"|translate}} </h1>
+          <p class="text-white">{{"pages.plans.desc"|translate}} </p>
           <ul class="page-breadcrumb">
-              <li><a routerLink=""><i class="fa fa-home"></i> Home</a> <i class="fa fa-angle-double-right"></i></li>
-              <li><span>Plans</span></li>
+              <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home"|translate}} </a> <i class="fa fa-angle-double-right"></i></li>
+              <li><span>{{"pages.plans.title"|translate}} </span></li>
           </ul>
       </div>
   </div>
@@ -38,10 +38,10 @@
             </div>
             <div class="pricing-button">
               <div class="text-center my-4 pointer" *ngIf="program?.type?.toLowerCase() == 'normal'">
-                <a class="button mt-20" routerLink="../normal/{{program?.id}}">Subscribe Now</a>
+                <a class="button mt-20" routerLink="../normal/{{program?.id}}">{{"buttons.subscribe"|translate}} </a>
               </div>
               <div class="text-center my-4 pointer" *ngIf="program?.type?.toLowerCase() == 'custom'">
-                <a class="button mt-20" routerLink="../custom/{{program?.id}}">Subscribe Now</a>
+                <a class="button mt-20" routerLink="../custom/{{program?.id}}">{{"buttons.subscribe"|translate}} </a>
               </div>
             </div>
           </div>

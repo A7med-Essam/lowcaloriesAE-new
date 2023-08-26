@@ -10,6 +10,8 @@ import {
 } from 'src/app/interfaces/normal-plan.interface';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { FETCH_NORMALPLAN_PRICE_START } from 'src/app/store/normalPlanStore/normalPlan.action';
+import { I18nService } from 'src/app/core/i18n/i18n.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-showMeals',
@@ -27,8 +29,11 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
     private _SharedService: SharedService,
     private _ActivatedRoute: ActivatedRoute,
     private _Router: Router,
-    private _Store: Store
+    private _Store: Store,
+    private _I18nService: I18nService,
+    public translate: TranslateService,
   ) {
+    this._I18nService.getCurrentLang(this.translate);
     _Store
       .select(fromNormalPlanSelector.showMealsSelector)
       .pipe(takeUntil(this.destroyed$))

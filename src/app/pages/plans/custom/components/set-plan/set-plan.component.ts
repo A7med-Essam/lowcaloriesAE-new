@@ -13,7 +13,9 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable, of, Subject, takeUntil } from 'rxjs';
+import { I18nService } from 'src/app/core/i18n/i18n.service';
 import {
   ICustomPlanResponse,
   ISubscriptionData,
@@ -58,8 +60,12 @@ export class SetPlanComponent implements OnInit, OnDestroy {
     private _FormBuilder: FormBuilder,
     private _Store: Store,
     private _SharedService: SharedService,
-    private _ElementRef: ElementRef
-  ) {}
+    private _ElementRef: ElementRef,
+    private _I18nService: I18nService,
+    public translate: TranslateService,
+  ) {
+    this._I18nService.getCurrentLang(this.translate);
+  }
 
   ngOnInit(): void {
     this._ActivatedRoute.paramMap.subscribe((params) => {

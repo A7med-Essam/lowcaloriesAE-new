@@ -1,11 +1,11 @@
 <div class="inner-intro parallax bg-overlay-black-70 bg-darkImg">
     <div class="container">
         <div class="row text-center intro-title">
-            <h1 class="text-orange">Login</h1>
-            <p class="text-white">Welcome To Low Calories</p>
+            <h1 class="text-orange">{{"pages.login.title"|translate}}</h1>
+            <p class="text-white">{{"pages.login.desc"|translate}}</p>
             <ul class="page-breadcrumb">
-                <li><a routerLink=""><i class="fa fa-home"></i> Home</a> <i class="fa fa-angle-double-right"></i></li>
-                <li><span>login</span></li>
+                <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home"|translate}}</a> <i class="fa fa-angle-double-right"></i></li>
+                <li><span>{{"pages.login.title"|translate}}</span></li>
             </ul>
         </div>
     </div>
@@ -16,7 +16,7 @@
             <div class="col-lg-5 login-sec">
                 <div class="header text-center">
                     <i class="fas fa-2x fa-utensils"></i>
-                    <h2 class="text-orange">Login</h2>
+                    <h2 class="text-orange">{{"pages.login.title"|translate}}</h2>
                 </div>
                 <div class="body">
                     <ng-container *ngIf="login$ | async as login">
@@ -38,9 +38,9 @@
                                 </div>
                                 <div class="text-start">
                                     <small class="text-danger ms-1" *ngIf="loginForm.get('email')?.touched &&
-                                        loginForm.get('email')?.hasError('email')">The email is not valid</small>
+                                        loginForm.get('email')?.hasError('email')">{{"validations.email"|translate}}</small>
                                     <small class="text-danger ms-1" *ngIf="loginForm.get('email')?.touched &&
-                                        loginForm.get('email')?.hasError('required')">This field is required</small>
+                                        loginForm.get('email')?.hasError('required')">{{"validations.required"|translate}}</small>
                                 </div>
                             </div>
                             <div class="col-12 my-2">
@@ -51,16 +51,16 @@
                                 </div>
                                 <div class="text-start">
                                     <small class="text-danger ms-1" *ngIf="loginForm.get('password')?.touched &&
-                                        loginForm.get('password')?.hasError('required')">This field is required</small>
+                                        loginForm.get('password')?.hasError('required')">{{"validations.required"|translate}}</small>
                                 </div>
                             </div>
                             <div class="form-submit mb-30 d-flex justify-content-between">
-                                <a routerLink="../register" class="href">REGISTER</a>
-                                <a routerLink="../forget-password" class="href">FORGET PASSWORD</a>
+                                <a routerLink="../register" class="href">{{"pages.register.title"|translate}}</a>
+                                <a routerLink="../forget-password" class="href">{{"pages.forgetPassword.title"|translate}}</a>
                             </div>
                             <div class="col-12 text-center">
                                 <button type="submit" class="slide_from_bottom mt-3">
-                                    LOGIN
+                                    {{"pages.login.title"|translate}}
                                     <ng-container *ngIf="login$ | async as login">
                                         <ng-container *ngIf="login.loading">
                                             <i class="fa-solid fa-circle-notch fa-spin"></i>

@@ -27,6 +27,8 @@ import {
 import * as fromNormalPlanSelector from '../../../../../store/normalPlanStore/normalPlan.selector';
 import { ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { SharedService } from 'src/app/services/shared.service';
+import { TranslateService } from '@ngx-translate/core';
+import { I18nService } from 'src/app/core/i18n/i18n.service';
 
 @Component({
   selector: 'app-setPlan',
@@ -108,8 +110,12 @@ export class SetPlanComponent
     private _Store: Store,
     private cdref: ChangeDetectorRef,
     private _SharedService: SharedService,
-    private _ElementRef: ElementRef
-  ) {}
+    private _ElementRef: ElementRef,
+    private _I18nService: I18nService,
+    public translate: TranslateService,
+  ) {
+    this._I18nService.getCurrentLang(this.translate);
+  }
 
   ngOnInit(): void {
     this._ActivatedRoute.paramMap.subscribe((params) => {

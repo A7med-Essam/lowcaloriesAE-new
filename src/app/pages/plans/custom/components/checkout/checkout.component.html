@@ -55,7 +55,7 @@
                             <div class="col-xl-2 col-lg-3 col-md-4 col-12 my-2">
                                 <a class="button pointer py-2 px-5 w-100" (click)="applyGiftCode(inputGiftCode)">
                                     <button class="btn w-100 border-0 flex-center">
-                                        <span class="mx-1">Apply</span>
+                                        <span class="mx-1">{{"buttons.apply"|translate}}</span>
                                         <ng-container *ngIf="giftcodeButtonMode$ | async">
                                             <i class="fa-solid fa-circle-notch fa-spin p-0"></i>
                                         </ng-container>
@@ -79,7 +79,7 @@
                             </div>
                             <div class="d-flex justify-content-between mt-3 font-weight-500">
                                 <span>Grand Total</span> <span class="txt-main">{{price.grand_total.toFixed(2)}} <sub
-                                        class="text-orange">AED</sub></span>
+                                        class="text-orange">{{"currency"|translate}}</sub></span>
                             </div>
                         </div>
                     </div>
@@ -107,8 +107,7 @@
                                     formControlName='emirate_id' placeholder='Select your emirate'></p-dropdown>
                                 <div class="text-start">
                                     <small class="text-danger ms-1" *ngIf="checkoutForm.get('emirate_id')?.touched &&
-                                            checkoutForm.get('emirate_id')?.hasError('required')">This field is
-                                        required</small>
+                                            checkoutForm.get('emirate_id')?.hasError('required')">{{"validations.required"|translate}}</small>
                                 </div>
                             </div>
                             <div class="my-4 text-start">
@@ -116,8 +115,7 @@
                                 <input formControlName="area_id" pInputText type="text">
                                 <div class="text-start">
                                     <small class="text-danger ms-1" *ngIf="checkoutForm.get('area_id')?.touched &&
-                                        checkoutForm.get('area_id')?.hasError('required')">This field is
-                                        required</small>
+                                        checkoutForm.get('area_id')?.hasError('required')">{{"validations.required"|translate}}</small>
                                 </div>
                             </div>
                             <div class="my-4 text-start">
@@ -125,8 +123,7 @@
                                 <input type="text" pInputText formControlName='address' />
                                 <div class="text-start">
                                     <small class="text-danger ms-1" *ngIf="checkoutForm.get('address')?.touched &&
-                                        checkoutForm.get('address')?.hasError('required')">This field is
-                                        required</small>
+                                        checkoutForm.get('address')?.hasError('required')">{{"validations.required"|translate}}</small>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-start align-items-center my-1">
@@ -145,7 +142,7 @@
                             <div class="text-start">
                                 <small class="text-danger ms-1" *ngIf="checkoutForm.get('terms')?.touched &&
                                     checkoutForm.get('terms')?.hasError('required')">
-                                    Please read and accept our terms and conditions.
+                                    {{"validations.terms"|translate}}
                                 </small>
                             </div>
                             <button class="btn w-100 border-0" type="submit" [disabled]="checkoutForm.invalid">
@@ -164,9 +161,7 @@
                                         <input type="text" pInputText formControlName='first_name' />
                                         <div class="text-start">
                                             <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('first_name')?.touched &&
-                                                checkoutForm_without_auth.get('first_name')?.hasError('required')">This
-                                                field is
-                                                required</small>
+                                                checkoutForm_without_auth.get('first_name')?.hasError('required')">{{"validations.required"|translate}}</small>
                                         </div>
                                     </div>
                                 </div>
@@ -176,8 +171,7 @@
                                         <input type="text" pInputText formControlName='last_name' />
                                         <div class="text-start">
                                             <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('last_name')?.touched &&
-                                        checkoutForm_without_auth.get('last_name')?.hasError('required')">This field is
-                                                required</small>
+                                        checkoutForm_without_auth.get('last_name')?.hasError('required')">{{"validations.required"|translate}}</small>
                                         </div>
                                     </div>
                                 </div>
@@ -187,11 +181,9 @@
                                         <input type="email" pInputText formControlName='email' />
                                         <div class="text-start">
                                             <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('email')?.touched &&
-                                        checkoutForm_without_auth.get('email')?.hasError('required')">This field is
-                                                required</small>
+                                        checkoutForm_without_auth.get('email')?.hasError('required')">{{"validations.required"|translate}}</small>
                                             <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('email')?.touched &&
-                                                checkoutForm_without_auth.get('email')?.hasError('email')">Email is not
-                                                valid.</small>
+                                                checkoutForm_without_auth.get('email')?.hasError('email')">{{"validations.email"|translate}}</small>
                                         </div>
                                     </div>
                                 </div>
@@ -202,13 +194,11 @@
                                         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"/>
                                         <div class="text-start">
                                             <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('phone_number')?.touched &&
-                                        checkoutForm_without_auth.get('phone_number')?.hasError('required')">This field
-                                                is
-                                                required</small>
+                                        checkoutForm_without_auth.get('phone_number')?.hasError('required')">{{"validations.required"|translate}}</small>
                                         </div>
                                         <div class="text-start">
                                             <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('phone_number')?.touched &&
-                                            checkoutForm_without_auth.get('phone_number')?.hasError('pattern')">Mobile number must be 10 digit</small>
+                                            checkoutForm_without_auth.get('phone_number')?.hasError('pattern')">{{"validations.phone"|translate}}</small>
                                         </div>
                                     </div>
                                 </div>
@@ -218,8 +208,7 @@
                                         <input type="password" pInputText formControlName='password' />
                                         <div class="text-start">
                                             <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('password')?.touched &&
-                                        checkoutForm_without_auth.get('password')?.hasError('required')">This field is
-                                                required</small>
+                                        checkoutForm_without_auth.get('password')?.hasError('required')">{{"validations.required"|translate}}</small>
                                         </div>
                                     </div>
                                 </div>
@@ -230,9 +219,7 @@
                                             formControlName='emirate_id' placeholder='Select your emirate'></p-dropdown>
                                         <div class="text-start">
                                             <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('emirate_id')?.touched &&
-                                        checkoutForm_without_auth.get('emirate_id')?.hasError('required')">This field
-                                                is
-                                                required</small>
+                                        checkoutForm_without_auth.get('emirate_id')?.hasError('required')">{{"validations.required"|translate}}</small>
                                         </div>
                                     </div>
                                 </div>
@@ -242,8 +229,7 @@
                                         <input formControlName="area_id" pInputText type="text">
                                         <div class="text-start">
                                             <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('area_id')?.touched &&
-                                        checkoutForm_without_auth.get('area_id')?.hasError('required')">This field is
-                                                required</small>
+                                        checkoutForm_without_auth.get('area_id')?.hasError('required')">{{"validations.required"|translate}}</small>
                                         </div>
                                     </div>
                                 </div>
@@ -253,8 +239,7 @@
                                         <input formControlName="address" pInputText type="text">
                                         <div class="text-start">
                                             <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('address')?.touched &&
-                                        checkoutForm_without_auth.get('address')?.hasError('required')">This field is
-                                                required</small>
+                                        checkoutForm_without_auth.get('address')?.hasError('required')">{{"validations.required"|translate}}</small>
                                         </div>
                                     </div>
                                 </div>
@@ -275,7 +260,7 @@
                             <div class="text-start">
                                 <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('terms')?.touched &&
                                     checkoutForm_without_auth.get('terms')?.hasError('required')">
-                                    Please read and accept our terms and conditions.
+                                    {{"validations.terms"|translate}}
                                 </small>
                             </div>
                             <button class="btn w-100 border-0" type="submit"

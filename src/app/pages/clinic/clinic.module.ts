@@ -10,6 +10,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'primeng/api';
 import { LottieModule } from 'ngx-lottie';
+import { I18nModule } from 'src/app/core/i18n/i18n.module';
+
 export function playerFactory() {
   return import('lottie-web');
 }
@@ -34,6 +36,7 @@ const APP_PRIMENG_MODULE = [
     ReactiveFormsModule,
     APP_PRIMENG_MODULE,
     LottieModule.forRoot({ player: playerFactory }),
+    I18nModule
   ]
 })
 export class ClinicModule { }

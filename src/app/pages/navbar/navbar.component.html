@@ -5,19 +5,21 @@
         <div class="col-lg-6 col-md-6 col-sm-6">
           <div class="topbar-left text-left">
             <ul>
-              <li><i class="fa fa-phone"></i> (04)5973939 </li>
-              <li><i class="fa fa-envelope"></i> info@Lowcalories.ae</li>
+              <li class="mx-1"><i class="fa fa-phone"></i> 04-5973939 </li>
+              <li class="mx-1"><i class="fa fa-envelope"></i> info@Lowcalories.ae</li>
             </ul>
           </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6">
           <div class="topbar-right text-end">
             <ul>
-              <li><a href="https://www.facebook.com/pages/category/Restaurant/Low-calories-209535336392037/"
+              <li class="mx-1"><a
+                  href="https://www.facebook.com/pages/category/Restaurant/Low-calories-209535336392037/"
                   target="_blank"><i class="fab fa-facebook"></i> </a></li>
-              <li><a href="https://api.whatsapp.com/send?phone=971522089620" target="_blank"><i
+              <li class="mx-1"><a href="https://api.whatsapp.com/send?phone=971522089620" target="_blank"><i
                     class="fab fa-whatsapp"></i> </a></li>
-              <li><a href="https://www.instagram.com/lowcaloriesae/" target="_blank"><i class="fab fa-instagram"></i>
+              <li class="mx-1"><a href="https://www.instagram.com/lowcaloriesae/" target="_blank"><i
+                    class="fab fa-instagram"></i>
                 </a></li>
             </ul>
           </div>
@@ -44,25 +46,24 @@
                       <div class="head-info-content d-flex">
                         <div class="info-left pull-left">
                           <div class="time">
-                            <h6>SUN – SAT</h6>
-                            <p>08:00am - 12:00am</p>
-                            <p>Closed on public holidays</p>
+                            <h6>{{"logoMetaData.workingHours.title" | translate}}</h6>
+                            <p>{{"logoMetaData.workingHours.times" | translate}}</p>
+                            <p>{{"logoMetaData.workingHours.desc" | translate}}</p>
                           </div>
                           <div class="time mt-20">
-                            <h6>Suggestions</h6>
+                            <h6>{{"logoMetaData.suggestions.title" | translate}}</h6>
                             <p>
-                              We appreciate all your suggestions, ideas and feedback
+                              {{"logoMetaData.suggestions.desc" | translate}}
                             </p>
                           </div>
                         </div>
                         <div class="info-right pull-right">
                           <div class="address">
-                            <p>ABU DHABI NEW SHAHAMA-BLOCK 137</p>
-                            <p> (04)5973939 </p>
+                            <p>{{"logoMetaData.location.title" | translate}}</p>
+                            <p> 04-5973939 </p>
                             <p>info@Lowcalories.ae</p>
                             <a target="_blank" href="https://goo.gl/maps/sKRWE3gFhBUfXsLR8?coh=178571&entry=tt"><i
-                                class="fa fa-map-o pr-10"></i> Find us
-                              here</a>
+                                class="fa fa-map-o pr-10"></i> {{"logoMetaData.location.findUs" | translate}}</a>
                             <ul class="list-inline mt-15 d-flex">
                               <li class="mx-2"><a target="_blank"
                                   href="https://www.facebook.com/pages/category/Restaurant/Low-calories-209535336392037/"
@@ -87,23 +88,24 @@
 
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="menu-links ms-auto" style="cursor: pointer;">
-                      <li routerLink="home" routerLinkActive="active"><a> Home </a></li>
-                      <li routerLink="plans" routerLinkActive="active"><a> Monthly Plans </a></li>
-                      <li routerLink="menu" routerLinkActive="active"><a> Menu </a></li>
-                      <li routerLink="contacts" routerLinkActive="active"><a>Contact us </a></li>
-                      <li routerLink="terms" routerLinkActive="active"><a> T & C </a></li>
-                      <li routerLink="clinic" routerLinkActive="active"><a>Clinic </a></li>
+                      <li routerLink="home" routerLinkActive="active"><a> {{"pages.home"|translate}} </a></li>
+                      <li routerLink="plans" routerLinkActive="active"><a> {{"pages.plans.title"|translate}} </a></li>
+                      <li routerLink="menu" routerLinkActive="active"><a> {{"pages.menu.title"|translate}} </a></li>
+                      <li routerLink="contacts" routerLinkActive="active"><a>{{"pages.contacts.title"|translate}} </a></li>
+                      <li routerLink="terms" routerLinkActive="active"><a> {{"pages.terms.title1"|translate}} </a></li>
+                      <li routerLink="clinic" routerLinkActive="active"><a>{{"pages.clinic.title"|translate}} </a></li>
                       <!-- <li routerLink="questions" routerLinkActive="active"><a>FAQ </a></li> -->
-                      <li routerLink="register" routerLinkActive="active"><a>Register</a></li>
+                      <li routerLink="register" routerLinkActive="active"><a>{{"pages.register.title"|translate}}</a></li>
                       <ng-container *ngIf="login$ | async as login">
-                        <li routerLink="login" routerLinkActive="active" *ngIf="login.data == null"><a>Login</a></li>
+                        <li routerLink="login" routerLinkActive="active" *ngIf="login.data == null"><a>{{"pages.login.title"|translate}}</a></li>
                         <li (click)="logOut()" *ngIf="login.data != null">
                           <a>
-                            Sign Out
+                            {{"pages.logout"|translate}}
                             <span *ngIf="login.loading">...</span>
                           </a>
                         </li>
                       </ng-container>
+                      <li (click)="changeLang()"><a>{{"lang" | translate}}</a></li>
                     </ul>
                   </div>
 

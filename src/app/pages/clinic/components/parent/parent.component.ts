@@ -1,4 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { I18nService } from 'src/app/core/i18n/i18n.service';
 import { IClinicStep1Form } from 'src/app/interfaces/clinic.interface';
 
 @Component({
@@ -11,7 +13,12 @@ export class ParentComponent implements OnInit {
   Step1Form!:IClinicStep1Form;
   @ViewChild('indicators') indicators!: ElementRef;
   @ViewChild('progressElm') progressElm!: ElementRef;
-  constructor() {}
+  constructor(
+    private _I18nService: I18nService,
+    public translate: TranslateService
+  ) {
+    this._I18nService.getCurrentLang(this.translate);
+  }
 
   ngOnInit(): void {}
 

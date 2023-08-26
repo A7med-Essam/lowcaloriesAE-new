@@ -33,6 +33,8 @@ import { ITermsResponse } from 'src/app/interfaces/terms.interface';
 import { termsSelector } from 'src/app/store/termsStore/terms.selector';
 import { giftCodeLoadingSelector, giftCodeSelector } from 'src/app/store/giftcodeStore/giftcode.selector';
 import { FETCH_GIFTCODE_START } from 'src/app/store/giftcodeStore/giftcode.action';
+import { TranslateService } from '@ngx-translate/core';
+import { I18nService } from 'src/app/core/i18n/i18n.service';
 
 @Component({
   selector: 'app-checkout',
@@ -68,8 +70,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private _Store: Store,
     private _Router: Router,
     private _FormBuilder: FormBuilder,
-    private _ActivatedRoute: ActivatedRoute
+    private _ActivatedRoute: ActivatedRoute,
+    private _I18nService: I18nService,
+    public translate: TranslateService,
   ) {
+    this._I18nService.getCurrentLang(this.translate);
     this.login$ = _Store.select(loginSelector);
     this.price$ = _Store.select(fromNormalPlanSelector.normalPlanPriceSelector);
     _Store
