@@ -83,13 +83,14 @@
 </section>
 
 <section class="our-menu white-bg pt-5">
-    <div class="container">
+    <div class="container" *ngIf="carouselVisible">
         <owl-carousel-o [options]="categoryOptions" ngClass="categories" *ngIf="menu$ |async as menu">
             <ng-container *ngFor="let category of menu; let i = index">
                 <ng-template carouselSlide>
                     <div class="item bg-white px-5 rounded py-3 font-weight-500"
                         [ngClass]="{'active': i == category_index}" (click)="toggleCategories($event, i)">
-                        <i [classList]="category.icon + ' fa-solid mx-1'"></i> {{category?.name}}
+                        <i [classList]="category.icon + ' fa-solid mx-1'"></i> 
+                        {{translate.currentLang == 'ar' ? category?.name_ar :category?.name}}
                     </div>
                 </ng-template>
             </ng-container>
@@ -102,7 +103,7 @@
                     </div>
                     <div class="menu-details">
                         <div class="menu-title clearfix">
-                            <h4>{{item.name}}</h4>
+                            <h4>{{translate.currentLang == 'ar' ? item?.name_ar :item?.name}}</h4>
                             <span class="price" *ngIf="!item.price.includes('=>')">
                                 {{item.price}} <sub>{{"currency"|translate}}</sub>
                             </span>
@@ -110,10 +111,11 @@
                                 <ol>{{item.price.split("AED")[0]}} {{"currency"|translate}}</ol>
                                 <ol>{{item.price.split("AED")[1]}} {{"currency"|translate}}</ol>
                                 <ol>{{item.price.split("AED")[2]}} {{"currency"|translate}}</ol>
+                                <!-- TODO:FIX -->
                             </ul>
                         </div>
                         <div class="menu-description">
-                            <p>{{item.description_en}}</p>
+                            <p>{{translate.currentLang == 'ar' ? item?.description_ar :item?.description_en}}</p>
                         </div>
                         <small class="text-muted">
                             {{item.nutrations}}

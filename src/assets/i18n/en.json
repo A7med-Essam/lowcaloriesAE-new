@@ -112,21 +112,37 @@
       "title1":"Special",
       "title2":"Menu",
       "desc":"We serve a daily changing menu. We serve our best food.",
-      "meal1":{
-        "title":"Caesar Salad",
-        "desc":"Salmon fillet in a rich red curry with coconut milk, sweet basil leaves ,pea aubergine, and kaffir lime leaves"
+      "meal1": {
+        "title": "French toast",
+        "desc": "A classic breakfast dish made by dipping slices of bread into a mixture of beaten eggs and milk, then frying until golden brown. Often served with toppings like maple syrup, powdered sugar, and fresh fruits."
       },
-      "meal2":{
-        "title":"Dynamite shrimps",
-        "desc":"Thai rice noodles stir-fried with bean curd, chinese chives, peanuts and beans sprouts in a special homemade sauce"
+      "meal2": {
+        "title": "Crazy chicken sandwich",
+        "desc": "A delicious sandwich featuring tender grilled or fried chicken breast topped with a variety of flavorful ingredients such as lettuce, tomato, cheese, bacon, and various sauces, all served between two slices of bread."
       },
-      "meal3":{
-        "title":"Shrimp Magbous",
-        "desc":"Grill boneless corn-fed chicken, marinated in coconut milk, lemongrass, galangal, turmeric and lime leaves"
+      "meal3": {
+        "title": "Greek salad",
+        "desc": "A refreshing and healthy salad made with fresh vegetables like cucumbers, tomatoes, red onions, and bell peppers, typically accompanied by Kalamata olives and feta cheese, all dressed with olive oil and oregano."
       },
-      "meal4":{
-        "title":"Beef Lasagna",
-        "desc":"The famous hot, sour and spicy thai soup with king prawn, shimeji mushrooms, lemongrass, and lime leaf"
+      "meal4": {
+        "title": "Dynamite shrimps",
+        "desc": "Thai rice noodles stir-fried with bean curd, Chinese chives, peanuts, and bean sprouts in a special homemade sauce, creating a flavorful and slightly spicy dish that's often enjoyed as a staple of Thai cuisine."
+      },
+      "meal5": {
+        "title": "Grilled steak",
+        "desc": "A succulent piece of steak, often seasoned with a blend of herbs and spices, and then cooked on a grill to achieve a perfect balance of smoky flavor on the outside and juicy tenderness on the inside."
+      },
+      "meal6": {
+        "title": "Halloumi sandwich",
+        "desc": "A delightful sandwich featuring slices of halloumi cheese, a semi-hard cheese with a high melting point, often grilled or pan-fried and served within the sandwich along with fresh vegetables and condiments."
+      },
+      "meal7": {
+        "title": "Salmon with avocado",
+        "desc": "A wholesome dish that combines the rich flavors of salmon with the creaminess of avocado. The salmon is usually grilled or baked to perfection and served with slices of ripe avocado, offering a delightful contrast of textures and tastes."
+      },
+      "meal8": {
+        "title": "Salmon sushi",
+        "desc": "A popular type of sushi featuring fresh, high-quality salmon as a topping. The salmon can be served as sashimi (sliced raw fish) on top of bite-sized portions of vinegared rice, often accompanied by soy sauce, wasabi, and pickled ginger."
       }
     },
     "section4":{

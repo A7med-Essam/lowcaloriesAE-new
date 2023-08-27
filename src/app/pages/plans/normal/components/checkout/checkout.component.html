@@ -20,7 +20,8 @@
                 <div class="item shadow-lg bg-white py-4 rounded text-center h-100"
                     *ngIf="subscriptionInfo$ | async as sub">
                     <div *ngIf="ProgramDetails | async as program">
-                        <img [src]="'https://lowcalories.ae/'+program[0].myprogram.image_new" class="img-fluid w-50 mx-auto mb-3" alt="Program Image">
+                        <img [src]="'https://api.lowcalories.ae/'+program[0].myprogram.image_new"
+                            class="img-fluid w-50 mx-auto mb-3" alt="Program Image">
                         <h6 class="text-orange">{{program[0].myprogram.name}}</h6>
                     </div>
                     <div>
@@ -90,7 +91,8 @@
                         <div class="d-flex justify-content-between flex-wrap">
                             <h5>Checkout Form</h5>
                             <h6 class="txt-main pointer ms-4">
-                                <u *ngIf="user.data" (click)="displayUserAddressModal()">Select Your Current Location</u>
+                                <u *ngIf="user.data" (click)="displayUserAddressModal()">Select Your Current
+                                    Location</u>
                             </h6>
                         </div>
                         <div *ngIf="checkoutResponse$ | async as res">
@@ -105,7 +107,8 @@
                                 <p-dropdown [options]="emirates$ | async" optionLabel="en_name" optionValue="id"
                                     formControlName='emirate_id' placeholder='Select your emirate'></p-dropdown>
                                 <div class="text-start">
-                                    <small class="text-danger ms-1" *ngIf="checkoutForm.get('emirate_id')?.touched &&
+                                    <small class="text-danger ms-1"
+                                        *ngIf="checkoutForm.get('emirate_id')?.touched &&
                                             checkoutForm.get('emirate_id')?.hasError('required')">{{"validations.required"|translate}}</small>
                                 </div>
                             </div>
@@ -113,7 +116,8 @@
                                 <label class="text-muted">Enter your area</label>
                                 <input formControlName="area_id" pInputText type="text">
                                 <div class="text-start">
-                                    <small class="text-danger ms-1" *ngIf="checkoutForm.get('area_id')?.touched &&
+                                    <small class="text-danger ms-1"
+                                        *ngIf="checkoutForm.get('area_id')?.touched &&
                                         checkoutForm.get('area_id')?.hasError('required')">{{"validations.required"|translate}}</small>
                                 </div>
                             </div>
@@ -121,7 +125,8 @@
                                 <label class="text-muted">Enter your address</label>
                                 <input type="text" pInputText formControlName='address' />
                                 <div class="text-start">
-                                    <small class="text-danger ms-1" *ngIf="checkoutForm.get('address')?.touched &&
+                                    <small class="text-danger ms-1"
+                                        *ngIf="checkoutForm.get('address')?.touched &&
                                         checkoutForm.get('address')?.hasError('required')">{{"validations.required"|translate}}</small>
                                 </div>
                             </div>
@@ -158,7 +163,8 @@
                                         <label class="text-muted">FIRST NAME</label>
                                         <input type="text" pInputText formControlName='first_name' />
                                         <div class="text-start">
-                                            <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('first_name')?.touched &&
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('first_name')?.touched &&
                                                 checkoutForm_without_auth.get('first_name')?.hasError('required')">{{"validations.required"|translate}}</small>
                                         </div>
                                     </div>
@@ -168,7 +174,8 @@
                                         <label class="text-muted">LAST NAME</label>
                                         <input type="text" pInputText formControlName='last_name' />
                                         <div class="text-start">
-                                            <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('last_name')?.touched &&
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('last_name')?.touched &&
                                         checkoutForm_without_auth.get('last_name')?.hasError('required')">{{"validations.required"|translate}}</small>
                                         </div>
                                     </div>
@@ -178,9 +185,11 @@
                                         <label class="text-muted">EMAIL</label>
                                         <input type="email" pInputText formControlName='email' />
                                         <div class="text-start">
-                                            <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('email')?.touched &&
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('email')?.touched &&
                                         checkoutForm_without_auth.get('email')?.hasError('required')">{{"validations.required"|translate}}</small>
-                                            <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('email')?.touched &&
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('email')?.touched &&
                                                 checkoutForm_without_auth.get('email')?.hasError('email')">{{"validations.email"|translate}}</small>
                                         </div>
                                     </div>
@@ -188,14 +197,17 @@
                                 <div class="col-md-6">
                                     <div class="my-2 text-start">
                                         <label class="text-muted">PHONE NUMBER</label>
-                                        <input type="text" pInputText formControlName='phone_number'   maxlength="10" minlength="10"
-                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"/>
+                                        <input type="text" pInputText formControlName='phone_number' maxlength="10"
+                                            minlength="10"
+                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
                                         <div class="text-start">
-                                            <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('phone_number')?.touched &&
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('phone_number')?.touched &&
                                         checkoutForm_without_auth.get('phone_number')?.hasError('required')">{{"validations.required"|translate}}</small>
                                         </div>
                                         <div class="text-start">
-                                            <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('phone_number')?.touched &&
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('phone_number')?.touched &&
                                             checkoutForm_without_auth.get('phone_number')?.hasError('pattern')">{{"validations.phone"|translate}}</small>
                                         </div>
                                     </div>
@@ -205,7 +217,8 @@
                                         <label class="text-muted">PASSWORD</label>
                                         <input type="password" pInputText formControlName='password' />
                                         <div class="text-start">
-                                            <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('password')?.touched &&
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('password')?.touched &&
                                         checkoutForm_without_auth.get('password')?.hasError('required')">{{"validations.required"|translate}}</small>
                                         </div>
                                     </div>
@@ -216,7 +229,8 @@
                                         <p-dropdown [options]="emirates$ | async" optionLabel="en_name" optionValue="id"
                                             formControlName='emirate_id' placeholder='Select your emirate'></p-dropdown>
                                         <div class="text-start">
-                                            <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('emirate_id')?.touched &&
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('emirate_id')?.touched &&
                                         checkoutForm_without_auth.get('emirate_id')?.hasError('required')">{{"validations.required"|translate}}</small>
                                         </div>
                                     </div>
@@ -226,7 +240,8 @@
                                         <label class="text-muted">AREA</label>
                                         <input formControlName="area_id" pInputText type="text">
                                         <div class="text-start">
-                                            <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('area_id')?.touched &&
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('area_id')?.touched &&
                                         checkoutForm_without_auth.get('area_id')?.hasError('required')">{{"validations.required"|translate}}</small>
                                         </div>
                                     </div>
@@ -236,7 +251,8 @@
                                         <label class="text-muted">ADDRESS</label>
                                         <input formControlName="address" pInputText type="text">
                                         <div class="text-start">
-                                            <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('address')?.touched &&
+                                            <small class="text-danger ms-1"
+                                                *ngIf="checkoutForm_without_auth.get('address')?.touched &&
                                         checkoutForm_without_auth.get('address')?.hasError('required')">{{"validations.required"|translate}}</small>
                                         </div>
                                     </div>
@@ -279,7 +295,8 @@
     [draggable]="false" [resizable]="false">
     <div class="modal-body" *ngIf="subscriptionInfo$ | async as sub">
         <div class="text-center" *ngIf="ProgramDetails | async as program">
-            <img [src]="'https://lowcalories.ae/'+program[0].myprogram.image_new" class="img-fluid" style="width: 150px;" alt="Program Image">
+            <img [src]="'https://api.lowcalories.ae/'+program[0].myprogram.image_new" class="img-fluid"
+                style="width: 150px;" alt="Program Image">
             <h5 class="text-orange mt-2">{{program[0].myprogram.name}}</h5>
         </div>
         <h6 class="txt-main">Delivery Days:</h6>

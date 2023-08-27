@@ -4,6 +4,7 @@ import { Observable ,Subject,takeUntil} from 'rxjs';
 import { ITermsResponse } from 'src/app/interfaces/terms.interface';
 import * as fromTermsSelector from '../../store/termsStore/terms.selector';
 import * as fromTermsActions from '../../store/termsStore/terms.action';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-terms',
@@ -16,7 +17,7 @@ export class TermsComponent implements OnInit,OnDestroy {
   private destroyed$: Subject<void> = new Subject();
 
 
-    constructor(private _Store: Store) {
+    constructor(private _Store: Store,public translate:TranslateService) {
     this.terms$ = this._Store.select(fromTermsSelector.termsSelector);
     this.skeletonMode$ = this._Store.select(
       fromTermsSelector.termsLoadingSelector

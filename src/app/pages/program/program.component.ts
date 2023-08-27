@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { IProgramResponse } from 'src/app/interfaces/program.interface';
 import * as fromProgramActions from '../../store/programStore/program.action';
@@ -15,7 +16,7 @@ export class ProgramComponent implements OnDestroy {
   programs$: Observable<IProgramResponse[] | null>;
   private destroyed$: Subject<void> = new Subject();
 
-  constructor(private _Store: Store) {
+  constructor(private _Store: Store, public translate:TranslateService) {
     this.programs$ = this._Store.select(fromProgramSelector.programSelector);
     this.skeletonMode$ = this._Store.select(
       fromProgramSelector.programLoadingSelector

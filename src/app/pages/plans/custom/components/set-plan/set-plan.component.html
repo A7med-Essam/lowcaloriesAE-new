@@ -49,9 +49,9 @@
                     <div class="row mx-0">
                         <div class="col-12 my-2">
                             <div class="mb-2"><label>Plan Type<span class="text-danger">*</span></label></div>
-                            <p-dropdown [options]="program" formControlName='Plan_Type' ngClass="w-100"
-                                appendTo="body" (onChange)="getSelectedPlanType($event.value)"
-                                placeholder='Choose program type' optionLabel="name">
+                            <p-dropdown [options]="program" formControlName='Plan_Type' ngClass="w-100" appendTo="body"
+                                (onChange)="getSelectedPlanType($event.value)" placeholder='Choose program type'
+                                optionLabel="name">
                             </p-dropdown>
                             <small class="text-danger " *ngIf="ProgramDetailsForm.get('Plan_Type')?.touched &&
                             ProgramDetailsForm.get('Plan_Type')?.invalid">{{"validations.required"|translate}}</small>
@@ -61,7 +61,8 @@
                             <p-dropdown [options]="max_meal" formControlName='Number_of_Meals' ngClass="w-100"
                                 appendTo="body" placeholder='Choose a number of meals'>
                             </p-dropdown>
-                            <small class="text-danger " *ngIf="ProgramDetailsForm.get('Number_of_Meals')?.touched &&
+                            <small class="text-danger "
+                                *ngIf="ProgramDetailsForm.get('Number_of_Meals')?.touched &&
                             ProgramDetailsForm.get('Number_of_Meals')?.invalid">{{"validations.required"|translate}}</small>
                         </div>
                         <div class="col-12 my-2" *ngIf="selectedPlanType">
@@ -69,7 +70,8 @@
                             <p-dropdown [options]="max_days" formControlName='Number_of_Days' ngClass="w-100"
                                 appendTo="body" placeholder='Choose a number of days'>
                             </p-dropdown>
-                            <small class="text-danger " *ngIf="ProgramDetailsForm.get('Number_of_Days')?.touched &&
+                            <small class="text-danger "
+                                *ngIf="ProgramDetailsForm.get('Number_of_Days')?.touched &&
                             ProgramDetailsForm.get('Number_of_Days')?.invalid">{{"validations.required"|translate}}</small>
                         </div>
                         <div class="col-12 my-2" *ngIf="selectedPlanType">
@@ -77,7 +79,8 @@
                             <p-dropdown [options]="max_snack" formControlName='Type_of_Snacks' ngClass="w-100"
                                 appendTo="body" placeholder='Choose a number of snacks'>
                             </p-dropdown>
-                            <small class="text-danger " *ngIf="ProgramDetailsForm.get('Type_of_Snacks')?.touched &&
+                            <small class="text-danger "
+                                *ngIf="ProgramDetailsForm.get('Type_of_Snacks')?.touched &&
                             ProgramDetailsForm.get('Type_of_Snacks')?.invalid">{{"validations.required"|translate}}</small>
                         </div>
                         <div class="col-12 my-2" *ngIf="selectedPlanType">
@@ -86,20 +89,22 @@
                                 <p-calendar dateFormat="dd-mm-yy DD" [showIcon]="true"
                                     (onSelect)="onSelectedDate($event,deliveredDays)" placeholder="dd-mm-yy"
                                     formControlName='Start_Date' [minDate]="uaeDate" [disabledDays]="[5]"></p-calendar>
-                                <small class="text-danger" *ngIf="ProgramDetailsForm.get('Start_Date')?.touched &&
+                                <small class="text-danger"
+                                    *ngIf="ProgramDetailsForm.get('Start_Date')?.touched &&
                                 ProgramDetailsForm.get('Start_Date')?.invalid">{{"validations.required"|translate}}</small>
                             </div>
                             <div class="my-2">
                                 <label>Delivery Days <span class="text-danger">*</span></label>
-                                <div><small><span class="text-muted">Days you want your meals to be delivered</span></small>
+                                <div><small><span class="text-muted">Days you want your meals to be
+                                            delivered</span></small>
                                 </div>
                                 <div class="row mt-3 deliveredDays" #deliveredDays>
                                     <div class="col-xl-3 col-lg-4 col-md-3 col-sm-6 col-12"
                                         *ngFor="let delivery_day of delivery_days; let i = index">
                                         <label
                                             class="item w-100 shadow-lg me-3 my-2 ms-0 px-3 py-2 bg-white rounded-md dayWeek"
-                                            [for]="'day'+i" [attr.day]="getDayNumber(delivery_day?.day_name)" #CurrentDay
-                                            [attr.dayName]="delivery_day?.day_name"
+                                            [for]="'day'+i" [attr.day]="getDayNumber(delivery_day?.day_name)"
+                                            #CurrentDay [attr.dayName]="delivery_day?.day_name"
                                             (click)="checkDeliveryDays(CurrentDay);">
                                             {{delivery_day?.day_name}}
                                         </label>
@@ -130,7 +135,8 @@
                 </form>
             </div>
             <div class="col-lg-4 flex-center my-3">
-                <img alt="Program Image" class="w-75" [src]="'https://lowcalories.ae/'+program[0].myprogram.image_new">
+                <img alt="Program Image" class="w-75"
+                    [src]="'https://api.lowcalories.ae/'+program[0].myprogram.image_new">
             </div>
         </div>
     </div>
