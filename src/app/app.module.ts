@@ -30,7 +30,9 @@ import { APP_STORE, APP_EFFECTS } from './store/appStore';
 import { AuthInterceptor } from './core/interceptor/http.interceptor';
 import { LottieModule } from 'ngx-lottie';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
-import { I18nModule } from './core/i18n/i18n.module';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export function playerFactory() {
   return import('lottie-web');
@@ -71,7 +73,14 @@ const APP_PRIMENG_MODULE = [
     CarouselModule,
     APP_PRIMENG_MODULE,
     LottieModule.forRoot({ player: playerFactory }),
-    I18nModule
+    TranslateModule.forRoot({
+      defaultLanguage: 'en',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: CreateTranslateLoader,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     {
@@ -84,3 +93,6 @@ const APP_PRIMENG_MODULE = [
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
+export function CreateTranslateLoader(http:HttpClient) {
+  return  new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}

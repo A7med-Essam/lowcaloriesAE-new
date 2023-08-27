@@ -24,7 +24,27 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   nextButtonMode$: Observable<boolean | null> = of(false);
   CurrentIndex: number = 0;
   cards!: Observable<ICards[] | null>;
- 
+  categoryOptions: OwlOptions = {
+    dots: false,
+    nav: false,
+    margin: 20,
+    responsive: {
+      0: {
+        items: 2,
+      },
+      600: {
+        items: 2,
+      },
+      1000: {
+        items: 3,
+      },
+      1200: {
+        items: 4,
+      },
+    },
+  };
+  carouselVisible:boolean = true;
+
   constructor(
     private _I18nService: I18nService,
     public translate: TranslateService,
@@ -45,27 +65,26 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
           });
         }
       });
+      if (this._I18nService.currentLang == 'ar') {
+        this.categoryOptions.rtl = true;
+      }
+      this.translate.onLangChange.pipe(takeUntil(this.destroyed$)).subscribe(res=>{
+        if (res.lang == 'ar') {
+          this.categoryOptions.rtl = true;
+        }else{
+          this.categoryOptions.rtl = false;
+        }
+        this.carouselVisible = false;
+  
+        setTimeout(() => {
+          this.carouselVisible = true;
+        });
+    
+      })
+
   }
 
-  categoryOptions: OwlOptions = {
-    dots: false,
-    nav: false,
-    margin: 20,
-    responsive: {
-      0: {
-        items: 2,
-      },
-      600: {
-        items: 2,
-      },
-      1000: {
-        items: 3,
-      },
-      1200: {
-        items: 4,
-      },
-    },
-  };
+
 
   toggleDates(e: HTMLElement) {
     e.classList.add('active');

@@ -13,7 +13,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { LottieModule } from 'ngx-lottie';
-import { I18nModule } from 'src/app/core/i18n/i18n.module';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 export function playerFactory() {
   return import('lottie-web');
 }
@@ -29,7 +29,7 @@ export function playerFactory() {
     DialogModule,
     CarouselModule,
     LottieModule.forRoot({ player: playerFactory }),
-    I18nModule
+    SharedModule,
   ],
 })
 export class NormalModule {}

@@ -60,7 +60,25 @@ export class SelectMealsComponent implements OnDestroy {
     },
   };
   mealDetails!: ICustomMealsResponse;
-
+  carouselVisible:boolean = true;
+  // slider meals
+  customOptions: OwlOptions = {
+    loop: false,
+    autoplay: false,
+    margin: 10,
+    items: 1,
+    responsive: {
+      0: {
+        items: 1,
+      },
+      400: {
+        items: 2,
+      },
+      768: {
+        items: 3,
+      },
+    },
+  };
   constructor(
     private _Store: Store,
     private _SharedService: SharedService,
@@ -100,6 +118,26 @@ export class SelectMealsComponent implements OnDestroy {
           });
         }
       });
+
+      if (this._I18nService.currentLang == 'ar') {
+        this.categoryOptions.rtl = true;
+        this.customOptions.rtl = true;
+      }
+      this.translate.onLangChange.pipe(takeUntil(this.destroyed$)).subscribe(res=>{
+        if (res.lang == 'ar') {
+          this.categoryOptions.rtl = true;
+          this.customOptions.rtl = true;
+        }else{
+          this.categoryOptions.rtl = false;
+          this.customOptions.rtl = false;
+        }
+        this.carouselVisible = false;
+  
+        setTimeout(() => {
+          this.carouselVisible = true;
+        });
+    
+      })
   }
 
   toggleCategories(e: Event, index: number, id: number) {
@@ -163,7 +201,7 @@ export class SelectMealsComponent implements OnDestroy {
     const daysOfWeek = [
       'SUNDAY',
       'MONDAY',
-      'TUESDAY',
+      'TUSEDAY',
       'WEDNESDAY',
       'THURSDAY',
       'FRIDAY',
@@ -206,8 +244,8 @@ export class SelectMealsComponent implements OnDestroy {
         this._MessageService.clear();
         this._MessageService.add({
           severity: 'success',
-          summary: 'Item Added',
-          detail: `${meal.mainDish.name} has been added successfully`,
+          summary: this.translate.currentLang == 'ar'?'تمت إضافة الوجبة':'Meal Added',
+          detail: this.translate.currentLang == 'ar'?`${meal.mainDish.name_ar} تمت إضافتها بنجاح`:`${meal.mainDish.name} has been added successfully`,
           life: 3000,
         });
       }
@@ -346,25 +384,4 @@ export class SelectMealsComponent implements OnDestroy {
       proteinPercentage * (isMainDish ? mainDish.max_meal : mainDish.max_side)
     );
   }
-
-  // slider meals
-  
-  customOptions: OwlOptions = {
-    loop: false,
-    autoplay: false,
-    margin: 10,
-    items: 1,
-    responsive: {
-      0: {
-        items: 1,
-      },
-      400: {
-        items: 2,
-      },
-      768: {
-        items: 3,
-      },
-    },
-  };
-
 }

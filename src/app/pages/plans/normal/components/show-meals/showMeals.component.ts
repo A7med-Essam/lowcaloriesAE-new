@@ -24,6 +24,28 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   ProgramMeals!: Observable<IShowMealsResponse[] | null>;
   ProgramDetails!: Observable<INormalPlanResponse[] | null>;
   nextButtonMode$: Observable<boolean | null> = of(false);
+  carouselVisible:boolean = true;
+  customOptions: OwlOptions = {
+    loop: false,
+    autoplay: false,
+    dots: false,
+    margin: 20,
+    items: 3,
+    responsive: {
+      0: {
+        items: 2,
+      },
+      768: {
+        items: 3,
+      },
+      1024: {
+        items: 4,
+      },
+      1200: {
+        items: 5,
+      },
+    },
+  };
 
   constructor(
     private _SharedService: SharedService,
@@ -51,29 +73,23 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
           });
         }
       });
+      if (this._I18nService.currentLang == 'ar') {
+        this.customOptions.rtl = true;
+      }
+      this.translate.onLangChange.pipe(takeUntil(this.destroyed$)).subscribe(res=>{
+        if (res.lang == 'ar') {
+          this.customOptions.rtl = true;
+        }else{
+          this.customOptions.rtl = false;
+        }
+        this.carouselVisible = false;
+  
+        setTimeout(() => {
+          this.carouselVisible = true;
+        });
+    
+      })
   }
-
-  customOptions: OwlOptions = {
-    loop: false,
-    autoplay: false,
-    dots: false,
-    margin: 20,
-    items: 3,
-    responsive: {
-      0: {
-        items: 2,
-      },
-      768: {
-        items: 3,
-      },
-      1024: {
-        items: 4,
-      },
-      1200: {
-        items: 5,
-      },
-    },
-  };
 
   ngOnInit(): void {}
 

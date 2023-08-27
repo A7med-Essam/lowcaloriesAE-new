@@ -245,7 +245,7 @@ export class SetPlanComponent implements OnInit, OnDestroy {
     },
     {
       id: 11,
-      day_name: 'TUESDAY',
+      day_name: 'TUSEDAY',
       day_name_ar: 'الثلاثاء',
       closed: 0,
       deleted_at: null,

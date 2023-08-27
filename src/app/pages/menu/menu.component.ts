@@ -33,7 +33,7 @@ export class MenuComponent implements OnInit {
       this.categoryOptions.rtl = true;
     }
 
-    this.translate.onLangChange.subscribe(res=>{
+    this.translate.onLangChange.pipe(takeUntil(this.destroyed$)).subscribe(res=>{
       if (res.lang == 'ar') {
         this.categoryOptions.rtl = true;
       }else{

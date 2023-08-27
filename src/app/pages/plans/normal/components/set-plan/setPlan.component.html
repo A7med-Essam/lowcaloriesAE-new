@@ -1,11 +1,11 @@
 <div class="inner-intro parallax bg-overlay-black-70 bg-darkImg">
     <div class="container">
         <div class="row text-center intro-title">
-            <h1 class="text-orange" *ngIf="ProgramDetails | async as program">{{program[0].myprogram.name}}</h1>
-            <p class="text-white">We Know The Secret Of Your Success</p>
+            <h1 class="text-orange" *ngIf="ProgramDetails | async as program">{{translate.currentLang == 'ar' ?program[0].myprogram.name_ar:program[0].myprogram.name}}</h1>
+            <p class="text-white">{{"pages.plans.desc"|translate}}</p>
             <ul class="page-breadcrumb">
-                <li><a routerLink=""><i class="fa fa-home"></i> Home</a> <i class="fa fa-angle-double-right"></i></li>
-                <li><span>Plans</span></li>
+                <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home"|translate}}</a> <i class="fa fa-angle-double-right"></i></li>
+                <li><span>{{"pages.plans.title"|translate}}</span></li>
             </ul>
         </div>
     </div>
@@ -37,42 +37,42 @@
             <div class="col-lg-8">
                 <h1 class="fa-4x">
                     <span class="txt-main text-orange">
-                        {{program[0].myprogram.name}}
+                        {{translate.currentLang == 'ar' ? program[0].myprogram.name_ar:program[0].myprogram.name}}
                     </span>
                 </h1>
                 <p class="text-muted txt-font">
-                    {{program[0].myprogram.description}}
+                    {{translate.currentLang == 'ar' ?program[0].myprogram.description_ar:program[0].myprogram.description}}
                 </p>
 
                 <form [formGroup]='ProgramDetailsForm' (ngSubmit)='onSubmit(ProgramDetailsForm)' class="mt-4"
                     *ngIf="ProgramDetails | async as program">
                     <div class="row mx-0">
                         <div class="col-12 my-2">
-                            <div class="mb-2"><label>Number Of Meals<span class="text-danger">*</span></label></div>
+                            <div class="mb-2"><label>{{"pages.plans.options.meals"|translate}}<span class="text-danger">*</span></label></div>
                             <p-dropdown [options]="program" formControlName='Number_of_Meals' ngClass="w-100"
                                 appendTo="body" (onChange)="getSelectedNumberOfMeals($event.value)"
-                                placeholder='Choose a number of meals' optionLabel="no_meals">
+                                placeholder=' ' optionLabel="no_meals">
                             </p-dropdown>
                             <small class="text-danger " *ngIf="ProgramDetailsForm.get('Number_of_Meals')?.touched &&
                             ProgramDetailsForm.get('Number_of_Meals')?.invalid">{{"validations.required"|translate}}</small>
                         </div>
                         <div class="col-12 my-2">
-                            <div class="mb-2"><label>Number Of Days<span class="text-danger">*</span></label></div>
+                            <div class="mb-2"><label>{{"pages.plans.options.days"|translate}}<span class="text-danger">*</span></label></div>
                             <p-dropdown [options]="selectedProgramOptions" formControlName='Number_of_Days'
                                 ngClass="w-100" optionLabel="no_days" optionValue="id"
-                                placeholder='Choose a number of days'>
+                                placeholder=' '>
                             </p-dropdown>
                             <small class="text-danger " *ngIf="ProgramDetailsForm.get('Number_of_Days')?.touched &&
                             ProgramDetailsForm.get('Number_of_Days')?.invalid">{{"validations.required"|translate}}</small>
                         </div>
                         <div class="col-12 my-2">
-                            <label>Number Of Snacks</label>
+                            <label>{{"pages.plans.options.snacks"|translate}}</label>
                             <p-dropdown [options]="no_snacks" formControlName='Type_of_Snacks' ngClass="w-100"
-                                appendTo="body" placeholder='Choose a number of snacks'>
+                                appendTo="body" placeholder=' '>
                             </p-dropdown>
                         </div>
                         <div class="col-12 my-2">
-                            <div class="mb-2"><label>Start Date <span class="text-danger">*</span></label></div>
+                            <div class="mb-2"><label>{{"pages.plans.options.date"|translate}} <span class="text-danger">*</span></label></div>
                             <p-calendar dateFormat="dd-mm-yy DD" [showIcon]="true"
                                 (onSelect)="onSelectedDate($event,deliveredDays)" placeholder="dd-mm-yy"
                                 formControlName='Start_Date' [minDate]="uaeDate" [disabledDays]="[5]"></p-calendar>
@@ -80,8 +80,8 @@
                             ProgramDetailsForm.get('Start_Date')?.invalid">{{"validations.required"|translate}}</small>
                         </div>
                         <div class="col-12 my-2">
-                            <label>Delivery Days <span class="text-danger">*</span></label>
-                            <div><small><span class="text-muted">Days you want your meals to be delivered</span></small>
+                            <label>{{"pages.plans.options.delivery.title"|translate}} <span class="text-danger">*</span></label>
+                            <div><small><span class="text-muted">{{"pages.plans.options.delivery.desc"|translate}}</span></small>
                             </div>
                             <div class="row mt-3 deliveredDays" #deliveredDays>
                                 <div class="col-xl-3 col-lg-4 col-md-3 col-sm-6 col-12"
@@ -91,15 +91,16 @@
                                         [for]="'day'+i" [attr.day]="getDayNumber(delivery_day?.day_name)" #CurrentDay
                                         [attr.dayName]="delivery_day?.day_name"
                                         (click)="checkDeliveryDays(CurrentDay);">
-                                        {{delivery_day?.day_name}}
+                                        {{translate.currentLang == 'ar' ? delivery_day?.day_name_ar:delivery_day?.day_name}}
                                     </label>
                                     <input type="checkbox" hidden formControlName='CheckDays' [id]="'day'+i">
                                 </div>
                                 <div class="col-xl-3 col-lg-4 col-md-3 col-sm-6 col-12">
                                     <label
                                         class="item w-100 shadow-lg me-3 my-2 ms-0 px-3 py-2 bg-white rounded-md allWeek"
-                                        day="8" [for]="'day8'" (click)="checkAllWeekBtn(AllWeek);" #AllWeek>All
-                                        Week</label>
+                                        day="8" [for]="'day8'" (click)="checkAllWeekBtn(AllWeek);" #AllWeek>
+                                        {{translate.currentLang == 'ar' ?"كل الأسبوع":"All Week"}}
+                                    </label>
                                     <input type="checkbox" hidden formControlName='CheckDays' [id]="'day8'">
                                 </div>
                             </div>

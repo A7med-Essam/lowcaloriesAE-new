@@ -13,13 +13,35 @@
     "here":"Here",
     "send":"Send",
     "apply":"Apply",
-    "goHome":"Go to home page"
+    "goHome":"Go to home page",
+    "proceed":"Proceed to checkout",
+    "select":"Select",
+    "details":"Details",
+    "deleteMeal":"Delete Meal"
   },
   "pages":{
     "home":"Home",
     "plans":{
       "title": "Monthly Plans",
-      "desc":"Choose The Meal Plan For Your Goals"
+      "desc":"Choose The Meal Plan For Your Goals",
+      "options":{
+        "meals":"Number Of Meals",
+        "snacks":"Number Of Snacks",
+        "days":"Number Of Days",
+        "date":"Start Date",
+        "type":"Plan Type",
+        "delivery":{
+          "title":"Delivery Days",
+          "desc":"Days you want your meals to be delivered"
+        }
+      },
+      "showMeals":"Show Meals",
+      "selectMeals":"Select Meals",
+      "labels":{
+        "meals":"Meals",
+        "snacks":"Snacks",
+        "cards":"Your Cards"
+      }
     },
     "menu":{
       "title": "Menu",
@@ -233,5 +255,11 @@
       "main":"The Page you were looking for, couldn't be found",
       "footer":"Look like the page you are trying to visit does not exist. Pleace check the URL and try your luck again"
     }
+  },
+  "nutritions":{
+    "protein": "Protein",
+    "fat": "Fat",
+    "carb": "Carb",
+    "calories": "Calories"
   }
 }
