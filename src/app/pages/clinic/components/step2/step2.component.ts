@@ -27,6 +27,7 @@ import {
 import { FETCH_CLINIC_CHECKOUT_START } from 'src/app/store/clinicStore/clinic.action';
 import Swal from 'sweetalert2';
 import { AnimationOptions } from 'ngx-lottie';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-step2',
@@ -59,7 +60,8 @@ export class Step2Component implements OnInit, OnDestroy {
   constructor(
     private _SharedService: SharedService,
     private _Store: Store,
-    private _Location: Location
+    private _Location: Location,
+    private translate:TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -205,8 +207,9 @@ export class Step2Component implements OnInit, OnDestroy {
         if (res.message !== null && res.status == 0) {
           Swal.fire({
             icon: 'error',
-            title: 'Oops...',
+            title: this.translate.currentLang == 'ar'? "أُووبس...":'Oops...',
             text: res.message,
+            confirmButtonText: this.translate.currentLang == 'ar'? "تأكيد":'Confirm',
           })
         }
       }

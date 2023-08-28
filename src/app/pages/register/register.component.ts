@@ -13,6 +13,7 @@ import { registerSelector } from 'src/app/store/authStore/auth.selector';
 import { REGISTER_START } from '../../store/authStore/auth.action';
 import { ConfirmedValidator } from './ConfirmedValidator';
 import Swal from 'sweetalert2';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register',
@@ -25,7 +26,7 @@ export class RegisterComponent implements OnInit,OnDestroy {
   register$!: Observable<IRegisterState>;
   subscribe$!: Subscription;
   maxBirthdate:Date;
-  constructor(private _FormBuilder: FormBuilder, private _Store: Store) {
+  constructor(private _FormBuilder: FormBuilder, private _Store: Store, private translate:TranslateService) {
     this.maxBirthdate = new Date("2005-12-31")
     this.register$ = _Store.select(registerSelector);
 
@@ -34,8 +35,9 @@ export class RegisterComponent implements OnInit,OnDestroy {
       if (res.message !== null && res.status == 0) {
         Swal.fire({
           icon: 'error',
-          title: 'Oops...',
+          title: this.translate.currentLang == 'ar'?"أُووبس...":'Oops...',
           text: res.message,
+          confirmButtonText: this.translate.currentLang == 'ar'? "تأكيد":'Confirm',
         })
       }
     });

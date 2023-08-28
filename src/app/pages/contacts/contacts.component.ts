@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { ContactsService } from 'src/app/services/contacts.service';
 import Swal from 'sweetalert2';
 
@@ -18,7 +19,8 @@ export class ContactsComponent implements OnInit {
   sendMailBtnStatus: boolean = false;
   constructor(
     private _FormBuilder: FormBuilder,
-    private _ContactsService: ContactsService
+    private _ContactsService: ContactsService,
+    private translate:TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -53,8 +55,9 @@ export class ContactsComponent implements OnInit {
   fireSwal(message: string, status: boolean) {
     Swal.fire({
       icon: status ? 'success' : 'error',
-      title: 'Mail Service',
+      title: this.translate.currentLang == 'ar'? "خدمة البريد":'Mail Service',
       text: message,
+      confirmButtonText: this.translate.currentLang == 'ar'? "تأكيد":'Confirm',
     });
   }
 }

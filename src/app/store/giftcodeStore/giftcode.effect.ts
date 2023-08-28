@@ -5,12 +5,14 @@ import { exhaustMap, map, of, catchError, tap } from 'rxjs';
 import { GiftcodeService } from 'src/app/services/giftcode.service';
 import * as fromGiftcodeActions from '../giftcodeStore/giftcode.action';
 import Swal from 'sweetalert2';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class GiftcodeEffects {
   constructor(
     private actions$: Actions,
-    private _GiftcodeService: GiftcodeService
+    private _GiftcodeService: GiftcodeService,
+    private translate:TranslateService
   ) {}
 
   // GIFTCODE
@@ -35,8 +37,9 @@ export class GiftcodeEffects {
             tap((res) => {
               Swal.fire({
                 title: res.message,
-                text: 'Gift Code Applied!',
+                text: this.translate.currentLang == 'ar'? "تم تطبيق كود الهدية!":'Gift Code Applied!',
                 icon: res.status == 1 ? 'success' : 'error',
+                confirmButtonText: this.translate.currentLang == 'ar'? "تأكيد":'Confirm',
               });
             }),
             catchError((error: HttpErrorResponse) =>

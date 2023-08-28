@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/services/auth.service';
 import Swal from 'sweetalert2';
 
@@ -8,7 +9,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./forget-password.component.scss'],
 })
 export class ForgetPasswordComponent implements OnInit {
-  constructor(private _AuthService: AuthService) {}
+  constructor(private _AuthService: AuthService, private translate:TranslateService) {}
   btnStatus:boolean = false
   ngOnInit(): void {}
 
@@ -26,8 +27,9 @@ export class ForgetPasswordComponent implements OnInit {
   fireSwal(message: string, status: boolean) {
     Swal.fire({
       icon: status ? 'success' : 'error',
-      title: 'Reset Password Service',
+      title: this.translate.currentLang == 'ar'? "خدمة إعادة تعيين كلمة المرور":'Reset Password Service',
       text: message,
+      confirmButtonText: this.translate.currentLang == 'ar'? "تأكيد":'Confirm',
     });
   }
 }

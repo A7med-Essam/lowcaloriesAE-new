@@ -24,7 +24,7 @@
     <div class="container">
         <main class="mt-5">
             <div class="section-group text-start my-4" *ngFor="let terms of terms$ | async">
-                <h2   h2 class="text-orange mb-3">{{translate.currentLang == 'ar' ? terms?.header_ar :terms?.header}}</h2>
+                <h2 class="text-orange mb-3">{{translate.currentLang == 'ar' ? terms?.header_ar :terms?.header}}</h2>
                 <div [innerHTML]="translate.currentLang == 'ar' ? terms?.description_ar:terms?.description" style="line-height: 45px;" class="text-muted">
                 </div>
             </div>

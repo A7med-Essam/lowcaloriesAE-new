@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/services/auth.service';
 import Swal from 'sweetalert2';
 
@@ -13,7 +14,8 @@ export class ResetPasswordComponent {
   constructor(
     private _AuthService: AuthService,
     private _ActivatedRoute: ActivatedRoute,
-    private _Router: Router
+    private _Router: Router,
+    private translate:TranslateService
   ) {}
 
   resetPassword(password: HTMLInputElement, confirmation: HTMLInputElement) {
@@ -48,8 +50,9 @@ export class ResetPasswordComponent {
   fireSwal(message: string, status: boolean) {
     Swal.fire({
       icon: status ? 'success' : 'error',
-      title: 'Reset Password Service',
+      title: this.translate.currentLang == 'ar'? "خدمة إعادة تعيين كلمة المرور":'Reset Password Service',
       text: message,
+      confirmButtonText: this.translate.currentLang == 'ar'? "تأكيد":'Confirm',
     });
   }
 }

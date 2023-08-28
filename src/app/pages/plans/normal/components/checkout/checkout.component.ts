@@ -257,8 +257,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         if (res.message !== null && res.status == 0) {
           Swal.fire({
             icon: 'error',
-            title: 'Oops...',
+            title: this.translate.currentLang == 'ar'?"أُووبس...":'Oops...',
             text: res.message,
+            confirmButtonText: this.translate.currentLang == 'ar'? "تأكيد":'Confirm',
           })
         }
       }

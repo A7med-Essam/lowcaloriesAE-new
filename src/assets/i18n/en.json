@@ -17,7 +17,10 @@
     "proceed":"Proceed to checkout",
     "select":"Select",
     "details":"Details",
-    "deleteMeal":"Delete Meal"
+    "deleteMeal":"Delete Meal",
+    "viewMore":"View More",
+    "close":"Close",
+    "selectAddress":"Select Address"
   },
   "pages":{
     "home":"Home",
@@ -30,6 +33,10 @@
         "days":"Number Of Days",
         "date":"Start Date",
         "type":"Plan Type",
+        "mealsPlaceholder":"Choose number of meals",
+        "snacksPlaceholder":"Choose number of snacks",
+        "daysPlaceholder":"Choose number of days",
+        "typePlaceholder":"Choose Plan Type",
         "delivery":{
           "title":"Delivery Days",
           "desc":"Days you want your meals to be delivered"
@@ -115,6 +122,51 @@
       "desc":"Enter the new password",
       "input1":"Password*",
       "input2":"Confirm Password*"
+    },
+    "checkout":{
+      "title":"Checkout",
+      "desc":"Complete Your Purchase Order",
+      "giftcode":{
+        "title":"Gift Code",
+        "placeholder":"Enter Gift Code",
+        "total":"Total",
+        "code":"Code",
+        "vat":"Vat",
+        "grandTotal":"Grand Total"
+      },
+      "form":{
+        "title":"Checkout Form",
+        "firstName":"First Name",
+        "lastName":"Last Name",
+        "email":"Email",
+        "password":"Password",
+        "area":"Area",
+        "emirate":"Emirates",
+        "address":"Address",
+        "phone":"Phone Number",
+        "terms":{
+          "title":"We Accept",
+          "desc1":"I accepted the ",
+          "desc2":"of the meals plan"
+        }
+      },
+      "subscription":{
+        "title":"Subscription Info",
+        "selectedPlan":"Selected Plan",
+        "delivery":"Delivery Days",
+        "meals":"Meals",
+        "snacks":"Snacks",
+        "startDate":"Start Date",
+        "subscriptionDays":"Subscription Days"
+      },
+      "selectLocation":{
+        "title":"Select Your Current Location",
+        "modalTitle":"My Addresses",
+        "empty":{
+          "message1":"You don't have any addresses yet!",
+          "message2":"Please enter a new address"
+        }
+      }
     },
     "logout":"Logout"
   },

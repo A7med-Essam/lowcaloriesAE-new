@@ -19,22 +19,22 @@ export class AuthInterceptor implements HttpInterceptor {
     private _LocalService: LocalService,
     private _AuthService: AuthService,
     private _Store: Store,
-    private _Router:Router
+    private _Router: Router
   ) {}
 
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
+    const currentLang: string =
+      this._LocalService.getJsonValue('currentLang') || 'en';
     let HttpHeader;
     if (this._LocalService.getJsonValue('lowcaloriesAE_new')) {
       HttpHeader = request.clone({
-        headers: request.headers.set(
-          'Authorization',
-          `Bearer ${
-            this._LocalService.getJsonValue('lowcaloriesAE_new').auth_token
-          }`
-        ),
+        setHeaders: {
+          'Authorization': `Bearer ${this._LocalService.getJsonValue('lowcaloriesAE_new').auth_token}`,
+          'lang': currentLang
+        }
       });
       return next.handle(HttpHeader).pipe(
         tap((res: any) => {
@@ -49,22 +49,28 @@ export class AuthInterceptor implements HttpInterceptor {
                     item.auth_token = res.data;
                     this._LocalService.setJsonValue('lowcaloriesAE_new', item);
                     const newRequest = request.clone({
-                      headers: request.headers.set(
-                        'Authorization',
-                        `Bearer ${
-                          this._LocalService.getJsonValue('lowcaloriesAE_new')
-                            .auth_token
-                        }`
-                      ),
+                      setHeaders: {
+                        'Authorization': `Bearer ${this._LocalService.getJsonValue('lowcaloriesAE_new').auth_token}`,
+                        'lang': currentLang
+                      }
                     });
                     return next.handle(newRequest);
                   } else {
                     Swal.fire({
-                      title:'Session expired!',
-                      text: 'Please login', 
-                      icon:'error'
+                      title:
+                        currentLang == 'ar'
+                          ? 'لقد انتهت فترة دخولك إلى النظام'
+                          : 'The session has expired!',
+                      text:
+                        currentLang == 'ar'
+                          ? 'الرجاء تسجيل الدخول'
+                          : 'Please login',
+                      icon: 'error',
+                      confirmButtonText: currentLang == 'ar'? "تأكيد":'Confirm',
                     });
-                    this._Store.dispatch(LOGOUT_SUCCESS({data:null,message:'',status:0}));
+                    this._Store.dispatch(
+                      LOGOUT_SUCCESS({ data: null, message: '', status: 0 })
+                    );
                     this._LocalService.removeItem('lowcaloriesAE_new');
                     this._Router.navigate(['login']);
                     return next.handle(request);
@@ -75,6 +81,13 @@ export class AuthInterceptor implements HttpInterceptor {
           }
         })
       );
+    }
+    else{
+      request = request.clone({
+        setHeaders: {
+          'lang': currentLang
+        }
+      });
     }
     return next.handle(request);
   }

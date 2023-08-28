@@ -50,7 +50,7 @@
                         <div class="col-12 my-2">
                             <div class="mb-2"><label>{{"pages.plans.options.type"|translate}}<span class="text-danger">*</span></label></div>
                             <p-dropdown [options]="program" formControlName='Plan_Type' ngClass="w-100" appendTo="body"
-                                (onChange)="getSelectedPlanType($event.value)" placeholder=' '
+                                (onChange)="getSelectedPlanType($event.value)" placeholder='{{"pages.plans.options.typePlaceholder"|translate}}'
                                 optionLabel="name">
                             </p-dropdown>
                             <small class="text-danger " *ngIf="ProgramDetailsForm.get('Plan_Type')?.touched &&
@@ -59,7 +59,7 @@
                         <div class="col-12 my-2" *ngIf="selectedPlanType">
                             <div class="mb-2"><label>{{"pages.plans.options.meals"|translate}}<span class="text-danger">*</span></label></div>
                             <p-dropdown [options]="max_meal" formControlName='Number_of_Meals' ngClass="w-100"
-                                appendTo="body" placeholder=' '>
+                                appendTo="body" placeholder='{{"pages.plans.options.mealsPlaceholder"|translate}}'>
                             </p-dropdown>
                             <small class="text-danger "
                                 *ngIf="ProgramDetailsForm.get('Number_of_Meals')?.touched &&
@@ -68,7 +68,7 @@
                         <div class="col-12 my-2" *ngIf="selectedPlanType">
                             <div class="mb-2"><label>{{"pages.plans.options.days"|translate}}<span class="text-danger">*</span></label></div>
                             <p-dropdown [options]="max_days" formControlName='Number_of_Days' ngClass="w-100"
-                                appendTo="body" placeholder=' '>
+                                appendTo="body" placeholder='{{"pages.plans.options.daysPlaceholder"|translate}}'>
                             </p-dropdown>
                             <small class="text-danger "
                                 *ngIf="ProgramDetailsForm.get('Number_of_Days')?.touched &&
@@ -77,7 +77,7 @@
                         <div class="col-12 my-2" *ngIf="selectedPlanType">
                             <div class="mb-2"><label>{{"pages.plans.options.snacks"|translate}}<span class="text-danger">*</span></label></div>
                             <p-dropdown [options]="max_snack" formControlName='Type_of_Snacks' ngClass="w-100"
-                                appendTo="body" placeholder=' '>
+                                appendTo="body" placeholder='{{"pages.plans.options.snacksPlaceholder"|translate}}'>
                             </p-dropdown>
                             <small class="text-danger "
                                 *ngIf="ProgramDetailsForm.get('Type_of_Snacks')?.touched &&
