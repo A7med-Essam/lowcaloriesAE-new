@@ -75,6 +75,100 @@ export class MenuComponent implements OnInit {
     },
   };
 
+  // parseAndCalculatePrices(input:string){
+  //   // Split the string into individual lines
+  //   const lines = input.split('\n');
+
+  //   // Extract data and manipulate
+  //   const extractedData = lines.map(line => {
+  //     const parts = line.split(' => ');
+  //     if (parts.length == 2) {
+  //       const gmPart = parts[0];
+  //       const pricePart = parts[1];
+  
+  //       const gmQuantity = parseInt(gmPart.split(' ')[0]);
+  //       const gmUnit = gmPart.split(' ')[1];
+  
+  //       const price = parseInt(pricePart.split(' ')[0]);
+  //       const currency = pricePart.split(' ')[1];
+  
+  //       return {
+  //         gmQuantity,
+  //         gmUnit,
+  //         price,
+  //         currency
+  //       };
+  //     } else {
+  //       const gmPart = parts[0];
+  //       const pcsPart = parts[1];
+  //       const pricePart = parts[2];
+  
+  //       const gmQuantity = parseInt(gmPart.split(' ')[0]);
+  //       const gmUnit = gmPart.split(' ')[1];
+  
+  //       const pcsQuantity = parseInt(pcsPart.split(' ')[0]);
+  //       const pcsUnit = pcsPart.split(' ')[1];
+  
+  //       const price = parseInt(pricePart.split(' ')[0]);
+  //       const currency = pricePart.split(' ')[1];
+  
+  //       return {
+  //         gmQuantity,
+  //         gmUnit,
+  //         pcsQuantity,
+  //         pcsUnit,
+  //         price,
+  //         currency
+  //       };
+  //     }
+  //   });
+
+  //   return extractedData
+  // }
+
+  parseAndCalculatePrices(input: string) {
+    // Split the string into individual lines
+    const lines = input.split('\n');
+  
+    // Extract data and manipulate
+    const extractedData = lines.map(line => {
+      const parts = line.split(' => ');
+      const gmPart = parts[0];
+      const pricePart = parts[parts.length - 1]; 
+  
+      const gmQuantity = parseInt(gmPart.split(' ')[0]);
+      const gmUnit = gmPart.split(' ')[1];
+      const price = parseInt(pricePart.split(' ')[0]);
+      const currency = pricePart.split(' ')[1];
+  
+      if (parts.length === 2) {
+        return {
+          gmQuantity,
+          gmUnit,
+          price,
+          currency
+        };
+      } else {
+        const pcsPart = parts[1];
+        const pcsQuantity = parseInt(pcsPart.split(' ')[0]);
+        const pcsUnit = pcsPart.split(' ')[1];
+  
+        return {
+          gmQuantity,
+          gmUnit,
+          pcsQuantity,
+          pcsUnit,
+          price,
+          currency
+        };
+      }
+    });
+
+    console.log(extractedData);
+    return extractedData;
+  }
+  
+
   ngOnDestroy() {
     this.destroyed$.next();
     this.destroyed$.complete();

@@ -21,7 +21,7 @@ export class ResetPasswordComponent {
   resetPassword(password: HTMLInputElement, confirmation: HTMLInputElement) {
     if (password.value != '' && confirmation.value != '') {
       if (password.value !== confirmation.value) {
-        this.fireSwal('Password does not match!', false);
+        this.fireSwal(this.translate.currentLang == 'ar'?"كلمة السر غير متطابقة!":'Password does not match!', false);
       } else {
         this.btnStatus = true;
         const allParams:any = this._ActivatedRoute.snapshot.queryParams;

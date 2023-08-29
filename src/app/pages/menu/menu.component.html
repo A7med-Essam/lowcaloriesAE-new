@@ -108,10 +108,32 @@
                                 {{item.price}} <sub>{{"currency"|translate}}</sub>
                             </span>
                             <ul class="price text-end" style="font-size: small;line-height: normal;" *ngIf="item.price.includes('=>')">
-                                <ol>{{item.price.split("AED")[0]}} {{"currency"|translate}}</ol>
-                                <ol>{{item.price.split("AED")[1]}} {{"currency"|translate}}</ol>
-                                <ol>{{item.price.split("AED")[2]}} {{"currency"|translate}}</ol>
-                                <!-- TODO:FIX -->
+                                <ol *ngFor="let meal of parseAndCalculatePrices(item.price)">
+                                    <div *ngIf="translate.currentLang == 'ar'">
+                                        <span class="mx-1">{{meal.gmQuantity}}</span>
+                                        <span class="mx-1">{{meal.gmUnit | mealUnitTranslate}}</span>
+                                        <span class="mx-1"><i class="fas fa-angle-double-left"></i></span>
+                                        <span *ngIf="meal.pcsQuantity != undefined">
+                                            <span class="mx-1">{{meal.pcsQuantity }}</span>
+                                            <span class="mx-1">{{meal.pcsUnit | mealUnitTranslate}}</span>
+                                            <span class="mx-1"><i class="fas fa-angle-double-left"></i></span>
+                                        </span>
+                                        <span class="mx-1">{{meal?.price}}</span>
+                                        <span class="mx-1">{{"currency"|translate}}</span>
+                                    </div>
+                                    <div *ngIf="translate.currentLang != 'ar'">
+                                        <span class="mx-1">{{meal.gmQuantity}}</span>
+                                        <span class="mx-1">{{meal.gmUnit}}</span>
+                                        <span class="mx-1"><i class="fas fa-angle-double-right"></i></span>
+                                        <span *ngIf="meal.pcsQuantity != undefined">
+                                            <span class="mx-1">{{meal.pcsQuantity }}</span>
+                                            <span class="mx-1">{{meal.pcsUnit}}</span>
+                                            <span class="mx-1"><i class="fas fa-angle-double-right"></i></span>
+                                        </span>
+                                        <span class="mx-1">{{meal?.price}}</span>
+                                        <span class="mx-1">{{"currency"|translate}}</span>
+                                    </div>
+                                </ol>
                             </ul>
                         </div>
                         <div class="menu-description">

@@ -33,6 +33,7 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 
 export function playerFactory() {
   return import('lottie-web');
@@ -80,7 +81,8 @@ const APP_PRIMENG_MODULE = [
         useFactory: CreateTranslateLoader,
         deps: [HttpClient]
       }
-    })
+    }),
+    SharedModule
   ],
   providers: [
     {

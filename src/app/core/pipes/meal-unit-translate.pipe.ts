@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class MealUnitTranslatePipe implements PipeTransform {
   private unitTranslations: { [key: string]: string } = {
     'pcs': 'قطعة',
-    'gm': 'جم'
+    'gm': 'جرام'
   };
 
   transform(unit: string): string {
