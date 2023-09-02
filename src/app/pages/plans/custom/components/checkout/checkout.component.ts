@@ -102,7 +102,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.ProgramDetails = this._Store.select(
             fromCustomPlanSelector.customPlanSelector
           );
-          this._Store.dispatch(FETCH_EMIRATE_START());
+          this._Store.dispatch(FETCH_EMIRATE_START({programType:res.Plan_Type.myprogram.company}));
           this._Store.dispatch(FETCH_USERADDRESS_START());
           this._Store.dispatch(FETCH_TERMS_START());
           this.emirates$ = this._Store.select(emirateSelector);
@@ -136,6 +136,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       emirate_id: new FormControl(null, [Validators.required]),
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
+      cutlery:new FormControl(false),
+      bag:new FormControl(false),
     });
   }
 
@@ -150,6 +152,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       emirate_id: new FormControl(null, [Validators.required]),
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
+      cutlery:new FormControl(false),
+      bag:new FormControl(false),
     });
   }
 
@@ -229,7 +233,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
                       snacks_count: res.number_of_Snacks,
                       plan_id: res.Plan_Type.id,
                       start_delivery_day: res.start_date,
-                      bag: 0,
+                      bag: form.value.bag,
+                      cutlery: form.value.cutlery,
                       code_id: Number(priceinfo?.code_id),
                       price: Number(priceinfo?.price),
                       total_price: Number(priceinfo?.grand_total),
@@ -308,7 +313,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
                       snacks_count: res.number_of_Snacks,
                       plan_id: res.Plan_Type.id,
                       start_delivery_day: res.start_date,
-                      bag: 0,
+                      bag: form.value.bag,
+                      cutlery: form.value.cutlery,
                       code_id: Number(priceinfo?.code_id),
                       price: Number(priceinfo?.price),
                       total_price: Number(priceinfo?.grand_total),

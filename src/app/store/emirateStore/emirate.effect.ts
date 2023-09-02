@@ -16,7 +16,7 @@ export class EmirateEffects {
     this.actions$.pipe(
       ofType(fromEmirateActions.FETCH_EMIRATE_START),
       exhaustMap((action) =>
-        this._EmiratesService.getEmirates().pipe(
+        this._EmiratesService.getEmirates(action.programType).pipe(
           map((res) =>
             fromEmirateActions.FETCH_EMIRATE_SUCCESS({
               data: res.data,

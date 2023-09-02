@@ -95,7 +95,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.ProgramDetails = this._Store.select(
             fromNormalPlanSelector.normalPlanSelector
           );
-          this._Store.dispatch(FETCH_EMIRATE_START());
+          this._Store.select(
+            fromNormalPlanSelector.normalPlanSelector
+          ).pipe(takeUntil(this.destroyed$)).subscribe(res=>{
+            if (res) {
+              this._Store.dispatch(FETCH_EMIRATE_START({programType:res[0].myprogram.company}));
+            }
+          })
+
           this._Store.dispatch(FETCH_USERADDRESS_START());
           this._Store.dispatch(FETCH_TERMS_START());
           this.emirates$ = this._Store.select(emirateSelector);
@@ -129,6 +136,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       emirate_id: new FormControl(null, [Validators.required]),
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
+      cutlery:new FormControl(false),
+      bag:new FormControl(false),
     });
   }
 
@@ -143,6 +152,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       emirate_id: new FormControl(null, [Validators.required]),
       area_id: new FormControl(null, [Validators.required]),
       terms: new FormControl(false, [Validators.requiredTrue]),
+      cutlery:new FormControl(false),
+      bag:new FormControl(false),
     });
   }
 
@@ -189,7 +200,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         program_id: sub?.program_id,
         plan_option_id: sub?.plan_option_id,
         start_date: sub?.start_date,
-        bag: 0,
+        bag: sub?.bag,
+        cutlery: sub?.cutlery,
         code_id: priceinfo?.code_id,
         price: priceinfo?.price,
         grand_total: priceinfo?.grand_total,
@@ -225,7 +237,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         program_id: sub?.program_id,
         plan_option_id: sub?.plan_option_id,
         start_date: sub?.start_date,
-        bag: 0,
+        bag: form.value.bag,
+        cutlery: form.value.cutlery,
         code_id: priceinfo?.code_id,
         price: priceinfo?.price,
         grand_total: priceinfo?.grand_total,
@@ -241,7 +254,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         phone_number: form.value.phone_number,
         password: form.value.password,
       };
-
       this._Store.dispatch(FETCH_CHECKOUT_START({ data: checkout }));
       this.fireSwal();
       this.redirectToPaymentGateway();

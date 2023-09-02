@@ -148,7 +148,9 @@
           "title":"We Accept",
           "desc1":"I accepted the ",
           "desc2":"of the meals plan"
-        }
+        },
+        "cutlery":"Cutlery",
+        "bag":"Safty Bag"
       },
       "subscription":{
         "title":"Subscription Info",

@@ -10,7 +10,7 @@ export class EmiratesService {
 
   constructor(private _ApiService: ApiService) {}
 
-  getEmirates(): Observable<{data:IEmirateResponse[],status:number,message:string}> {
-    return this._ApiService.postReq('getEmirates','');
+  getEmirates(type:string): Observable<{data:IEmirateResponse[],status:number,message:string}> {
+    return this._ApiService.postReq('getEmirates',{type});
   }
 }

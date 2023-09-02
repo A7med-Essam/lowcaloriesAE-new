@@ -82,10 +82,20 @@
                                     {{price.vat*100}}%
                                 </span>
                             </div>
+                            <div class="d-flex justify-content-between my-3 font-weight-500">
+                                <span>{{"pages.checkout.form.bag" | translate}}</span> <span class="txt-main">
+                                    {{(checkoutForm_without_auth.get("bag")?.value || checkoutForm.get("bag")?.value) ? 50:0}} <sub
+                                    class="text-orange">{{"currency" | translate}}</sub>
+                                </span>
+                            </div>
                             <div class="d-flex justify-content-between mt-3 font-weight-500">
-                                <span>{{"pages.checkout.giftcode.grandTotal" | translate}}</span> <span
-                                    class="txt-main">{{price.grand_total.toFixed(2)}} <sub
-                                        class="text-orange">{{"currency" | translate}}</sub></span>
+                                <span>{{"pages.checkout.giftcode.grandTotal" | translate}}</span> 
+                                <span class="txt-main">{{
+                                        (checkoutForm_without_auth.get("bag")?.value || checkoutForm.get("bag")?.value) ?
+                                         (price.grand_total+50).toFixed(2) : price.grand_total.toFixed(2)
+                                        }} 
+                                        <sub class="text-orange">{{"currency" | translate}}</sub>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -134,6 +144,20 @@
                                     <small class="text-danger ms-1"
                                         *ngIf="checkoutForm.get('address')?.touched &&
                                         checkoutForm.get('address')?.hasError('required')">{{"validations.required"|translate}}</small>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center my-1">
+                                <div class="mx-2">
+                                        <input type="checkbox" formControlName='bag' id="checkoutForm_bag">
+                                        <label for="checkoutForm_bag" class="mx-1 font-weight-500">
+                                            <small>{{"pages.checkout.form.bag" | translate}}</small>
+                                        </label>
+                                </div>
+                                <div class="mx-2">
+                                        <input type="checkbox" formControlName='cutlery' id="checkoutForm_cutlery">
+                                        <label for="checkoutForm_cutlery" class="mx-1 font-weight-500">
+                                            <small>{{"pages.checkout.form.cutlery" | translate}}</small>
+                                        </label>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-start align-items-center my-1">
@@ -265,17 +289,33 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-start align-items-center my-1">
+                                <div class="mx-2">
+                                        <input type="checkbox" formControlName='bag'  id="checkoutForm_without_auth_bag">
+                                        <label for="checkoutForm_without_auth_bag" class="mx-1 font-weight-500">
+                                            <small>{{"pages.checkout.form.bag" | translate}}</small>
+                                        </label>
+                                </div>
+                                <div class="mx-2">
+                                        <input type="checkbox" formControlName='cutlery'  id="checkoutForm_without_auth_cutlery">
+                                        <label for="checkoutForm_without_auth_cutlery" class="mx-1 font-weight-500">
+                                            <small>{{"pages.checkout.form.cutlery" | translate}}</small>
+                                        </label>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center my-1">
                                 <p class="m-0 font-weight-500">{{"pages.checkout.form.terms.title" | translate}}:</p>
                                 <img src="../../../../../../assets/images/check-out/payment-method.png" id="visa_img"
                                     class="img-fluid mx-1" alt="">
                             </div>
                             <div class="d-flex justify-content-start align-items-center my-1">
-                                <input type="checkbox" formControlName='terms' (change)="onCheckTermsChange($event)">
-                                <small class="mx-2 font-weight-500">
-                                    {{"pages.checkout.form.terms.desc1" | translate}}
-                                    <a class="text-orange pointer mx-1" (click)="termsModal=true">{{"pages.terms.title2"|translate}}</a>
-                                    {{"pages.checkout.form.terms.desc2" | translate}}
-                                </small>
+                                <div>
+                                    <input type="checkbox" formControlName='terms' (change)="onCheckTermsChange($event)">
+                                    <small class="mx-2 font-weight-500">
+                                        {{"pages.checkout.form.terms.desc1" | translate}}
+                                        <a class="text-orange pointer mx-1" (click)="termsModal=true">{{"pages.terms.title2"|translate}}</a>
+                                        {{"pages.checkout.form.terms.desc2" | translate}}
+                                    </small>
+                                </div>
                             </div>
                             <div class="text-start">
                                 <small class="text-danger ms-1" *ngIf="checkoutForm_without_auth.get('terms')?.touched &&

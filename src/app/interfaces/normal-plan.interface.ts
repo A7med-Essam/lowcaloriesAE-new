@@ -104,7 +104,8 @@ export interface ICheckout {
     grand_total:    number;
     price:          number;
     code_id:        number;
-    bag:            number;
+    bag:            boolean;
+    cutlery:        boolean;
     location: {
         emirate_id:     number;
         area_id:        string;
