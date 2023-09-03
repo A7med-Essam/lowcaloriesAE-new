@@ -118,8 +118,8 @@ export interface ICheckout {
     email?:              string;
     phone_number?:       string;
     password?:           string;
-    bag:                boolean;
-    cutlery:            boolean;
+    bag:                number;
+    cutlery:            number;
     plan_id:            number;
     total_price:        number;
     price:              number;
