@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { OwlOptions } from 'ngx-owl-carousel-o';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CarouselComponent, OwlOptions } from 'ngx-owl-carousel-o';
 import { AnimationOptions } from 'ngx-lottie';
+import { CarouselService } from 'ngx-owl-carousel-o/lib/services/carousel.service';
 
 @Component({
   selector: 'app-home',
@@ -9,8 +10,16 @@ import { AnimationOptions } from 'ngx-lottie';
 })
 export class HomeComponent implements OnInit {
   constructor() {}
+  @ViewChild('carousel', { static: true }) carousel!: CarouselComponent;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    setTimeout(() => {
+      const anyService = this.carousel as any;
+      const carouselService = anyService.carouselService as CarouselService;
+       carouselService.refresh();
+       carouselService.update();
+    }, 500);
+  }
   options: AnimationOptions = {
     path: '../../../assets/lottie/app_store.json'
   };
