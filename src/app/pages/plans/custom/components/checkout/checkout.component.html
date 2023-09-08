@@ -18,14 +18,14 @@
             <span class="text-orange">{{"pages.checkout.title" | translate}}</span>
         </h1>
         <div class="row mt-5">
-            <div class="col-lg-3 col-md-4 my-3">
+            <div class="col-lg-3 col-md-4 my-3" *ngIf="ProgramDetails | async as program">
                 <div class="item shadow-lg bg-white py-4 rounded text-center h-100"
                     *ngIf="subscriptionInfo$ | async as sub">
-                    <div *ngIf="ProgramDetails | async as program">
+                    <div>
                         <img [src]="'https://api.lowcalories.ae/'+program[0].myprogram.image_new"
                             class="img-fluid w-50 mx-auto mb-3" alt="Program Image">
                         <h6 class="text-orange">{{translate.currentLang == 'ar' ?
-                            program[0].myprogram.name_ar:program[0].myprogram.name}}</h6>
+                            program[0].myprogram.name_ar:program[0].myprogram.name | titlecase}}</h6>
                     </div>
                     <div>
                         <span>
@@ -35,7 +35,7 @@
                         </span>
                         <br>
                         <span>
-                            {{sub.number_of_Meals.length}}M-LW-{{sub.number_of_Days}}D-{{sub.number_of_Snacks}}S
+                            {{sub.number_of_Meals.length}}M-{{sub.Plan_Type.name.toLowerCase().includes("lose") ? 'LWC' :'GWC'}}-{{sub.number_of_Days}}D-{{sub.number_of_Snacks}}S
                         </span>
                     </div>
                     <div class="mt-3">

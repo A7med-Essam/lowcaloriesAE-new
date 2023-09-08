@@ -23,7 +23,7 @@ interface IMyProgram {
     order_number:   number;
     max_meals:      number;
     no_snacks:      number;
-    shortcut_name:  null;
+    shortcut_name:  string;
     image_new:      string;
     bag_price:      number;
     snack_price:    number;
