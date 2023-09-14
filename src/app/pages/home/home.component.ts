@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { CarouselComponent, OwlOptions } from 'ngx-owl-carousel-o';
+import { Component, OnInit } from '@angular/core';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 import { AnimationOptions } from 'ngx-lottie';
-import { CarouselService } from 'ngx-owl-carousel-o/lib/services/carousel.service';
+import { Image } from 'primeng/image';
 
 @Component({
   selector: 'app-home',
@@ -10,38 +10,42 @@ import { CarouselService } from 'ngx-owl-carousel-o/lib/services/carousel.servic
 })
 export class HomeComponent implements OnInit {
   constructor() {}
-  // @ViewChild('carousel', { static: true }) carousel!: CarouselComponent;
 
-  // ngOnInit(): void {
-  //   setTimeout(() => {
-  //     const anyService = this.carousel as any;
-  //     const carouselService = anyService.carouselService as CarouselService;
-  //      carouselService.refresh();
-  //      carouselService.update();
-  //   }, 500);
-  // }
+  ngOnInit(): void {
+    document.addEventListener('DOMContentLoaded', function () {
+      let lazyImages = document.querySelectorAll("img[loading='lazy']");
 
-    // @ViewChild('carousel', { static: true }) carousel!: CarouselComponent;
-    owlRefreshMode:boolean = false
-    ngOnInit(): void {
-      setTimeout(() => {
-        this.owlRefreshMode = true
-        // const anyService = this.carousel as any;
-        // const carouselService = anyService.carouselService as CarouselService;
-        //  carouselService.refresh();
-        //  carouselService.update();
-      }, 1);
-    }
-  
+      let lazyImageObserver = new IntersectionObserver(function (
+        entries,
+        observer
+      ) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            let lazyImage: any = entry.target;
+            lazyImage.src = lazyImage.dataset.src;
+            lazyImage.removeAttribute('loading');
+            lazyImageObserver.unobserve(lazyImage);
+          }
+        });
+      });
+
+      lazyImages.forEach(function (lazyImage) {
+        lazyImageObserver.observe(lazyImage);
+      });
+    });
+  }
+
   options: AnimationOptions = {
-    path: '../../../assets/lottie/app_store.json'
+    path: '../../../assets/lottie/app_store.json',
   };
 
   customOptions: OwlOptions = {
     loop: true,
     autoplay: true,
+    lazyLoad: true,
     items: 1,
     dots: false,
+    animateOut: 'fadeOut',
     responsive: {
       0: {
         items: 1,
@@ -51,7 +55,14 @@ export class HomeComponent implements OnInit {
       },
       1000: {
         items: 1,
-      }
-    }
+      },
+    },
+  };
+
+  imgFlag: boolean = true;
+  handleShowEvent(event: Image, newSrc: string) {
+    this.imgFlag = false;
+    event.src = newSrc;
+    this.imgFlag = true;
   }
 }
