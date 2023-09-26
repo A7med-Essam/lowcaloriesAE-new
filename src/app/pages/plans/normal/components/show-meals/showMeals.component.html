@@ -49,7 +49,11 @@
                                     {{translate.currentLang == 'ar' ?meal?.name_ar:meal?.name}}
                                 </h6>
                                 <p class="text-muted m-0" *ngIf="meal?.description">
-                                    <i class="fas fa-info-circle txt-main"></i> {{translate.currentLang == 'ar' ?meal?.description_ar:meal?.description}}
+                                    {{translate.currentLang == 'ar' ?meal?.description_ar:meal?.description}}
+                                </p>
+                                <p class="text-muted m-0">
+                                    <i class="fas fa-info-circle txt-main"></i>
+                                     {{meal.type |  transformMealType:translate.currentLang }}
                                 </p>
                             </div>
                         </div>

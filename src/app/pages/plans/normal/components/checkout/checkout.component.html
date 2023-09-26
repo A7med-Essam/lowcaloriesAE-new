@@ -34,7 +34,7 @@
                         </span>
                         <br>
                         <span>
-                            {{sub.meal_types.length}}M-<span *ngFor="let n of program[0].myprogram.name.split(' ')">{{n[0] | titlecase}}</span>-{{sub.no_days}}D-{{sub.no_snacks}}S
+                            {{sub.no_meals}}M-<span *ngFor="let n of program[0].myprogram.name.split(' ')">{{n[0] | titlecase}}</span>-{{sub.no_days}}D-{{sub.no_snacks}}S
                         </span>
                     </div>
                     <div class="mt-3">
@@ -358,7 +358,7 @@
         <hr style="height: .5px;">
         <div class="d-flex justify-content-between">
             <h6 class="txt-main">{{"pages.checkout.subscription.meals" | translate}}:</h6>
-            <span>{{sub.meal_types.length}}</span>
+            <span>{{sub.no_meals}}</span>
         </div>
         <hr class="my-2" style="height: .5px;">
         <div class="d-flex justify-content-between">

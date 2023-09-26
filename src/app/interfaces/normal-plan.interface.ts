@@ -69,6 +69,7 @@ export interface ISubscriptionData {
     meal_types:     string[];
     program_id:     number;
     no_snacks:      number;
+    no_meals:       number;
     no_days:        number
 }
 

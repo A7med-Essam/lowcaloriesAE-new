@@ -112,7 +112,7 @@ export class SetPlanComponent
     private _SharedService: SharedService,
     private _ElementRef: ElementRef,
     private _I18nService: I18nService,
-    public translate: TranslateService,
+    public translate: TranslateService
   ) {
     this._I18nService.getCurrentLang(this.translate);
   }
@@ -231,9 +231,10 @@ export class SetPlanComponent
       delivery_days: this.getSelectedDeliveryDays(),
       meal_types: this.getSelectedMealTypes(
         Number(data.value.Number_of_Meals.no_meals)
-      ),
+      ).concat(this.getSelectedSnackTypes(Number(data.value.Type_of_Snacks))),
       program_id: Number(this.program_id),
       no_snacks: Number(data.value.Type_of_Snacks),
+      no_meals: Number(data.value.Number_of_Meals.no_meals),
     };
     return SubscriptionData;
   }
@@ -246,6 +247,14 @@ export class SetPlanComponent
     let meals = [];
     for (let i = 1; i <= num; i++) {
       meals.push(`Meal ${i}`);
+    }
+    return meals;
+  }
+
+  getSelectedSnackTypes(num: number) {
+    let meals = [];
+    for (let i = 1; i <= num; i++) {
+      meals.push(`Snack ${i}`);
     }
     return meals;
   }

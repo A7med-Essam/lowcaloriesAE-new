@@ -112,7 +112,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
             FETCH_NORMALPLAN_PRICE_START({
               data: {
                 day_count: res.no_days,
-                meal_count: res.meal_types.length,
+                meal_count: res.no_meals,
                 program_id: res.program_id,
                 snack_count: res.no_snacks,
               },
