@@ -27,12 +27,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
   register$!: Observable<IRegisterState>;
   subscribe$!: Subscription;
   maxBirthdate: Date;
+  minBirthdate: Date;
   constructor(
     private _FormBuilder: FormBuilder,
     private _Store: Store,
     private translate: TranslateService
   ) {
-    this.maxBirthdate = new Date('2005-12-31');
+    this.maxBirthdate = new Date('2010-12-31');
+    this.minBirthdate = new Date('1970-01-01');
     this.register$ = _Store.select(registerSelector);
 
     this.subscribe$ = _Store.select(registerSelector).subscribe((res) => {
@@ -77,7 +79,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           Validators.minLength(10),
         ]),
         gender: new FormControl(null, [Validators.required]),
-        birthday: new FormControl(this.maxBirthdate, [Validators.required]),
+        birthday: new FormControl(null, [Validators.required]),
         height: new FormControl(null, [
           Validators.required,
           Validators.maxLength(3),

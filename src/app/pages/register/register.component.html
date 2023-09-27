@@ -104,7 +104,7 @@
                             <!-- <p-calendar [view]="dateView" formControlName='birthday' [maxDate]="maxBirthdate" [showIcon]="true" 
                                 #calendar [dateFormat]="dateFormat"  (onSelect)="onDateChange($event)"></p-calendar> -->
 
-                            <p-calendar view="year" formControlName='birthday' [maxDate]="maxBirthdate"
+                            <p-calendar view="year" formControlName='birthday' [defaultDate]="minBirthdate" [minDate]="minBirthdate" [maxDate]="maxBirthdate" 
                                 [showIcon]="true" #calendar dateFormat="yy" [showOverlay]="true" [showButtonBar]="true" 
                                 (onClearClick)="onClearClick()"
                                 (onSelect)="onDateChange($event)"></p-calendar>
