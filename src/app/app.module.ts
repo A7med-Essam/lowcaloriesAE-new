@@ -13,7 +13,7 @@ import { ProgramComponent } from './pages/program/program.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
@@ -82,7 +82,8 @@ const APP_PRIMENG_MODULE = [
         deps: [HttpClient]
       }
     }),
-    SharedModule
+    SharedModule,
+    FormsModule
   ],
   providers: [
     {

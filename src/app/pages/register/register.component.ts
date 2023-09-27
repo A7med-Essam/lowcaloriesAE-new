@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   AbstractControlOptions,
   FormBuilder,
@@ -14,31 +14,36 @@ import { REGISTER_START } from '../../store/authStore/auth.action';
 import { ConfirmedValidator } from './ConfirmedValidator';
 import Swal from 'sweetalert2';
 import { TranslateService } from '@ngx-translate/core';
+import { Calendar } from 'primeng/calendar';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent implements OnInit,OnDestroy {
+export class RegisterComponent implements OnInit, OnDestroy {
   gender: string[] = ['male', 'female'];
   registerForm: FormGroup = new FormGroup({});
   register$!: Observable<IRegisterState>;
   subscribe$!: Subscription;
-  maxBirthdate:Date;
-  constructor(private _FormBuilder: FormBuilder, private _Store: Store, private translate:TranslateService) {
-    this.maxBirthdate = new Date("2005-12-31")
+  maxBirthdate: Date;
+  constructor(
+    private _FormBuilder: FormBuilder,
+    private _Store: Store,
+    private translate: TranslateService
+  ) {
+    this.maxBirthdate = new Date('2005-12-31');
     this.register$ = _Store.select(registerSelector);
 
-    this.subscribe$ = _Store.select(registerSelector)
-    .subscribe(res=>{
+    this.subscribe$ = _Store.select(registerSelector).subscribe((res) => {
       if (res.message !== null && res.status == 0) {
         Swal.fire({
           icon: 'error',
-          title: this.translate.currentLang == 'ar'?"أُووبس...":'Oops...',
+          title: this.translate.currentLang == 'ar' ? 'أُووبس...' : 'Oops...',
           text: res.message,
-          confirmButtonText: this.translate.currentLang == 'ar'? "تأكيد":'Confirm',
-        })
+          confirmButtonText:
+            this.translate.currentLang == 'ar' ? 'تأكيد' : 'Confirm',
+        });
       }
     });
   }
@@ -52,26 +57,80 @@ export class RegisterComponent implements OnInit,OnDestroy {
   }
 
   setRegisterForm() {
-    this.registerForm = this._FormBuilder.group({
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required]),
-      first_name: new FormControl(null, [Validators.required, Validators.max(20), Validators.min(1)]),
-      last_name: new FormControl(null, [Validators.required, Validators.maxLength(20), Validators.minLength(1)]),
-      phone_number: new FormControl(null, [Validators.required, Validators.maxLength(10), Validators.minLength(10)]),
-      gender: new FormControl(null, [Validators.required]),
-      birthday: new FormControl(this.maxBirthdate, [Validators.required]),
-      height: new FormControl(null, [Validators.required, Validators.maxLength(3), Validators.minLength(1)]),
-      Weight: new FormControl(null, [Validators.required, Validators.maxLength(3), Validators.minLength(1)]),
-      confirm_password: new FormControl(null),
-    },{ 
-      validator: ConfirmedValidator('password', 'confirm_password')
-    } as AbstractControlOptions);
+    this.registerForm = this._FormBuilder.group(
+      {
+        email: new FormControl(null, [Validators.required, Validators.email]),
+        password: new FormControl(null, [Validators.required]),
+        first_name: new FormControl(null, [
+          Validators.required,
+          Validators.max(20),
+          Validators.min(1),
+        ]),
+        last_name: new FormControl(null, [
+          Validators.required,
+          Validators.maxLength(20),
+          Validators.minLength(1),
+        ]),
+        phone_number: new FormControl(null, [
+          Validators.required,
+          Validators.maxLength(10),
+          Validators.minLength(10),
+        ]),
+        gender: new FormControl(null, [Validators.required]),
+        birthday: new FormControl(this.maxBirthdate, [Validators.required]),
+        height: new FormControl(null, [
+          Validators.required,
+          Validators.maxLength(3),
+          Validators.minLength(1),
+        ]),
+        Weight: new FormControl(null, [
+          Validators.required,
+          Validators.maxLength(3),
+          Validators.minLength(1),
+        ]),
+        confirm_password: new FormControl(null),
+      },
+      {
+        validator: ConfirmedValidator('password', 'confirm_password'),
+      } as AbstractControlOptions
+    );
   }
 
   onSubmit(data: FormGroup) {
     if (data.valid) {
-      data.get("birthday")?.patchValue(new Date(this.registerForm.value.birthday).toLocaleDateString('en-CA'))
+      data
+        .get('birthday')
+        ?.patchValue(
+          new Date(this.registerForm.value.birthday).toLocaleDateString('en-CA')
+        );
       this._Store.dispatch(REGISTER_START({ data: data.value }));
     }
   }
+
+  @ViewChild('calendar') calendar!: Calendar;
+  onDateChange(e: any) {
+    if (this.calendar.view == 'year') {
+      this.calendar.view = 'month';
+      this.calendar.dateFormat = 'yy/mm';
+      this.showDialog();
+    } else if (this.calendar.view == 'month') {
+      this.calendar.view = 'date';
+      this.calendar.dateFormat = 'yy/mm/dd';
+      this.showDialog();
+    }
+  }
+
+  showDialog() {
+    setTimeout(() => {
+      this.calendar.showOverlay();
+      this.calendar.inputfieldViewChild.nativeElement.dispatchEvent(
+        new Event('click')
+      );
+    }, 200);
+  }
+
+  onClearClick() {
+    this.calendar.view = 'year';
+  }
+ 
 }
