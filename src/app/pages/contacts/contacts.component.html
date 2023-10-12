@@ -16,7 +16,8 @@
             <h1 class="text-orange">{{"pages.contacts.title"|translate}}</h1>
             <p class="text-white">{{"pages.contacts.desc"|translate}}</p>
             <ul class="page-breadcrumb">
-                <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home"|translate}}</a> <i class="fa fa-angle-double-right"></i></li>
+                <li><a routerLink=""><i class="fa fa-home"></i> {{"pages.home"|translate}}</a> <i
+                        class="fa fa-angle-double-right"></i></li>
                 <li><span>{{"pages.contacts.title"|translate}}</span></li>
             </ul>
         </div>
@@ -31,7 +32,8 @@
                     <i class="fa-solid fa-location-dot"></i>
                     <h5>{{"pages.contacts.form.address.title"|translate}}</h5>
                     <p>
-                        <a class="text-reset" target="_blank" href="https://goo.gl/maps/sKRWE3gFhBUfXsLR8?coh=178571&entry=tt">
+                        <a class="text-reset" target="_blank"
+                            href="https://goo.gl/maps/sKRWE3gFhBUfXsLR8?coh=178571&entry=tt">
                             {{"pages.contacts.form.address.desc"|translate}}
                         </a>
                     </p>
@@ -43,7 +45,7 @@
                     <h5>{{"pages.contacts.form.phone"|translate}}</h5>
                     <p>
                         <a class="text-reset" target="_blank" href="tel:+(04)5973939">
-                            04-5973939
+                            02-5666667
                         </a>
                     </p>
                 </div>
@@ -80,10 +82,11 @@
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="form-field">
                                     <i class="fa fa-user"></i>
-                                    <input id="name" type="text" placeholder='{{"pages.contacts.form.name"|translate}}' class="placeholder" name="name"
-                                        formControlName="name">
+                                    <input id="name" type="text" placeholder='{{"pages.contacts.form.name"|translate}}'
+                                        class="placeholder" name="name" formControlName="name">
                                     <div class="text-start">
-                                        <small class="text-danger ms-1" *ngIf="EmailForm.get('name')?.touched &&
+                                        <small class="text-danger ms-1"
+                                            *ngIf="EmailForm.get('name')?.touched &&
                                         EmailForm.get('name')?.hasError('required')">{{"validations.required"|translate}}</small>
                                     </div>
                                 </div>
@@ -91,10 +94,11 @@
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="form-field">
                                     <i class="fa-solid fa-paperclip"></i>
-                                    <input type="text" placeholder='{{"pages.contacts.form.subject"|translate}}' class="placeholder" name="subject"
-                                        formControlName="subject">
+                                    <input type="text" placeholder='{{"pages.contacts.form.subject"|translate}}'
+                                        class="placeholder" name="subject" formControlName="subject">
                                     <div class="text-start">
-                                        <small class="text-danger ms-1" *ngIf="EmailForm.get('subject')?.touched &&
+                                        <small class="text-danger ms-1"
+                                            *ngIf="EmailForm.get('subject')?.touched &&
                                     EmailForm.get('subject')?.hasError('required')">{{"validations.required"|translate}}</small>
                                     </div>
                                 </div>
@@ -102,14 +106,16 @@
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="form-field">
                                     <i class="fa fa-envelope"></i>
-                                    <input type="email" placeholder='{{"pages.contacts.form.email"|translate}}' class="placeholder" name="email"
-                                        formControlName="email">
+                                    <input type="email" placeholder='{{"pages.contacts.form.email"|translate}}'
+                                        class="placeholder" name="email" formControlName="email">
                                     <div class="text-start">
-                                        <small class="text-danger ms-1" *ngIf="EmailForm.get('email')?.touched &&
+                                        <small class="text-danger ms-1"
+                                            *ngIf="EmailForm.get('email')?.touched &&
                                     EmailForm.get('email')?.hasError('required')">{{"validations.required"|translate}}</small>
                                     </div>
                                     <div class="text-start">
-                                        <small class="text-danger ms-1" *ngIf="EmailForm.get('email')?.touched &&
+                                        <small class="text-danger ms-1"
+                                            *ngIf="EmailForm.get('email')?.touched &&
                                     EmailForm.get('email')?.hasError('email')">{{"validations.email"|translate}}</small>
                                     </div>
                                 </div>
@@ -117,10 +123,11 @@
                             <div class="col-lg-3 col-md-6 col-sm-12">
                                 <div class="form-field">
                                     <i class="fa fa-phone"></i>
-                                    <input type="text" placeholder='{{"pages.contacts.form.phone"|translate}}' class="placeholder" name="mobile"
-                                        formControlName="mobile">
+                                    <input type="text" placeholder='{{"pages.contacts.form.phone"|translate}}'
+                                        class="placeholder" name="mobile" formControlName="mobile">
                                     <div class="text-start">
-                                        <small class="text-danger ms-1" *ngIf="EmailForm.get('mobile')?.touched &&
+                                        <small class="text-danger ms-1"
+                                            *ngIf="EmailForm.get('mobile')?.touched &&
                                     EmailForm.get('mobile')?.hasError('required')">{{"validations.required"|translate}}</small>
                                     </div>
                                 </div>
@@ -130,9 +137,11 @@
                             <div class="col-lg-12">
                                 <div class="form-field">
                                     <i class="fa fa-pencil"></i>
-                                    <textarea class="input-message placeholder" placeholder='{{"pages.contacts.form.message"|translate}}' rows="7"
+                                    <textarea class="input-message placeholder"
+                                        placeholder='{{"pages.contacts.form.message"|translate}}' rows="7"
                                         formControlName="message" name="message"></textarea>
-                                    <small class="text-danger ms-1" *ngIf="EmailForm.get('message')?.touched &&
+                                    <small class="text-danger ms-1"
+                                        *ngIf="EmailForm.get('message')?.touched &&
                                         EmailForm.get('message')?.hasError('required')">{{"validations.required"|translate}}</small>
                                 </div>
                             </div>

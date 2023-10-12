@@ -1,6 +1,7 @@
 {
   "lang": "En",
   "currency": "درهم",
+  "setMenu":"تفقد المنيو الخاص بنا",
   "buttons":{
     "read_more":"اقرأ المزيد",
     "contact_us":"تواصل معنا",

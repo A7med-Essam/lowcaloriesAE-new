@@ -1,6 +1,7 @@
 {
   "lang": "Ar",
   "currency": "AED",
+  "setMenu":"Check out our menu",
   "buttons":{
     "read_more":"Read More",
     "contact_us":"Contact Us",

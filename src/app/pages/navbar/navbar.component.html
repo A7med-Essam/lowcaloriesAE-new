@@ -5,7 +5,7 @@
         <div class="col-lg-6 col-md-6 col-sm-6">
           <div class="topbar-left text-left">
             <ul>
-              <li class="mx-1"><i class="fa fa-phone"></i> 04-5973939 </li>
+              <li class="mx-1"><i class="fa fa-phone"></i> 02-5666667 </li>
               <li class="mx-1"><i class="fa fa-envelope"></i> info@Lowcalories.ae</li>
             </ul>
           </div>
@@ -60,7 +60,7 @@
                         <div class="info-right pull-right">
                           <div class="address">
                             <p>{{"logoMetaData.location.title" | translate}}</p>
-                            <p> 04-5973939 </p>
+                            <p> 02-5666667 </p>
                             <p>info@Lowcalories.ae</p>
                             <a target="_blank" href="https://goo.gl/maps/sKRWE3gFhBUfXsLR8?coh=178571&entry=tt"><i
                                 class="fa fa-map-o pr-10"></i> {{"logoMetaData.location.findUs" | translate}}</a>
@@ -91,13 +91,16 @@
                       <li routerLink="home" routerLinkActive="active"><a> {{"pages.home"|translate}} </a></li>
                       <li routerLink="plans" routerLinkActive="active"><a> {{"pages.plans.title"|translate}} </a></li>
                       <li routerLink="menu" routerLinkActive="active"><a> {{"pages.menu.title"|translate}} </a></li>
-                      <li routerLink="contacts" routerLinkActive="active"><a>{{"pages.contacts.title"|translate}} </a></li>
+                      <li routerLink="contacts" routerLinkActive="active"><a>{{"pages.contacts.title"|translate}} </a>
+                      </li>
                       <li routerLink="terms" routerLinkActive="active"><a> {{"pages.terms.title1"|translate}} </a></li>
                       <li routerLink="clinic" routerLinkActive="active"><a>{{"pages.clinic.title"|translate}} </a></li>
                       <!-- <li routerLink="questions" routerLinkActive="active"><a>FAQ </a></li> -->
-                      <li routerLink="register" routerLinkActive="active"><a>{{"pages.register.title"|translate}}</a></li>
+                      <li routerLink="register" routerLinkActive="active"><a>{{"pages.register.title"|translate}}</a>
+                      </li>
                       <ng-container *ngIf="login$ | async as login">
-                        <li routerLink="login" routerLinkActive="active" *ngIf="login.data == null"><a>{{"pages.login.title"|translate}}</a></li>
+                        <li routerLink="login" routerLinkActive="active" *ngIf="login.data == null">
+                          <a>{{"pages.login.title"|translate}}</a></li>
                         <li (click)="logOut()" *ngIf="login.data != null">
                           <a>
                             {{"pages.logout"|translate}}

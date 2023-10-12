@@ -27,6 +27,7 @@ interface IMyProgram {
     image_new:      string;
     bag_price:      number;
     snack_price:    number;
+    menu_url:       string;
 }
 
 export interface IOptions {
