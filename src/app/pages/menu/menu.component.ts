@@ -164,7 +164,6 @@ export class MenuComponent implements OnInit {
       }
     });
 
-    console.log(extractedData);
     return extractedData;
   }
   

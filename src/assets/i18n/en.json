@@ -2,6 +2,11 @@
   "lang": "Ar",
   "currency": "AED",
   "setMenu":"Check out our menu",
+  "offer": {
+    "remaining_days": "There are {{value}} {{day}} left until the offer ends",
+    "price": "Price",
+    "title":"WINTER OFFERS"
+  },
   "buttons":{
     "read_more":"Read More",
     "contact_us":"Contact Us",

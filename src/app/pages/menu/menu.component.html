@@ -82,7 +82,7 @@
     </div>
 </section>
 
-<section class="our-menu white-bg pt-5">
+<section class="our-menu pt-5">
     <div class="container" *ngIf="carouselVisible">
         <owl-carousel-o [options]="categoryOptions" ngClass="categories" *ngIf="menu$ |async as menu">
             <ng-container *ngFor="let category of menu; let i = index">

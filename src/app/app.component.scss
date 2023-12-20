@@ -1,0 +1,36 @@
+/* TIMER STYLES */
+.timeContainer {
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timeContainer .wrapper {
+  width: 300px;
+  max-height: 400px;
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.timeContainer .wrapper div {
+  color: rgb(255, 175, 175);
+  text-align: center;
+  width: 24%;
+  border-radius: 12px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+}
+
+
+
+.timeContainer .wrapper > div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  width: 80px;
+}
+

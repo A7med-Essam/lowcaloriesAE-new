@@ -15,6 +15,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
+import { CardModule } from 'primeng/card';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
@@ -44,7 +45,8 @@ const APP_PRIMENG_MODULE = [
   SkeletonModule,
   ImageModule,
   CalendarModule,
-  DialogModule
+  DialogModule,
+  CardModule
 ];
 @NgModule({
   declarations: [
