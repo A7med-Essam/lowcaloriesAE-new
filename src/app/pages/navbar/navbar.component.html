@@ -89,6 +89,8 @@
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="menu-links ms-auto" style="cursor: pointer;">
                       <li routerLink="home" routerLinkActive="active"><a> {{"pages.home"|translate}} </a></li>
+                      <li *ngIf="hasOffers" class="glow" (click)="welcomeModal = true;"><a> {{"pages.offer"|translate}}
+                        </a></li>
                       <li routerLink="plans" routerLinkActive="active"><a> {{"pages.plans.title"|translate}} </a></li>
                       <li routerLink="menu" routerLinkActive="active"><a> {{"pages.menu.title"|translate}} </a></li>
                       <li routerLink="contacts" routerLinkActive="active"><a>{{"pages.contacts.title"|translate}} </a>
@@ -100,7 +102,8 @@
                       </li>
                       <ng-container *ngIf="login$ | async as login">
                         <li routerLink="login" routerLinkActive="active" *ngIf="login.data == null">
-                          <a>{{"pages.login.title"|translate}}</a></li>
+                          <a>{{"pages.login.title"|translate}}</a>
+                        </li>
                         <li (click)="logOut()" *ngIf="login.data != null">
                           <a>
                             {{"pages.logout"|translate}}
@@ -128,3 +131,84 @@
     <!-- menu end -->
   </div>
 </header>
+
+<!-- <p-dialog [(visible)]="welcomeModal" [header]="'offer.title'|translate"
+ [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+    <div class="text-center">
+        <span class="text-muted">
+            <div class="row">
+                <div class="col-lg-6 my-3" *ngFor="let offer of offers">
+                    <p-card [header]="offer.offer_name" subheader="{{'offer.price'|translate}} ({{offer.price}}) {{'currency'|translate}}">
+                        <ng-template pTemplate="header">
+                            <ng-lottie height="150px" [options]="options"></ng-lottie>
+                        </ng-template>
+                        <p>
+                            {{offer.plan}}
+                        </p>
+                        <small class="text-danger">
+                            {{"offer.remaining_days"|translate: 
+                            { value: offer.remaining_days, day: offer.remaining_days <= 1 && translate.currentLang == 'ar' ?
+                             'يوم':offer.remaining_days > 1 && translate.currentLang == 'ar' ?'يوم':offer.remaining_days > 1 &&
+                              translate.currentLang != 'ar' ?'days':'day' } }} </small>
+                        <ng-template pTemplate="footer">
+                            <div class="text-center pointer">
+                                <a [href]="offer.link" class="button mt-20">{{"buttons.subscribe"|translate}}</a>
+                            </div>
+                        </ng-template>
+                    </p-card>
+                </div>
+            </div>
+
+        </span>
+    </div>
+</p-dialog> -->
+
+<p-dialog [(visible)]="welcomeModal" [header]="'offer.title'|translate" [modal]="true" [style]="{ width: '50vw' }"
+  [draggable]="false" [resizable]="false">
+  <div class="categories d-flex">
+    <div class="item bg-white px-5 rounded my-0 py-3 font-weight-500 mx-3" (click)="toggleCategories('CH')"
+      [class.active]="currentCompany == 'CH'">
+      {{'offer.ch' | translate}}
+    </div>
+    <div class="item bg-white px-5 rounded my-0 py-3 font-weight-500 mx-3" (click)="toggleCategories('LC')"
+      [class.active]="currentCompany == 'LC'">
+      {{'offer.lc' | translate}}
+    </div>
+  </div>
+
+  <div class="row mt-1" id="offers">
+    <div class="col-lg-6 my-3" *ngFor="let offer of offers?.[currentCompany]">
+      <div class="item">
+        <div class="content">
+          <h1 class="title">{{offer.offer_name}}</h1>
+          <p class="price">{{'offer.price'|translate}} ({{offer.price}}) {{'currency'|translate}}</p>
+          <div class="desc-container">
+            <div class="desc" *ngIf="offer.plan.split('-')[0]">
+              {{offer.plan.split("-")[0]}}
+            </div>
+            <div class="desc" *ngIf="offer.plan.split('-')[1]">
+              {{offer.plan.split("-")[1]}}
+            </div>
+            <div class="desc" *ngIf="offer.plan.split('-')[2]">
+              {{offer.plan.split("-")[2]}}
+            </div>
+            <div class="desc" *ngIf="offer.plan.split('-')[3]">
+              {{offer.plan.split("-")[3]}}
+            </div>
+          </div>
+          <div class="time" id="time" [style.direction]="translate.currentLang == 'ar' ?'rtl' : 'ltr'">
+            {{ offer.remaining_days | countdown:translate.currentLang }}
+          </div>
+          <div class="d-flex justify-content-center">
+            <div class="text-center pointer mx-2">
+              <a target="_blank" [href]="offer.link" class="button mt-20">{{"buttons.subscribe"|translate}}</a>
+            </div>
+            <div *ngIf="currentCompany == 'CH'" class="text-center pointer mx-2">
+              <a target="_blank" [href]="offer.menu" class="button mt-20">{{"offer.showMenu"|translate}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-dialog>

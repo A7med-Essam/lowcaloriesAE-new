@@ -5,7 +5,10 @@
   "offer": {
     "remaining_days": "There are {{value}} {{day}} left until the offer ends",
     "price": "Price",
-    "title":"WINTER OFFERS"
+    "title":"OFFERS",
+    "showMenu":"Show Menu",
+    "ch":"Chef Gourmet",
+    "lc":"Low Calories"
   },
   "buttons":{
     "read_more":"Read More",
@@ -30,6 +33,7 @@
   },
   "pages":{
     "home":"Home",
+    "offer":"Offers",
     "plans":{
       "title": "Monthly Plans",
       "desc":"Choose The Meal Plan For Your Goals",

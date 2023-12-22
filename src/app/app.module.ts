@@ -35,6 +35,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
+import { CountdownPipe } from './core/pipes/countdown.pipe';
 
 export function playerFactory() {
   return import('lottie-web');
@@ -64,6 +65,7 @@ const APP_PRIMENG_MODULE = [
     ForgetPasswordComponent,
     FaqComponent,
     ResetPasswordComponent,
+    CountdownPipe,
   ],
   imports: [
     BrowserModule,

@@ -2,31 +2,3 @@
 <router-outlet></router-outlet>
 <app-footer></app-footer>
 
-<p-dialog [(visible)]="welcomeModal" [header]="'offer.title'|translate"
- [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
-    <div class="text-center">
-        <span class="text-muted">
-            <div class="row">
-                <div class="col-lg-6 my-3" *ngFor="let offer of offers">
-                    <p-card [header]="offer.offer_name" subheader="{{'offer.price'|translate}} ({{offer.price}}) {{'currency'|translate}}">
-                        <ng-template pTemplate="header">
-                            <ng-lottie height="150px" [options]="options"></ng-lottie>
-                        </ng-template>
-                        <p>
-                            {{offer.plan}}
-                        </p>
-                        <small class="text-danger">{{"offer.remaining_days"|translate: 
-                            { value: offer.remaining_days, day: offer.remaining_days <= 1 && translate.currentLang == 'ar' ? 'يوم':offer.remaining_days > 1 && translate.currentLang == 'ar' ?'يوم':offer.remaining_days > 1 && translate.currentLang != 'ar' ?'days':'day' } }} </small>
-                        <ng-template pTemplate="footer">
-                            <div class="text-center pointer">
-                                <a [href]="offer.link" class="button mt-20">{{"buttons.subscribe"|translate}}</a>
-                            </div>
-                        </ng-template>
-                    </p-card>
-                </div>
-            </div>
-
-        </span>
-        <!-- <button class="btn btn-dark mt-3" style="background-color: #FE9F4B;border-color:#FE9F4B" (click)="welcomeModal=false">Continue</button> -->
-    </div>
-</p-dialog>

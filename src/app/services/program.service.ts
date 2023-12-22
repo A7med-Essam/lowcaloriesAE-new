@@ -19,15 +19,9 @@ export class ProgramService {
 
   getOffers(): Observable<{
     status: number;
-    data: {
-      offer_name: string;
-      plan: string;
-      price: number;
-      remaining_days: number;
-      link: string;
-    }[];
+    data: any;
     message: string;
   }> {
-    return this._ApiService.postReqV3('getOffers', {sub_from:'web'});
+    return this._ApiService.postReqV3('getOffersV2', {sub_from:'web'});
   }
 }
