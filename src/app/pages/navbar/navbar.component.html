@@ -163,9 +163,9 @@
     </div>
 </p-dialog> -->
 
-<p-dialog [(visible)]="welcomeModal" [header]="'offer.title'|translate" [modal]="true" [style]="{ width: '50vw' }"
+<p-dialog [(visible)]="welcomeModal" [header]="'offer.title'|translate" [modal]="true" [style]="{ width: '60vw' }"
   [draggable]="false" [resizable]="false">
-  <div class="categories d-flex">
+  <div class="categories d-flex pb-4" style="overflow: hidden;">
     <div class="item bg-white px-5 rounded my-0 py-3 font-weight-500 mx-3" (click)="toggleCategories('CH')"
       [class.active]="currentCompany == 'CH'">
       {{'offer.ch' | translate}}
@@ -177,28 +177,28 @@
   </div>
 
   <div class="row mt-1" id="offers">
-    <div class="col-lg-6 my-3" *ngFor="let offer of offers?.[currentCompany]">
+    <div class="col-md-6 my-3" *ngFor="let offer of offers?.[currentCompany]">
       <div class="item">
         <div class="content">
           <h1 class="title">{{offer.offer_name}}</h1>
           <p class="price">{{'offer.price'|translate}} ({{offer.price}}) {{'currency'|translate}}</p>
           <div class="desc-container row">
-            <div class="col-lg-6" *ngIf="offer.plan.split('-')[0]">
+            <div class="col-6" *ngIf="offer.plan.split('-')[0]">
               <div class="desc shadow">
                 {{offer.plan.split("-")[0]}}
               </div>
             </div>
-            <div class="col-lg-6" *ngIf="offer.plan.split('-')[1]">
+            <div class="col-6" *ngIf="offer.plan.split('-')[1]">
               <div class="desc shadow">
                 {{offer.plan.split("-")[1]}}
               </div>
             </div>
-            <div class="col-lg-6" *ngIf="offer.plan.split('-')[2]">
+            <div class="col-6" *ngIf="offer.plan.split('-')[2]">
               <div class="desc shadow">
                 {{offer.plan.split("-")[2]}}
               </div>
             </div>
-            <div class="col-lg-6" *ngIf="offer.plan.split('-')[3]">
+            <div class="col-6" *ngIf="offer.plan.split('-')[3]">
               <div class="desc shadow">
                 {{offer.plan.split("-")[3]}}
               </div>

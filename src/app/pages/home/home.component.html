@@ -68,7 +68,7 @@
   </div> -->
 
   <p-carousel [value]="slider" [showNavigators]="false" [showIndicators]="false" [numVisible]="1" [numScroll]="1"
-    [circular]="true" [responsiveOptions]="responsiveOptions"  [autoplayInterval]="5000">
+    [circular]="true" [responsiveOptions]="responsiveOptions"  [autoplayInterval]="5000" [draggable]="true" >
     <ng-template let-img pTemplate="item">
       <div class="text-center py-5" [id]="img">
         <span *ngIf="img == 'slider-3'" class="text-white my-1">{{"home.section1.slide3_sub"|translate}}</span>
