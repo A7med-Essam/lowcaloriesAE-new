@@ -1,4 +1,4 @@
-<section id="slider" dir="ltr">
+<!-- <section id="slider" dir="ltr">
   <div class="owl">
     <owl-carousel-o [options]="customOptions" #carousel>
       <ng-template carouselSlide>
@@ -31,7 +31,61 @@
       </ng-template>
     </owl-carousel-o>
   </div>
+</section> -->
+
+<section id="slider" dir="ltr">
+  <!-- <div class="owl">
+    <owl-carousel-o [options]="customOptions" #carousel>
+      <ng-template carouselSlide>
+        <div class="text-center py-5" id="slider-1">
+          <div class="m-5">
+            <button class="btn slider-btns btn-readmore m-1" routerLink="../plans">{{"buttons.read_more"|translate}}</button>
+            <button class="btn slider-btns btn-contacts m-1" routerLink="../contacts">{{"buttons.contact_us"|translate}}</button>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="text-center py-5" id="slider-2">
+          <div class="m-5">
+            <button class="btn slider-btns btn-readmore m-1" routerLink="../plans">{{"buttons.read_more"|translate}}</button>
+            <button class="btn slider-btns btn-contacts m-1" routerLink="../contacts">{{"buttons.contact_us"|translate}}</button>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template carouselSlide>
+        <div class="text-center py-5" id="slider-3">
+          <span class="text-white my-1">{{"home.section1.slide3_sub"|translate}}</span>
+          <h3 class="text-orange my-1">{{"home.section1.slide3_title"|translate}}</h3>
+          <div class="slider3-btns">
+            <div class="m-5">
+              <button class="btn slider-btns btn-readmore m-1" routerLink="../plans">{{"buttons.read_more"|translate}}</button>
+              <button class="btn slider-btns btn-contacts m-1" routerLink="../contacts">{{"buttons.contact_us"|translate}}</button>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </owl-carousel-o>
+  </div> -->
+
+  <p-carousel [value]="slider" [showNavigators]="false" [showIndicators]="false" [numVisible]="1" [numScroll]="1"
+    [circular]="true" [responsiveOptions]="responsiveOptions"  [autoplayInterval]="5000">
+    <ng-template let-img pTemplate="item">
+      <div class="text-center py-5" [id]="img">
+        <span *ngIf="img == 'slider-3'" class="text-white my-1">{{"home.section1.slide3_sub"|translate}}</span>
+        <h3 *ngIf="img == 'slider-3'" class="text-orange my-1">{{"home.section1.slide3_title"|translate}}</h3>
+        <div class="slider3-btns">
+          <div class="m-5">
+            <button class="btn slider-btns btn-readmore m-1"
+              routerLink="../plans">{{"buttons.read_more"|translate}}</button>
+            <button class="btn slider-btns btn-contacts m-1"
+              routerLink="../contacts">{{"buttons.contact_us"|translate}}</button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
 </section>
+
 
 <section class="about-2 white-bg2">
   <div class="container">
@@ -39,16 +93,13 @@
       <div class="col-lg-12">
         <div class="row">
           <div class="col-lg-6 my-3">
-            <img
-              class="img-fluid"
-              src="../../../assets/images/Certified logo/ISO-22000-lowQ.png"
-              data-src="../../../assets/images/Certified logo/ISO-22000.png"
-              alt="ISO"
-              loading="lazy">
+            <img class="img-fluid" src="../../../assets/images/Certified logo/ISO-22000-lowQ.png"
+              data-src="../../../assets/images/Certified logo/ISO-22000.png" alt="ISO" loading="lazy">
           </div>
           <div class="col-lg-6 my-3">
             <div class="about-content mt-100">
-              <h2>{{"home.section2.title1"|translate}} <span class="text-orange">{{"home.section2.title2"|translate}}</span></h2>
+              <h2>{{"home.section2.title1"|translate}} <span
+                  class="text-orange">{{"home.section2.title2"|translate}}</span></h2>
               <p>{{"home.section2.desc1"|translate}}</p>
               <p>{{"home.section2.desc2"|translate}}</p>
               <br><br>
@@ -73,7 +124,8 @@
             <div class="title-separator">
               <i class="glyph-icon flaticon-food-27"></i>
             </div>
-            <h2 class="text-white"> <span class="text-orange">{{"home.section3.title2"|translate}}</span> {{"home.section3.title1"|translate}}</h2>
+            <h2 class="text-white"> <span class="text-orange">{{"home.section3.title2"|translate}}</span>
+              {{"home.section3.title1"|translate}}</h2>
             <p class="text-white">{{"home.section3.desc"|translate}}</p>
           </div>
         </div>
@@ -82,8 +134,9 @@
         <div class="col-lg-6 col-12">
           <div class="menu-body menu-left menu-white">
             <div class="menu-thumbnail">
-                 <p-image src="../../../assets/images/home/meals/1-lowQ.png" alt="Meal Image" #IMG_SRC *ngIf="imgFlag"
-                 (onShow)="handleShowEvent(IMG_SRC,'../../../assets/images/home/meals/1.png')" [preview]="true"></p-image>
+              <p-image src="../../../assets/images/home/meals/1-lowQ.png" alt="Meal Image" #IMG_SRC *ngIf="imgFlag"
+                (onShow)="handleShowEvent(IMG_SRC,'../../../assets/images/home/meals/1.png')" [preview]="true">
+              </p-image>
             </div>
             <div class="menu-details">
               <div class="menu-title clearfix">
@@ -98,8 +151,9 @@
 
           <div class="menu-body menu-left menu-white">
             <div class="menu-thumbnail">
-                <p-image src="../../../assets/images/home/meals/2-lowQ.png" #IMG_SRC *ngIf="imgFlag"
-                (onShow)="handleShowEvent(IMG_SRC,'../../../assets/images/home/meals/2.png')" alt="Meal Image"  [preview]="true"></p-image>
+              <p-image src="../../../assets/images/home/meals/2-lowQ.png" #IMG_SRC *ngIf="imgFlag"
+                (onShow)="handleShowEvent(IMG_SRC,'../../../assets/images/home/meals/2.png')" alt="Meal Image"
+                [preview]="true"></p-image>
             </div>
             <div class="menu-details">
               <div class="menu-title clearfix">
@@ -116,7 +170,8 @@
           <div class="menu-body menu-left menu-white">
             <div class="menu-thumbnail">
               <p-image src="../../../assets/images/home/meals/3-lowQ.png" #IMG_SRC *ngIf="imgFlag"
-              (onShow)="handleShowEvent(IMG_SRC,'../../../assets/images/home/meals/3.png')" alt="Meal Image"  [preview]="true"></p-image>
+                (onShow)="handleShowEvent(IMG_SRC,'../../../assets/images/home/meals/3.png')" alt="Meal Image"
+                [preview]="true"></p-image>
             </div>
             <div class="menu-details">
               <div class="menu-title clearfix">
@@ -131,7 +186,8 @@
           <div class="menu-body menu-left menu-white">
             <div class="menu-thumbnail">
               <p-image src="../../../assets/images/home/meals/4-lowQ.png" #IMG_SRC *ngIf="imgFlag"
-              (onShow)="handleShowEvent(IMG_SRC,'../../../assets/images/home/meals/4.png')" alt="Meal Image"  [preview]="true"></p-image>
+                (onShow)="handleShowEvent(IMG_SRC,'../../../assets/images/home/meals/4.png')" alt="Meal Image"
+                [preview]="true"></p-image>
             </div>
             <div class="menu-details">
               <div class="menu-title clearfix">
@@ -148,7 +204,8 @@
           <div class="menu-body menu-left menu-white">
             <div class="menu-thumbnail">
               <p-image src="../../../assets/images/home/meals/5-lowQ.png" #IMG_SRC *ngIf="imgFlag"
-              (onShow)="handleShowEvent(IMG_SRC,'../../../assets/images/home/meals/5.png')" alt="Meal Image"  [preview]="true"></p-image>
+                (onShow)="handleShowEvent(IMG_SRC,'../../../assets/images/home/meals/5.png')" alt="Meal Image"
+                [preview]="true"></p-image>
             </div>
             <div class="menu-details">
               <div class="menu-title clearfix">
@@ -163,7 +220,8 @@
           <div class="menu-body menu-left menu-white">
             <div class="menu-thumbnail">
               <p-image src="../../../assets/images/home/meals/6-lowQ.png" #IMG_SRC *ngIf="imgFlag"
-              (onShow)="handleShowEvent(IMG_SRC,'../../../assets/images/home/meals/6.png')" alt="Meal Image"  [preview]="true"></p-image>
+                (onShow)="handleShowEvent(IMG_SRC,'../../../assets/images/home/meals/6.png')" alt="Meal Image"
+                [preview]="true"></p-image>
             </div>
             <div class="menu-details">
               <div class="menu-title clearfix">
@@ -180,7 +238,8 @@
           <div class="menu-body menu-left menu-white">
             <div class="menu-thumbnail">
               <p-image src="../../../assets/images/home/meals/7-lowQ.png" #IMG_SRC *ngIf="imgFlag"
-              (onShow)="handleShowEvent(IMG_SRC,'../../../assets/images/home/meals/7.png')" alt="Meal Image"  [preview]="true"></p-image>
+                (onShow)="handleShowEvent(IMG_SRC,'../../../assets/images/home/meals/7.png')" alt="Meal Image"
+                [preview]="true"></p-image>
             </div>
             <div class="menu-details">
               <div class="menu-title clearfix">
@@ -195,7 +254,8 @@
           <div class="menu-body menu-left menu-white">
             <div class="menu-thumbnail">
               <p-image src="../../../assets/images/home/meals/8-lowQ.png" #IMG_SRC *ngIf="imgFlag"
-              (onShow)="handleShowEvent(IMG_SRC,'../../../assets/images/home/meals/8.png')" alt="Meal Image"  [preview]="true"></p-image>
+                (onShow)="handleShowEvent(IMG_SRC,'../../../assets/images/home/meals/8.png')" alt="Meal Image"
+                [preview]="true"></p-image>
             </div>
             <div class="menu-details">
               <div class="menu-title clearfix">
@@ -221,7 +281,8 @@
           <div class="title-separator">
             <i class="glyph-icon flaticon-food-27"></i>
           </div>
-          <h2> {{"home.section4.title1"|translate}} <span class="text-orange">{{"home.section4.title2"|translate}}</span></h2>
+          <h2> {{"home.section4.title1"|translate}} <span
+              class="text-orange">{{"home.section4.title2"|translate}}</span></h2>
           <p>{{"home.section4.desc"|translate}}</p>
         </div>
       </div>
@@ -262,7 +323,8 @@
       </div>
 
     </div>
-    <div class="text-center"><a class="button mt-20" routerLink="../plans">{{"buttons.check_our_plans"|translate}}</a></div>
+    <div class="text-center"><a class="button mt-20" routerLink="../plans">{{"buttons.check_our_plans"|translate}}</a>
+    </div>
   </div>
 </section>
 
@@ -271,9 +333,11 @@
     <div class="row">
       <div class="col-12">
         <div class="section-title text-center m-0 mb-5">
-          <h2 class="text-white"> <span class="text-orange">{{"home.section5.title1"|translate}} </span> {{"home.section5.title2"|translate}}</h2>
+          <h2 class="text-white"> <span class="text-orange">{{"home.section5.title1"|translate}} </span>
+            {{"home.section5.title2"|translate}}</h2>
         </div>
-          <img src="https://api.lowcalories.ae/web\assets\home/qr-code-downApp.png" alt="QR" style="width: 150px;" class="img-fluid">
+        <img src="https://api.lowcalories.ae/web\assets\home/qr-code-downApp.png" alt="QR" style="width: 150px;"
+          class="img-fluid">
         <p class="text-white mt-30 mb-30">
           {{"home.section5.desc1"|translate}}
           <br>

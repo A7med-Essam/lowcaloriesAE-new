@@ -36,7 +36,7 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { CountdownPipe } from './core/pipes/countdown.pipe';
-
+import { CarouselModule as primeng_carousel } from 'primeng/carousel';
 export function playerFactory() {
   return import('lottie-web');
 }
@@ -47,7 +47,8 @@ const APP_PRIMENG_MODULE = [
   ImageModule,
   CalendarModule,
   DialogModule,
-  CardModule
+  CardModule,
+  primeng_carousel
 ];
 @NgModule({
   declarations: [
