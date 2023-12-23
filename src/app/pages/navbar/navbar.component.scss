@@ -1901,12 +1901,12 @@
       font-weight: 600;
   }
   
-  .item .content .desc-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-  }
+  // .item .content .desc-container {
+  //     display: flex;
+  //     justify-content: center;
+  //     align-items: center;
+  //     flex-wrap: wrap;
+  // }
   
   .item .content .desc {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -1914,8 +1914,8 @@
       border-radius: 15px;
       font-weight: 700;
       font-size: 14px;
-      width: 180px;
-      padding: 15px;
+      // width: 180px;
+      padding: 15px 0px;
       margin: 7px;
   }
   

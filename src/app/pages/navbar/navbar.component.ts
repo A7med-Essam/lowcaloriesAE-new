@@ -37,7 +37,7 @@ export class NavbarComponent {
   welcomeModal: boolean = false;
   offers: any;
   hasOffers: boolean = false;
-  currentCompany:string = 'CH'
+  currentCompany:string = 'LC'
   private interval: any;
 
   ngOnInit(): void {
