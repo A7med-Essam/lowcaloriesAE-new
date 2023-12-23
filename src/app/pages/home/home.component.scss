@@ -65,9 +65,19 @@
 }
 
 @media screen and (max-width:1200px) {
-    // #slider .owl{
-    //     width: 900px;
-    // }
+    #slider-1,#slider-2{
+        justify-content: center !important;
+    }
+
+    #slider-3 .slider3-btns{
+        justify-content: center !important;
+    }
+}
+
+@media screen and (max-width:700px) {
+    #slider-3 h3{
+        font-size: 20px;
+    }
 }
 
 @media screen and (max-width:900px) {
