@@ -44,6 +44,11 @@ export class NavbarComponent {
     this._ProgramService.getOffers().subscribe((res) => {
       if (res.status == 1) {
         this.offers = res.data;
+        if (res.data.hasOwnProperty('LC')) { 
+          this.currentCompany = 'LC';
+        } else {
+          this.currentCompany = 'CH';
+        }
         this.welcomeModal = true;
         this.hasOffers = true;
         this.interval = setInterval(() => {

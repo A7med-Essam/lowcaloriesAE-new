@@ -136,11 +136,11 @@
 <p-dialog [(visible)]="welcomeModal" [header]="'offer.title'|translate" [modal]="true" [style]="{ width: '60vw' }"
   [draggable]="false" [resizable]="false">
   <div class="categories d-flex pb-4" style="overflow: hidden;">
-    <div class="item bg-white px-5 rounded my-0 py-3 font-weight-500 mx-3" (click)="toggleCategories('LC')"
+    <div class="item bg-white px-5 rounded my-0 py-3 font-weight-500 mx-3" (click)="toggleCategories('LC')" *ngIf="offers?.['LC']&&offers?.['LC'].length"
       [class.active]="currentCompany == 'LC'">
       {{'offer.lc' | translate}}
     </div>
-    <div class="item bg-white px-5 rounded my-0 py-3 font-weight-500 mx-3" (click)="toggleCategories('CH')"
+    <div class="item bg-white px-5 rounded my-0 py-3 font-weight-500 mx-3" (click)="toggleCategories('CH')" *ngIf="offers?.['CH']&&offers?.['CH'].length"
       [class.active]="currentCompany == 'CH'">
       {{'offer.ch' | translate}}
     </div>
