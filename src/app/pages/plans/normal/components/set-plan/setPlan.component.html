@@ -101,7 +101,7 @@
                                 ProgramDetailsForm.get('Number_of_Days')?.invalid">{{"validations.required"|translate}}</small>
                             </div>
                         </ng-template>
-                        <div class="col-12 my-2">
+                        <div class="col-12 my-2" *ngIf="program[0].program_id != 10 && program[0].program_id != 11">
                             <label>{{"pages.plans.options.snacks"|translate}}</label>
                             <p-dropdown [options]="no_snacks" formControlName='Type_of_Snacks' ngClass="w-100"
                                 appendTo="body" placeholder=' '>
