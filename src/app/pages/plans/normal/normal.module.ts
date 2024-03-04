@@ -15,12 +15,11 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { LottieModule } from 'ngx-lottie';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { RamadanPipe } from 'src/app/core/pipes/ramadan.pipe';
-import { RamadanMealPipe } from 'src/app/core/pipes/ramadan-meal.pipe';
 export function playerFactory() {
   return import('lottie-web');
 }
 @NgModule({
-  declarations: [SetPlanComponent, ShowMealsComponent, CheckoutComponent,RamadanPipe,RamadanMealPipe],
+  declarations: [SetPlanComponent, ShowMealsComponent, CheckoutComponent,RamadanPipe],
   imports: [
     CommonModule,
     NormalRoutingModule,
