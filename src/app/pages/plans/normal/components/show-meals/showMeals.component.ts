@@ -24,7 +24,7 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
   ProgramMeals!: Observable<IShowMealsResponse[] | null>;
   ProgramDetails!: Observable<INormalPlanResponse[] | null>;
   nextButtonMode$: Observable<boolean | null> = of(false);
-  carouselVisible:boolean = true;
+  carouselVisible: boolean = true;
   customOptions: OwlOptions = {
     loop: false,
     autoplay: false,
@@ -46,14 +46,14 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
       },
     },
   };
-
+  isRamadan: boolean = false;
   constructor(
     private _SharedService: SharedService,
     private _ActivatedRoute: ActivatedRoute,
     private _Router: Router,
     private _Store: Store,
     private _I18nService: I18nService,
-    public translate: TranslateService,
+    public translate: TranslateService
   ) {
     this._I18nService.getCurrentLang(this.translate);
     _Store
@@ -73,22 +73,28 @@ export class ShowMealsComponent implements OnInit, OnDestroy {
           });
         }
       });
-      if (this._I18nService.currentLang == 'ar') {
-        this.customOptions.rtl = true;
-      }
-      this.translate.onLangChange.pipe(takeUntil(this.destroyed$)).subscribe(res=>{
+    if (this._I18nService.currentLang == 'ar') {
+      this.customOptions.rtl = true;
+    }
+    this.translate.onLangChange
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((res) => {
         if (res.lang == 'ar') {
           this.customOptions.rtl = true;
-        }else{
+        } else {
           this.customOptions.rtl = false;
         }
         this.carouselVisible = false;
-  
+
         setTimeout(() => {
           this.carouselVisible = true;
         });
-    
-      })
+      });
+
+    this.ProgramDetails.pipe(takeUntil(this.destroyed$)).subscribe((res) => {
+      this.isRamadan =
+        res?.[0].program_id == 10 || res?.[0].program_id == 11 ? true : false;
+    });
   }
 
   ngOnInit(): void {}

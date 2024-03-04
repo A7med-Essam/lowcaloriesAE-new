@@ -139,7 +139,7 @@ export class SetPlanComponent
         );
         this.transformProgramDetails();
         this.getUaeDate();
-        this.isRamadan = 
+        this.isRamadan =
           this.program_id == 10 || this.program_id == 11 ? true : false;
       }
     });
@@ -232,7 +232,9 @@ export class SetPlanComponent
   getSubscriptionData(data: FormGroup) {
     let SelectedDate: Date = data.value.Start_Date;
     let SubscriptionData: ISubscriptionData = {
-      plan_option_id: data.value.Number_of_Days,
+      plan_option_id: this.isRamadan
+        ? this.getPlanOptionIdInRamadan()
+        : data.value.Number_of_Days,
       no_days: this.isRamadan
         ? data.value.Number_of_Days
         : Number(
@@ -272,6 +274,21 @@ export class SetPlanComponent
       }
     );
     return meals;
+  }
+
+  getPlanOptionIdInRamadan() :number{
+    let PlanOptionId = 0; 
+    this.ProgramDetails.pipe(takeUntil(this.destroyed$)).subscribe((res) => {
+      if (res) {
+        PlanOptionId = res[
+          this.ProgramDetailsForm.value.Number_of_Meals.length - 1
+        ].options.find(
+          (e) =>
+            e.no_days == this.ProgramDetailsForm.value.Number_of_Days.toString()
+        )?.id || 0;
+      }
+    });
+    return PlanOptionId;
   }
 
   getOptionById(optionsArr: IOptions[], id: number) {
