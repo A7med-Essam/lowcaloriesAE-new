@@ -44,6 +44,7 @@ export class SetPlanComponent
   @ViewChild('MealsType') MealsType!: ElementRef;
   @ViewChild('SnacksType') SnacksType!: ElementRef;
   uaeDate!: Date;
+  ramadanDate: Date = new Date('2024-03-11T00:00:00.000Z');
   ProgramDetails!: Observable<INormalPlanResponse[] | null>;
   program_id: number = 0;
   ProgramDetailsForm: FormGroup = new FormGroup({});
@@ -102,7 +103,7 @@ export class SetPlanComponent
       day_name_in_view: 'Thursday',
     },
   ];
-
+  isRamadan: boolean = false;
   constructor(
     private _ActivatedRoute: ActivatedRoute,
     private _Router: Router,
@@ -138,6 +139,8 @@ export class SetPlanComponent
         );
         this.transformProgramDetails();
         this.getUaeDate();
+        this.isRamadan = 
+          this.program_id == 10 || this.program_id == 11 ? true : false;
       }
     });
   }
@@ -158,6 +161,7 @@ export class SetPlanComponent
       Start_Date: new FormControl(null, [Validators.required]),
       Type_of_Snacks: new FormControl('0'),
       CheckDays: new FormControl(null),
+      no_meals: new FormControl(0),
     });
   }
 
@@ -175,10 +179,16 @@ export class SetPlanComponent
           this.no_snacks.push(i.toString());
         }
         this.getSelectedNumberOfMeals(res[0]);
-        this.ProgramDetailsForm.get('Number_of_Meals')?.setValue(res[0]);
-        this.ProgramDetailsForm.get('Number_of_Days')?.setValue(
-          res[0].options[0].id
-        );
+        if (this.isRamadan) {
+          this.ProgramDetailsForm.get('Number_of_Days')?.setValue(
+            res[0].options[0].no_days
+          );
+        } else {
+          this.ProgramDetailsForm.get('Number_of_Meals')?.setValue(res[0]);
+          this.ProgramDetailsForm.get('Number_of_Days')?.setValue(
+            res[0].options[0].id
+          );
+        }
         this.setDefaultDate();
       }
     });
@@ -199,10 +209,15 @@ export class SetPlanComponent
         month: 'long',
         day: 'numeric',
       });
-      this.ProgramDetailsForm.get('Start_Date')?.setValue(new Date(firstDate));
+      this.ProgramDetailsForm.get('Start_Date')?.setValue(
+        new Date(this.ramadanDate)
+      );
       const DeliveredDays: HTMLElement[] =
         this._ElementRef.nativeElement.querySelectorAll('.deliveredDays');
-      this._SharedService.onSelectedDate(new Date(firstDate), DeliveredDays[0]);
+      this._SharedService.onSelectedDate(
+        new Date(this.ramadanDate),
+        DeliveredDays[0]
+      );
     }, 1);
   }
 
@@ -218,25 +233,45 @@ export class SetPlanComponent
     let SelectedDate: Date = data.value.Start_Date;
     let SubscriptionData: ISubscriptionData = {
       plan_option_id: data.value.Number_of_Days,
-      no_days: Number(
-        this.getOptionById(
-          data.value.Number_of_Meals.options,
-          data.value.Number_of_Days
-        )?.no_days
-      ),
+      no_days: this.isRamadan
+        ? data.value.Number_of_Days
+        : Number(
+            this.getOptionById(
+              data.value.Number_of_Meals.options,
+              data.value.Number_of_Days
+            )?.no_days
+          ),
       start_date: SelectedDate.toLocaleDateString('pt-br')
         .split('/')
         .reverse()
         .join('-'),
       delivery_days: this.getSelectedDeliveryDays(),
-      meal_types: this.getSelectedMealTypes(
-        Number(data.value.Number_of_Meals.no_meals)
-      ).concat(this.getSelectedSnackTypes(Number(data.value.Type_of_Snacks))),
+      meal_types: this.isRamadan
+        ? this.getRamadanMealTypes().concat(
+            this.getSelectedSnackTypes(Number(data.value.Type_of_Snacks))
+          )
+        : this.getSelectedMealTypes(
+            Number(data.value.Number_of_Meals.no_meals)
+          ).concat(
+            this.getSelectedSnackTypes(Number(data.value.Type_of_Snacks))
+          ),
       program_id: Number(this.program_id),
       no_snacks: Number(data.value.Type_of_Snacks),
-      no_meals: Number(data.value.Number_of_Meals.no_meals),
+      no_meals: this.isRamadan
+        ? data.value.no_meals
+        : Number(data.value.Number_of_Meals.no_meals),
     };
     return SubscriptionData;
+  }
+
+  getRamadanMealTypes(): string[] {
+    let meals: string[] = [];
+    this.ProgramDetailsForm.value.Number_of_Meals.forEach(
+      (e: INormalPlanResponse) => {
+        meals.push(`Meal ${e.no_meals}`);
+      }
+    );
+    return meals;
   }
 
   getOptionById(optionsArr: IOptions[], id: number) {
@@ -298,5 +333,23 @@ export class SetPlanComponent
   ngOnDestroy() {
     this.destroyed$.next();
     this.destroyed$.complete();
+  }
+
+  selectedNumberOfMeals: INormalPlanResponse[] = [];
+  getRamadanCheckboxes(event: any, meal: INormalPlanResponse) {
+    if (event.target.checked) {
+      if (!this.selectedNumberOfMeals.includes(meal)) {
+        this.selectedNumberOfMeals.push(meal);
+      }
+    } else {
+      const index = this.selectedNumberOfMeals.indexOf(meal);
+      if (index !== -1) {
+        this.selectedNumberOfMeals.splice(index, 1);
+      }
+    }
+    this.ProgramDetailsForm.patchValue({
+      no_meals: this.selectedNumberOfMeals.length,
+      Number_of_Meals: this.selectedNumberOfMeals,
+    });
   }
 }

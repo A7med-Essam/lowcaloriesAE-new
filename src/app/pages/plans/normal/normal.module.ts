@@ -14,11 +14,12 @@ import { DialogModule } from 'primeng/dialog';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { LottieModule } from 'ngx-lottie';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
+import { RamadanPipe } from 'src/app/core/pipes/ramadan.pipe';
 export function playerFactory() {
   return import('lottie-web');
 }
 @NgModule({
-  declarations: [SetPlanComponent, ShowMealsComponent, CheckoutComponent],
+  declarations: [SetPlanComponent, ShowMealsComponent, CheckoutComponent,RamadanPipe],
   imports: [
     CommonModule,
     NormalRoutingModule,
@@ -30,6 +31,7 @@ export function playerFactory() {
     CarouselModule,
     LottieModule.forRoot({ player: playerFactory }),
     SharedModule,
+    
   ],
 })
 export class NormalModule {}
