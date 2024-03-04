@@ -42,7 +42,7 @@ export class NavbarComponent {
 
   ngOnInit(): void {
     this._ProgramService.getOffers().subscribe((res) => {
-      if (res.status == 1) {
+      if (res?.status == 1) {
         this.offers = res.data;
         if (res.data.hasOwnProperty('LC')) { 
           this.currentCompany = 'LC';
