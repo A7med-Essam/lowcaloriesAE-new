@@ -1,84 +1,17 @@
-<!-- <section id="slider" dir="ltr">
-  <div class="owl">
-    <owl-carousel-o [options]="customOptions" #carousel>
-      <ng-template carouselSlide>
-        <div class="text-center py-5" id="slider-1">
-          <div class="m-5">
-            <button class="btn slider-btns btn-readmore m-1" routerLink="../plans">{{"buttons.read_more"|translate}}</button>
-            <button class="btn slider-btns btn-contacts m-1" routerLink="../contacts">{{"buttons.contact_us"|translate}}</button>
-          </div>
-        </div>
-      </ng-template>
-      <ng-template carouselSlide>
-        <div class="text-center py-5" id="slider-2">
-          <div class="m-5">
-            <button class="btn slider-btns btn-readmore m-1" routerLink="../plans">{{"buttons.read_more"|translate}}</button>
-            <button class="btn slider-btns btn-contacts m-1" routerLink="../contacts">{{"buttons.contact_us"|translate}}</button>
-          </div>
-        </div>
-      </ng-template>
-      <ng-template carouselSlide>
-        <div class="text-center py-5" id="slider-3">
-          <span class="text-white my-1">{{"home.section1.slide3_sub"|translate}}</span>
-          <h3 class="text-orange my-1">{{"home.section1.slide3_title"|translate}}</h3>
-          <div class="slider3-btns">
-            <div class="m-5">
-              <button class="btn slider-btns btn-readmore m-1" routerLink="../plans">{{"buttons.read_more"|translate}}</button>
-              <button class="btn slider-btns btn-contacts m-1" routerLink="../contacts">{{"buttons.contact_us"|translate}}</button>
-            </div>
-          </div>
-        </div>
-      </ng-template>
-    </owl-carousel-o>
-  </div>
-</section> -->
-
 <section id="slider" dir="ltr">
-  <!-- <div class="owl">
-    <owl-carousel-o [options]="customOptions" #carousel>
-      <ng-template carouselSlide>
-        <div class="text-center py-5" id="slider-1">
-          <div class="m-5">
-            <button class="btn slider-btns btn-readmore m-1" routerLink="../plans">{{"buttons.read_more"|translate}}</button>
-            <button class="btn slider-btns btn-contacts m-1" routerLink="../contacts">{{"buttons.contact_us"|translate}}</button>
-          </div>
-        </div>
-      </ng-template>
-      <ng-template carouselSlide>
-        <div class="text-center py-5" id="slider-2">
-          <div class="m-5">
-            <button class="btn slider-btns btn-readmore m-1" routerLink="../plans">{{"buttons.read_more"|translate}}</button>
-            <button class="btn slider-btns btn-contacts m-1" routerLink="../contacts">{{"buttons.contact_us"|translate}}</button>
-          </div>
-        </div>
-      </ng-template>
-      <ng-template carouselSlide>
-        <div class="text-center py-5" id="slider-3">
-          <span class="text-white my-1">{{"home.section1.slide3_sub"|translate}}</span>
-          <h3 class="text-orange my-1">{{"home.section1.slide3_title"|translate}}</h3>
-          <div class="slider3-btns">
-            <div class="m-5">
-              <button class="btn slider-btns btn-readmore m-1" routerLink="../plans">{{"buttons.read_more"|translate}}</button>
-              <button class="btn slider-btns btn-contacts m-1" routerLink="../contacts">{{"buttons.contact_us"|translate}}</button>
-            </div>
-          </div>
-        </div>
-      </ng-template>
-    </owl-carousel-o>
-  </div> -->
 
   <p-carousel [value]="slider" [showNavigators]="false" [showIndicators]="false" [numVisible]="1" [numScroll]="1"
-    [circular]="true" [responsiveOptions]="responsiveOptions"  [autoplayInterval]="5000" [draggable]="true" >
+    [circular]="true" [responsiveOptions]="responsiveOptions" [autoplayInterval]="5000" [draggable]="true" style="width: 100%;">
     <ng-template let-img pTemplate="item">
       <div class="text-center py-5" [id]="img">
-        <span *ngIf="img == 'slider-3'" class="text-white my-1">{{"home.section1.slide3_sub"|translate}}</span>
-        <h3 *ngIf="img == 'slider-3'" class="text-orange my-1">{{"home.section1.slide3_title"|translate}}</h3>
+        <!-- <span *ngIf="img == 'slider-3'" class="text-white my-1">{{"home.section1.slide3_sub"|translate}}</span> -->
+        <!-- <h3 *ngIf="img == 'slider-3'" class="text-orange my-1">{{"home.section1.slide3_title"|translate}}</h3> -->
         <div class="slider3-btns">
           <div class="m-5">
-            <button class="btn slider-btns btn-readmore m-1"
+            <!-- <button class="btn slider-btns btn-readmore m-1"
               routerLink="../plans">{{"buttons.read_more"|translate}}</button>
             <button class="btn slider-btns btn-contacts m-1"
-              routerLink="../contacts">{{"buttons.contact_us"|translate}}</button>
+              routerLink="../contacts">{{"buttons.contact_us"|translate}}</button> -->
           </div>
         </div>
       </div>
