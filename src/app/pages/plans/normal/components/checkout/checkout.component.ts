@@ -204,7 +204,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         cutlery: Number(form.value.cutlery),
         code_id: priceinfo?.code_id,
         price: priceinfo?.price,
-        grand_total: priceinfo?.grand_total,
+        grand_total: Math.round(priceinfo?.grand_total),
         location: {
           emirate_id: form.value.emirate_id,
           area_id: form.value.area_id,
@@ -241,7 +241,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         cutlery: Number(form.value.cutlery),
         code_id: priceinfo?.code_id,
         price: priceinfo?.price,
-        grand_total: priceinfo?.grand_total,
+        grand_total: Math.round(priceinfo?.grand_total),
         location: {
           emirate_id: form.value.emirate_id,
           area_id: form.value.area_id,
