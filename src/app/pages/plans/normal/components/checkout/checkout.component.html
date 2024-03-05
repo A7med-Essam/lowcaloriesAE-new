@@ -94,7 +94,7 @@
                                 <span>{{"pages.checkout.giftcode.grandTotal" | translate}}</span>
                                 <span class="txt-main">{{
                                     (checkoutForm_without_auth.get("bag")?.value || checkoutForm.get("bag")?.value) ?
-                                    (price.grand_total+50).toFixed(2) : price.grand_total.toFixed(2)
+                                    (price.grand_total+50).toFixed(2) : price.grand_total.toFixed(2) | round
                                     }}
                                     <sub class="text-orange">{{"currency" | translate}}</sub>
                                 </span>
@@ -369,8 +369,8 @@
             <h6 class="txt-main">{{"pages.checkout.subscription.meals" | translate}}:</h6>
             <span>{{sub.no_meals}}</span>
         </div>
-        <hr class="my-2" style="height: .5px;">
-        <div class="d-flex justify-content-between">
+        <hr class="my-2" style="height: .5px;" *ngIf="sub.program_id != 10 && sub.program_id != 11">
+        <div class="d-flex justify-content-between" *ngIf="sub.program_id != 10 && sub.program_id != 11">
             <h6 class="txt-main">{{"pages.checkout.subscription.snacks" | translate}}:</h6>
             <span>{{sub.no_snacks}}</span>
         </div>
