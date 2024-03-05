@@ -9,32 +9,31 @@ import { Image } from 'primeng/image';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  responsiveOptions: any[] ;
-  slider:string[]=['slider-1','slider-3','slider-4','slider-5','slider-6','slider-7','slider-8'];
+  responsiveOptions: any[];
+  slider: string[] = ['slider-1', 'slider-3'];
   constructor() {
     this.responsiveOptions = [
       {
-          breakpoint: '1199px',
-          numVisible: 1,
-          numScroll: 1
+        breakpoint: '1199px',
+        numVisible: 1,
+        numScroll: 1,
       },
       {
-          breakpoint: '991px',
-          numVisible: 1,
-          numScroll: 1
+        breakpoint: '991px',
+        numVisible: 1,
+        numScroll: 1,
       },
       {
-          breakpoint: '767px',
-          numVisible: 1,
-          numScroll: 1
-      }
-  ];
+        breakpoint: '767px',
+        numVisible: 1,
+        numScroll: 1,
+      },
+    ];
   }
 
   ngOnInit(): void {
     document.addEventListener('DOMContentLoaded', function () {
       let lazyImages = document.querySelectorAll("img[loading='lazy']");
-
 
       let lazyImageObserver = new IntersectionObserver(function (
         entries,
