@@ -10,7 +10,7 @@ import { Image } from 'primeng/image';
 })
 export class HomeComponent implements OnInit {
   responsiveOptions: any[];
-  slider: string[] = ['slider-1', 'slider-3'];
+  slider: string[] = ['slider-1', 'slider-2', 'slider-3', 'slider-4'];
   constructor() {
     this.responsiveOptions = [
       {
