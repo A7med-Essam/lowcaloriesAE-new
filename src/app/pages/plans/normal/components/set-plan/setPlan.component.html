@@ -112,7 +112,7 @@
                                         class="text-danger">*</span></label></div>
                             <p-calendar dateFormat="dd-mm-yy DD" [showIcon]="true"
                                 (onSelect)="onSelectedDate($event,deliveredDays)" placeholder="dd-mm-yy"
-                                formControlName='Start_Date' [minDate]="ramadanDate" [disabledDays]="[5]"></p-calendar>
+                                formControlName='Start_Date' [minDate]="uaeDate" [disabledDays]="[5]"></p-calendar>
                             <small class="text-danger" *ngIf="ProgramDetailsForm.get('Start_Date')?.touched &&
                             ProgramDetailsForm.get('Start_Date')?.invalid">{{"validations.required"|translate}}</small>
                         </div>

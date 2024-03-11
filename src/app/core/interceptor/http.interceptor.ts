@@ -28,67 +28,122 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     const currentLang: string =
       this._LocalService.getJsonValue('currentLang') || 'en';
+    const token =
+      this._LocalService.getJsonValue('lowcaloriesAE_new')?.auth_token;
     let HttpHeader;
-    if (this._LocalService.getJsonValue('lowcaloriesAE_new')) {
-      HttpHeader = request.clone({
-        setHeaders: {
-          'Authorization': `Bearer ${this._LocalService.getJsonValue('lowcaloriesAE_new').auth_token}`,
-          'lang': currentLang
+    // if (this._LocalService.getJsonValue('lowcaloriesAE_new')) {
+    //   HttpHeader = request.clone({
+    //     setHeaders: {
+    //       'Authorization': `Bearer ${this._LocalService.getJsonValue('lowcaloriesAE_new').auth_token}`,
+    //       'lang': currentLang
+    //     }
+    //   });
+    //   return next.handle(HttpHeader).pipe(
+    //     tap((res: any) => {
+    //       if (res?.body?.message === 'unauthenticated') {
+    //         this._AuthService
+    //           .refreshToken()
+    //           .pipe(
+    //             switchMap((res) => {
+    //               if (res.data) {
+    //                 const item =
+    //                   this._LocalService.getJsonValue('lowcaloriesAE_new');
+    //                 item.auth_token = res.data;
+    //                 this._LocalService.setJsonValue('lowcaloriesAE_new', item);
+    //                 const newRequest = request.clone({
+    //                   setHeaders: {
+    //                     'Authorization': `Bearer ${this._LocalService.getJsonValue('lowcaloriesAE_new').auth_token}`,
+    //                     'lang': currentLang
+    //                   }
+    //                 });
+    //                 return next.handle(newRequest);
+    //               } else {
+    //                 Swal.fire({
+    //                   title:
+    //                     currentLang == 'ar'
+    //                       ? 'لقد انتهت فترة دخولك إلى النظام'
+    //                       : 'The session has expired!',
+    //                   text:
+    //                     currentLang == 'ar'
+    //                       ? 'الرجاء تسجيل الدخول'
+    //                       : 'Please login',
+    //                   icon: 'error',
+    //                   confirmButtonText: currentLang == 'ar'? "تأكيد":'Confirm',
+    //                 });
+    //                 this._Store.dispatch(
+    //                   LOGOUT_SUCCESS({ data: null, message: '', status: 0 })
+    //                 );
+    //                 this._LocalService.removeItem('lowcaloriesAE_new');
+    //                 this._Router.navigate(['login']);
+    //                 return next.handle(request);
+    //               }
+    //             })
+    //           )
+    //           .subscribe();
+    //       }
+    //     })
+    //   );
+    // }
+    // else{
+    //   request = request.clone({
+    //     setHeaders: {
+    //       'lang': currentLang
+    //     }
+    //   });
+    // }
+    // return next.handle(request);
+
+    HttpHeader = request.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`,
+        lang: currentLang,
+      },
+    });
+    return next.handle(HttpHeader).pipe(
+      tap((res: any) => {
+        if (res?.body?.message === 'unauthenticated') {
+          this._AuthService
+            .refreshToken()
+            .pipe(
+              switchMap((res) => {
+                if (res.data) {
+                  const item =
+                    this._LocalService.getJsonValue('lowcaloriesAE_new');
+                  item.auth_token = res.data;
+                  this._LocalService.setJsonValue('lowcaloriesAE_new', item);
+                  const newRequest = request.clone({
+                    setHeaders: {
+                      Authorization: `Bearer ${token}`,
+                      lang: currentLang,
+                    },
+                  });
+                  return next.handle(newRequest);
+                } else {
+                  Swal.fire({
+                    title:
+                      currentLang == 'ar'
+                        ? 'لقد انتهت فترة دخولك إلى النظام'
+                        : 'The session has expired!',
+                    text:
+                      currentLang == 'ar'
+                        ? 'الرجاء تسجيل الدخول'
+                        : 'Please login',
+                    icon: 'error',
+                    confirmButtonText:
+                      currentLang == 'ar' ? 'تأكيد' : 'Confirm',
+                  });
+                  this._Store.dispatch(
+                    LOGOUT_SUCCESS({ data: null, message: '', status: 0 })
+                  );
+                  this._LocalService.removeItem('lowcaloriesAE_new');
+                  this._Router.navigate(['login']);
+                  return next.handle(request);
+                }
+              })
+            )
+            .subscribe();
         }
-      });
-      return next.handle(HttpHeader).pipe(
-        tap((res: any) => {
-          if (res?.body?.message === 'unauthenticated') {
-            this._AuthService
-              .refreshToken()
-              .pipe(
-                switchMap((res) => {
-                  if (res.data) {
-                    const item =
-                      this._LocalService.getJsonValue('lowcaloriesAE_new');
-                    item.auth_token = res.data;
-                    this._LocalService.setJsonValue('lowcaloriesAE_new', item);
-                    const newRequest = request.clone({
-                      setHeaders: {
-                        'Authorization': `Bearer ${this._LocalService.getJsonValue('lowcaloriesAE_new').auth_token}`,
-                        'lang': currentLang
-                      }
-                    });
-                    return next.handle(newRequest);
-                  } else {
-                    Swal.fire({
-                      title:
-                        currentLang == 'ar'
-                          ? 'لقد انتهت فترة دخولك إلى النظام'
-                          : 'The session has expired!',
-                      text:
-                        currentLang == 'ar'
-                          ? 'الرجاء تسجيل الدخول'
-                          : 'Please login',
-                      icon: 'error',
-                      confirmButtonText: currentLang == 'ar'? "تأكيد":'Confirm',
-                    });
-                    this._Store.dispatch(
-                      LOGOUT_SUCCESS({ data: null, message: '', status: 0 })
-                    );
-                    this._LocalService.removeItem('lowcaloriesAE_new');
-                    this._Router.navigate(['login']);
-                    return next.handle(request);
-                  }
-                })
-              )
-              .subscribe();
-          }
-        })
-      );
-    }
-    else{
-      request = request.clone({
-        setHeaders: {
-          'lang': currentLang
-        }
-      });
-    }
-    return next.handle(request);
+      })
+    );
   }
 }

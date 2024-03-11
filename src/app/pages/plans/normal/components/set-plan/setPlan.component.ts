@@ -210,12 +210,12 @@ export class SetPlanComponent
         day: 'numeric',
       });
       this.ProgramDetailsForm.get('Start_Date')?.setValue(
-        new Date(this.ramadanDate)
+        new Date(this.uaeDate)
       );
       const DeliveredDays: HTMLElement[] =
         this._ElementRef.nativeElement.querySelectorAll('.deliveredDays');
       this._SharedService.onSelectedDate(
-        new Date(this.ramadanDate),
+        new Date(this.uaeDate),
         DeliveredDays[0]
       );
     }, 1);
