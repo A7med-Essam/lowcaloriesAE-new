@@ -26,6 +26,9 @@ export class ProgramComponent implements OnDestroy {
     });
   }
 
+  isRamadan(program_name: string): boolean {
+    return program_name.toLowerCase().includes('ramadan');
+  }
   ngOnDestroy() {
     this.destroyed$.next();
     this.destroyed$.complete();

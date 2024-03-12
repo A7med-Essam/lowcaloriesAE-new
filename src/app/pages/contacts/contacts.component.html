@@ -83,7 +83,7 @@
                                 <div class="form-field">
                                     <i class="fa fa-user"></i>
                                     <input id="name" type="text" placeholder='{{"pages.contacts.form.name"|translate}}'
-                                        class="placeholder" name="name" formControlName="name">
+                                        class="bg-white placeholder" name="name" formControlName="name">
                                     <div class="text-start">
                                         <small class="text-danger ms-1"
                                             *ngIf="EmailForm.get('name')?.touched &&
@@ -95,7 +95,7 @@
                                 <div class="form-field">
                                     <i class="fa-solid fa-paperclip"></i>
                                     <input type="text" placeholder='{{"pages.contacts.form.subject"|translate}}'
-                                        class="placeholder" name="subject" formControlName="subject">
+                                        class="bg-white placeholder" name="subject" formControlName="subject">
                                     <div class="text-start">
                                         <small class="text-danger ms-1"
                                             *ngIf="EmailForm.get('subject')?.touched &&
@@ -107,7 +107,7 @@
                                 <div class="form-field">
                                     <i class="fa fa-envelope"></i>
                                     <input type="email" placeholder='{{"pages.contacts.form.email"|translate}}'
-                                        class="placeholder" name="email" formControlName="email">
+                                        class="bg-white placeholder" name="email" formControlName="email">
                                     <div class="text-start">
                                         <small class="text-danger ms-1"
                                             *ngIf="EmailForm.get('email')?.touched &&
@@ -124,7 +124,7 @@
                                 <div class="form-field">
                                     <i class="fa fa-phone"></i>
                                     <input type="text" placeholder='{{"pages.contacts.form.phone"|translate}}'
-                                        class="placeholder" name="mobile" formControlName="mobile">
+                                        class="bg-white placeholder" name="mobile" formControlName="mobile">
                                     <div class="text-start">
                                         <small class="text-danger ms-1"
                                             *ngIf="EmailForm.get('mobile')?.touched &&
@@ -137,7 +137,7 @@
                             <div class="col-lg-12">
                                 <div class="form-field">
                                     <i class="fa fa-pencil"></i>
-                                    <textarea class="input-message placeholder"
+                                    <textarea class="bg-white input-message placeholder"
                                         placeholder='{{"pages.contacts.form.message"|translate}}' rows="7"
                                         formControlName="message" name="message"></textarea>
                                     <small class="text-danger ms-1"
