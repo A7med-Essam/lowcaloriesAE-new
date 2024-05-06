@@ -35,6 +35,7 @@ import { giftCodeLoadingSelector, giftCodeSelector } from 'src/app/store/giftcod
 import { FETCH_GIFTCODE_START } from 'src/app/store/giftcodeStore/giftcode.action';
 import { TranslateService } from '@ngx-translate/core';
 import { I18nService } from 'src/app/core/i18n/i18n.service';
+import { LocalService } from 'src/app/services/local.service';
 
 @Component({
   selector: 'app-checkout',
@@ -73,6 +74,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private _ActivatedRoute: ActivatedRoute,
     private _I18nService: I18nService,
     public translate: TranslateService,
+    public _LocalService: LocalService,
   ) {
     this._I18nService.getCurrentLang(this.translate);
     this.login$ = _Store.select(loginSelector);
@@ -103,7 +105,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             }
           })
 
-          this._Store.dispatch(FETCH_USERADDRESS_START());
+          if (this._LocalService.getJsonValue('lowcaloriesAE_new')) {
+            this._Store.dispatch(FETCH_USERADDRESS_START());
+          }
           this._Store.dispatch(FETCH_TERMS_START());
           this.emirates$ = this._Store.select(emirateSelector);
           this.addresses$ = this._Store.select(addressSelector);

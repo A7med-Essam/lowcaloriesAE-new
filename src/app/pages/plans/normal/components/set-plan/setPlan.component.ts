@@ -172,10 +172,16 @@ export class SetPlanComponent
   transformProgramDetails() {
     this.ProgramDetails.pipe(takeUntil(this.destroyed$)).subscribe((res) => {
       if (res) {
+        const isSLW = res[0].myprogram.shortcut_name == 'SLW';
+        if (isSLW) {
+          this.ProgramDetailsForm.patchValue({
+            Type_of_Snacks: '1'
+          })
+        }
         res.forEach((e) => {
           e.no_meals.toString();
         });
-        for (let i = 0; i <= res[0].myprogram.no_snacks; i++) {
+        for (let i = isSLW ? 1 :0; i <= res[0].myprogram.no_snacks; i++) {
           this.no_snacks.push(i.toString());
         }
         this.getSelectedNumberOfMeals(res[0]);

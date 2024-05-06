@@ -33,10 +33,15 @@
                             <i class="fa-solid fa-bahai" style="font-size: 10px;"></i>
                         </span>
                         <br>
-                        <span>
-                            {{sub.no_meals}}M-<span *ngFor="let n of program[0].myprogram.name.split(' ')">{{n[0] |
-                                titlecase}}</span>-{{sub.no_days}}D-{{sub.no_snacks}}S
+                        <span *ngIf="program[0].myprogram.shortcut_name == 'SLW' else no_SLW">
+                            {{sub.no_meals}}M-{{program[0].myprogram.shortcut_name}}-{{sub.no_days}}D-{{sub.no_snacks}}S
                         </span>
+                        <ng-template #no_SLW>
+                            <span>
+                                {{sub.no_meals}}M-<span *ngFor="let n of program[0].myprogram.name.split(' ')">{{n[0] |
+                                    titlecase}}</span>-{{sub.no_days}}D-{{sub.no_snacks}}S
+                            </span>
+                        </ng-template>
                     </div>
                     <div class="mt-3">
                         <a class="txt-main pointer" (click)="subscribtionModal=true">{{"buttons.viewMore" |
@@ -54,7 +59,8 @@
                         </div>
                         <div class="row mt-3 mb-4">
                             <div class="col-xl-10 col-lg-9 col-md-8 col-12 my-2">
-                                <input type="text" class="form-control" [disabled]="program[0].program_id == 10 || program[0].program_id == 11"
+                                <input type="text" class="form-control"
+                                    [disabled]="program[0].program_id == 10 || program[0].program_id == 11"
                                     placeholder='{{"pages.checkout.giftcode.placeholder" | translate}}' #inputGiftCode>
                             </div>
                             <div class="col-xl-2 col-lg-3 col-md-4 col-12 my-2">
